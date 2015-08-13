@@ -1,6 +1,7 @@
 class AddFieldsToAccount < ActiveRecord::Migration
   def change
-    add_column :accounts, :name, :string, default: ""
+    add_column :accounts, :fname, :string, default: ""
+    add_column :accounts, :lname, :string, default: ""
     add_column :accounts, :phone, :string, default: ""
 
     # Address
