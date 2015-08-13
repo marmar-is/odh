@@ -6,5 +6,5 @@ class Account < ActiveRecord::Base
          :timeoutable, :confirmable, :lockable
 
   # Associations
-  belongs_to :meta, polymorphic: true # Polymorphic association for Accounts + Broker/Employee
+  belongs_to :meta, polymorphic: true # Polymorphic association for Accounts + Ambassador/Etc.
 end
