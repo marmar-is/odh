@@ -10,6 +10,11 @@ Rails.application.config.assets.version = '1.0'
 # application.js, application.css, and all non-JS/CSS in app/assets folder are already added.
 # Rails.application.config.assets.precompile += %w( search.js )
 
+
+# Vendor Plugins
+Rails.application.config.assets.paths << Rails.root.join("vendor", "assets", "plugins")
+
+
 # Ambassador index Assets ( js )
 Rails.application.config.assets.precompile += %w(
   flexslider.min.js
@@ -22,4 +27,10 @@ Rails.application.config.assets.precompile += %w(
   smooth-scroll.min.js
   parallax.js
   scripts.js
+)
+
+# Register Assets (js & css)
+Rails.application.config.assets.precompile += %w(
+bootstrap-datepicker/bootstrap-datepicker3.css
+bootstrap-datepicker/bootstrap-datepicker.js
 )

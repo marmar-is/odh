@@ -1,46 +1,92 @@
-<h2>Sign up</h2>
+<%= content_for :head do %>
+  <style>
+    section.overlay.cover.fullscreen {
+      min-height:1000px!important;
+    }
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-  <%= devise_error_messages! %>
+    p.group-tag {
+      margin-bottom:0;
+    }
 
-  <div class="field">
-    <%= f.email_field :email, placeholder: "Email", autofocus: true %>
-  </div>
+    .group-elem {
+      margin-bottom: 5px!important;
+    }
+  </style>
 
-  <div class="field">
-    <%= f.text_field :fname, placeholder: "First Name" %>
-    <%= f.text_field :lname, placeholder: "Last Name" %>
-  </div>
-
-  <div class="field">
-    <p>Address</p>
-    <%= f.text_field :street, placeholder: "State" %>
-    <%= f.text_field :city, placeholder: "City" %>
-    <%= f.text_field :state, placeholder: "State" %>
-    <%= f.text_field :zip, placeholder: "Zip Code" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :dob, "Date of Birth" %><br />
-    <%= f.date_select :dob, order: [:month, :day, :year], start_year: 1945, end_year: Date.today.year, default: 50.years.ago %>
-  </div>
-
-  <div class="field">
-    <%= f.label :password %>
-    <% if @minimum_password_length %>
-    <em>(<%= @minimum_password_length %> characters minimum)</em>
-    <% end %><br />
-    <%= f.password_field :password, autocomplete: "off" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "off" %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit "Sign up" %>
-  </div>
+  <%= stylesheet_link_tag 'bootstrap-datepicker/bootstrap-datepicker3.css', 'data-turbolinks-track' => true %>
 <% end %>
 
-<%= render "devise/shared/links" %>
+<section class="cover fullscreen image-bg overlay">
+  <div class="background-image-holder">
+    <%= image_tag "home2.jpg", class:"background-image", alt:"image" %>
+  </div>
+  <div class="container v-align-transform">
+    <div class="row">
+      <section>
+        <div class="col-sm-6 col-sm-offset-3">
+          <div class="feature bordered text-center">
+            <h4 class="uppercase">Register Here</h4>
+            <%= form_for(resource, html: { class: 'text-left' }, as: resource_name, url: session_path(resource_name)) do |f| %>
+              <%= devise_error_messages! %>
+
+              <p class="group-tag">Identity</p>
+              <%= f.email_field :email, placeholder: "Email", autofocus: true, class:"group-elem" %>
+              <div class="row">
+                <div class="col-sm-6">
+                  <%= f.text_field :fname, placeholder: "First Name", class:"group-elem" %>
+                </div>
+                <div class="col-sm-6">
+                  <%= f.text_field :lname, placeholder: "Last Name" %>
+                </div>
+              </div>
+
+              <p class="group-tag">Address</p>
+              <div class="row">
+                <div class="col-sm-7">
+                  <%= f.text_field :street, placeholder: "Street", class:"group-elem" %>
+                </div>
+                <div class="col-sm-5">
+                  <%= f.text_field :city, placeholder: "City", class:"group-elem" %>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-sm-9">
+                  <%= f.text_field :state, placeholder: "State", class:"group-elem" %>
+                </div>
+                <div class="col-sm-3">
+                  <%= f.text_field :zip, placeholder: "Zip Code" %>
+                </div>
+              </div>
+
+              <p class="group-tag">Date of Birth</p>
+              <div class="row">
+                <div class="col-sm-12">
+                  <%#= f.date_select :dob, order: [:month, :day, :year], start_year: 1945, end_year: Date.today.year, default: 50.years.ago, with_css_classes: true %>
+                  <%= f.text_field :dob, data: { provide: 'datepicker', 'date-format': 'yyyy-mm-dd', 'date-end-date': "+0d", 'date-start-view': 2 } %>
+                </div>
+              </div>
+
+
+              <p class="group-tag">Security</p>
+              <%= f.password_field :password, placeholder: "Password (#{@minimum_password_length} characters minimum)", class:"group-elem", autocomplete: "off" %>
+              <%= f.password_field :password_confirmation, placeholder: "Confirm Password", autocomplete: "off" %>
+
+              <%= f.submit "Register" %>
+
+              <hr />
+              <%= render "accounts/shared/links" %>
+            <% end %>
+            <p class="mb0">By signing up, you agree to our
+              <a href="#">Terms Of Use</a>
+            </p>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</section>
+
+<%= content_for :js_includes do  %>
+  <%= javascript_include_tag 'bootstrap-datepicker/bootstrap-datepicker.js', 'data-turbolinks-track' => true %>
+<% end %>

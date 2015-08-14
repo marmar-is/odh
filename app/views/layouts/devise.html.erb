@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title><%= title(@title) %></title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= yield :head %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Marmaris ODH Project" />
+  <meta name="keywords" content="ODH,marmaris,dashboard" />
+  <meta name="author" content="Marmaris" />
+
+  <!-- Font -->
+  <%= stylesheet_link_tag 'http://fonts.googleapis.com/css?family=Lato:300,400%7CRaleway:100,400,300,500,600,700%7COpen+Sans:400,500,600', 'data-turbolinks-track' => true %>
+</head>
+<body>
+
+  <%#= render partial: 'layouts/header' %>
+
+  <div class="main-container">
+    <%= yield %>
+
+    <%#= render partial: 'layouts/footer' %>
+  </div>
+
+  <%= javascript_include_tag 'flexslider.min.js', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'lightbox.min.js', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'masonry.min.js', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'twitterfetcher.min.js', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'spectragram.min.js', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'ytplayer.min.js', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'countdown.min.js', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'smooth-scroll.min.js', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'parallax.js', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'scripts.js', 'data-turbolinks-track' => true %>
+  <%= yield :js_includes %>
+
+</body>
+</html>
