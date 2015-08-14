@@ -1,4 +1,4 @@
-class Account::RegistrationsController < Devise::RegistrationsController
+class Accounts::RegistrationsController < Devise::RegistrationsController
 # before_filter :configure_sign_up_params, only: [:create]
 # before_filter :configure_account_update_params, only: [:update]
 
@@ -7,10 +7,13 @@ class Account::RegistrationsController < Devise::RegistrationsController
   #   super
   # end
 
-  POST /resource
+  # POST /resource
   def create
     super do |resource|
-      resource.meta = Ambassador.create( status: 'registered' )
+      # TODO: params to determine type of account (when not all are ambassadors)
+      ambas = Ambassador.new( status: 'registered', account: resource )
+      ambas.save
+      ambas.update( registration_token: nil ) # nil registration_token after registering
     end
   end
 
