@@ -4,8 +4,25 @@
   <%= devise_error_messages! %>
 
   <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true %>
+    <%= f.email_field :email, placeholder: "Email", autofocus: true %>
+  </div>
+
+  <div class="field">
+    <%= f.text_field :fname, placeholder: "First Name" %>
+    <%= f.text_field :lname, placeholder: "Last Name" %>
+  </div>
+
+  <div class="field">
+    <p>Address</p>
+    <%= f.text_field :street, placeholder: "State" %>
+    <%= f.text_field :city, placeholder: "City" %>
+    <%= f.text_field :state, placeholder: "State" %>
+    <%= f.text_field :zip, placeholder: "Zip Code" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :dob, "Date of Birth" %><br />
+    <%= f.date_select :dob, order: [:month, :day, :year], start_year: 1945, end_year: Date.today.year, default: 50.years.ago %>
   </div>
 
   <div class="field">
