@@ -1,46 +1,282 @@
-<h2>Sign up</h2>
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-  <%= devise_error_messages! %>
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>index.html.erb</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="css/font-awesome.min.css" rel="stylesheet" type="text/css" media="all">
+        <link href="css/themify-icons.css" rel="stylesheet" type="text/css" media="all" />
+        <link href="css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
+        <link href="css/flexslider.css" rel="stylesheet" type="text/css" media="all" />
+        <link href="css/lightbox.min.css" rel="stylesheet" type="text/css" media="all" />
+        <link href="css/ytplayer.css" rel="stylesheet" type="text/css" media="all" />
+        <link href="css/theme-chipotle.css" rel="stylesheet" type="text/css" media="all" />
+        <link href="css/custom.css" rel="stylesheet" type="text/css" media="all" />
+        <link href='http://fonts.googleapis.com/css?family=Lato:300,400%7CRaleway:100,400,300,500,600,700%7COpen+Sans:400,500,600' rel='stylesheet' type='text/css'>
+        <link href="http://fonts.googleapis.com/css?family=Open+Sans:100,300,400,600,700" rel="stylesheet" type="text/css">
+        <link href="css/font-opensans.css" rel="stylesheet" type="text/css">
+    </head>
 
-  <div class="field">
-    <%= f.email_field :email, placeholder: "Email", autofocus: true %>
-  </div>
+    <body>
 
-  <div class="field">
-    <%= f.text_field :fname, placeholder: "First Name" %>
-    <%= f.text_field :lname, placeholder: "Last Name" %>
-  </div>
+		<div class="nav-container">
 
-  <div class="field">
-    <p>Address</p>
-    <%= f.text_field :street, placeholder: "State" %>
-    <%= f.text_field :city, placeholder: "City" %>
-    <%= f.text_field :state, placeholder: "State" %>
-    <%= f.text_field :zip, placeholder: "Zip Code" %>
-  </div>
 
-  <div class="field">
-    <%= f.label :dob, "Date of Birth" %><br />
-    <%= f.date_select :dob, order: [:month, :day, :year], start_year: 1945, end_year: Date.today.year, default: 50.years.ago %>
-  </div>
 
-  <div class="field">
-    <%= f.label :password %>
-    <% if @minimum_password_length %>
-    <em>(<%= @minimum_password_length %> characters minimum)</em>
-    <% end %><br />
-    <%= f.password_field :password, autocomplete: "off" %>
-  </div>
 
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "off" %>
-  </div>
+		    <nav class="absolute transparent">
+		        <div class="nav-bar">
+		            <div class="module left">
+		                <a href="index.html">
+		                    <img class="logo logo-light" alt="Foundry" src="img/logo-light.png">
+		                    <img class="logo logo-dark" alt="Foundry" src="img/logo-dark.png">
+		                </a>
+		            </div>
+		            <div class="module widget-handle mobile-toggle right visible-sm visible-xs">
+		                <i class="ti-menu"></i>
+		            </div>
+		            <div class="module-group right">
+		                <div class="module left">
+		                    <ul class="menu">
+		                        <li>
+		                            <a href="#">THE MEMBERSHIP</a>
+		                        </li><li>
+		                            <a href="#">THE EVENTS</a>
+		                        </li>
 
-  <div class="actions">
-    <%= f.submit "Sign up" %>
-  </div>
-<% end %>
 
-<%= render "devise/shared/links" %>
+		                    </ul>
+		                </div>
+
+		                <div class="module widget-handle language left">
+		                    <ul class="menu">
+		                        <li class="has-dropdown">
+		                            <a href="#">JOIN US</a>
+		                            <ul>
+		                                <li>
+		                                    <a href="#">French</a>
+		                                </li>
+		                                <li>
+		                                    <a href="#">Deutsch</a>
+		                                </li>
+		                            </ul>
+		                        </li>
+		                    </ul>
+		                </div>
+		            </div>
+
+		        </div>
+		    </nav>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		</div>
+
+		<div class="main-container">
+
+			<section class="bg-primary">
+		        <div class="container">
+		            <div class="row mb48 mb-xs-24">
+		                <div class="col-md-6 col-md-offset-3 col-sm-10 col-sm-offset-1 text-center">
+		                    <img alt="Pic" class="mb16" src="img/vent2.png">
+		                    <h5 class="uppercase">Exclusive Offers, Travel Tips &amp; More</h5>
+		                </div>
+		            </div>
+
+
+
+                <div class="container">
+      		            <div class="row">
+
+      		                <div class="col-sm-6 col-md-5 col-md-offset-1">
+                            <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+                              <%= devise_error_messages! %>
+
+                              <div class="field">
+                                <%= f.email_field :email, placeholder: "Email", autofocus: true %>
+                              </div>
+
+                              <div class="field">
+                                <%= f.text_field :fname, placeholder: "First Name" %>
+                                <%= f.text_field :lname, placeholder: "Last Name" %>
+                              </div>
+
+                              <div class="field">
+                                <p>Address</p>
+                                <%= f.text_field :street, placeholder: "State" %>
+                                <%= f.text_field :city, placeholder: "City" %>
+                                <%= f.text_field :state, placeholder: "State" %>
+                                <%= f.text_field :zip, placeholder: "Zip Code" %>
+                              </div>
+
+                              <div class="field">
+                                <%= f.label :dob, "Date of Birth" %><br />
+                                <%= f.date_select :dob, order: [:month, :day, :year], start_year: 1945, end_year: Date.today.year, default: 50.years.ago %>
+                              </div>
+
+                              <div class="field">
+                                <%= f.label :password %>
+                                <% if @minimum_password_length %>
+                                <em>(<%= @minimum_password_length %> characters minimum)</em>
+                                <% end %><br />
+                                <%= f.password_field :password, autocomplete: "off" %>
+                              </div>
+
+                              <div class="field">
+                                <%= f.label :password_confirmation %><br />
+                                <%= f.password_field :password_confirmation, autocomplete: "off" %>
+                              </div>
+
+                              <div class="actions">
+                                <%= f.submit "Sign up" %>
+                              </div>
+                            <% end %>
+
+                            <%= render "devise/shared/links" %>
+
+
+
+
+
+
+
+
+
+
+      		                </div>
+      		            </div>
+
+      		        </div>
+
+
+		            <div class="row">
+		                <div class="col-sm-12 text-center">
+		                    <p class="fade-half lead mb0">*Newsletters are sent bi-monthly</p>
+		                </div>
+		            </div>
+
+		        </div>
+
+		    </section><footer class="footer-1 bg-dark">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-3 col-sm-6">
+							<img alt="Logo" class="logo" src="img/logo-light.png">
+						</div>
+						<div class="col-md-3 col-sm-6">
+							<div class="widget">
+								<h6 class="title">Recent Posts</h6>
+								<hr>
+								<ul class="link-list recent-posts">
+									<li>
+										<a href="#">Hugging pugs is super trendy</a>
+										<span class="date">February
+											<span class="number">14, 2015</span>
+										</span>
+									</li>
+									<li>
+										<a href="#">Spinning vinyl is oh so cool</a>
+										<span class="date">February
+											<span class="number">9, 2015</span>
+										</span>
+									</li>
+									<li>
+										<a href="#">Superior theme design by pros</a>
+										<span class="date">January
+											<span class="number">27, 2015</span>
+										</span>
+									</li>
+								</ul>
+							</div>
+
+						</div>
+						<div class="col-md-3 col-sm-6">
+							<div class="widget">
+								<h6 class="title">Latest Updates</h6>
+								<hr>
+								<div class="twitter-feed">
+									<div class="tweets-feed" data-widget-id="492085717044981760">
+									</div>
+								</div>
+							</div>
+
+						</div>
+						<div class="col-md-3 col-sm-6">
+							<div class="widget">
+								<h6 class="title">Instagram</h6>
+								<hr>
+								<div class="instafeed" data-user-name="funsizeco">
+									<ul></ul>
+								</div>
+							</div>
+
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-sm-6">
+							<span class="sub">© Copyright 2015 - Medium Rare</span>
+						</div>
+						<div class="col-sm-6 text-right">
+							<ul class="list-inline social-list">
+								<li>
+									<a href="#">
+										<i class="ti-twitter-alt"></i>
+									</a>
+								</li>
+								<li>
+									<a href="#">
+										<i class="ti-facebook"></i>
+									</a>
+								</li>
+								<li>
+									<a href="#">
+										<i class="ti-dribbble"></i>
+									</a>
+								</li>
+								<li>
+									<a href="#">
+										<i class="ti-vimeo-alt"></i>
+									</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+
+				<a class="btn btn-sm fade-half back-to-top inner-link" href="#top">Top</a>
+			</footer>
+		</div>
+
+
+	<script src="js/jquery.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/flexslider.min.js"></script>
+        <script src="js/lightbox.min.js"></script>
+        <script src="js/masonry.min.js"></script>
+        <script src="js/twitterfetcher.min.js"></script>
+        <script src="js/spectragram.min.js"></script>
+        <script src="js/ytplayer.min.js"></script>
+        <script src="js/countdown.min.js"></script>
+        <script src="js/smooth-scroll.min.js"></script>
+        <script src="js/parallax.js"></script>
+        <script src="js/scripts.js"></script>
+    </body>
+</html>
+				
