@@ -60,6 +60,9 @@ gem 'letter_opener', group: :development
 # Use Unicorn as the app server
 gem 'unicorn'
 
+# Ambassador Tokens
+gem 'has_secure_token'
+
 # Deployment Details (Use Capistrano for deployment)
 group :development do
     gem 'capistrano',         require: false
