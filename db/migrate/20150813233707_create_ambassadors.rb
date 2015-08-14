@@ -8,5 +8,6 @@ class CreateAmbassadors < ActiveRecord::Migration
     end
 
     add_index :ambassadors, :token, unique: true
+    add_reference :ambassadors, :parent, index:true, foreign_key: true
   end
 end
