@@ -57,7 +57,7 @@ ActiveRecord::Schema.define(version: 20150813233707) do
   create_table "ambassadors", force: :cascade do |t|
     t.string   "token"
     t.string   "registration_token"
-    t.integer  "role"
+    t.integer  "status"
     t.integer  "parent_id"
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false

@@ -22,7 +22,7 @@
 
   <div class="field">
     <%= f.label :dob, "Date of Birth" %><br />
-    <%= f.date_select :dob, order: [ :month, :day, :year ], start_year: 1945, end_year: Date.today.year, default: 50.years.ago %>
+    <%= f.date_select :dob, order: [:month, :day, :year], start_year: 1945, end_year: Date.today.year, default: 50.years.ago %>
   </div>
 
   <div class="field">
