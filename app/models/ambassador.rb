@@ -11,6 +11,9 @@ class Ambassador < ActiveRecord::Base
   # Enumerations
   enum role: [:prospective, :registered, :active]
 
+  # Tokens
+  has_secure_token :registration_token  
+
   private
   def create_unique_token
     if self.account
