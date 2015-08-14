@@ -57,13 +57,12 @@ ActiveRecord::Schema.define(version: 20150813233707) do
   create_table "ambassadors", force: :cascade do |t|
     t.string   "token"
     t.integer  "role"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
-    t.integer  "ambassador_id"
+    t.integer  "parent_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
-  add_index "ambassadors", ["ambassador_id"], name: "index_ambassadors_on_ambassador_id", using: :btree
+  add_index "ambassadors", ["parent_id"], name: "index_ambassadors_on_parent_id", using: :btree
   add_index "ambassadors", ["token"], name: "index_ambassadors_on_token", unique: true, using: :btree
 
-  add_foreign_key "ambassadors", "ambassadors"
 end
