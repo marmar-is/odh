@@ -7,10 +7,12 @@ class Account::RegistrationsController < Devise::RegistrationsController
   #   super
   # end
 
-  # POST /resource
-  # def create
-  #   super
-  # end
+  POST /resource
+  def create
+    super do |resource|
+      resource.meta = Ambassador.create( status: 'registered' )
+    end
+  end
 
   # GET /resource/edit
   # def edit
