@@ -1,0 +1,4 @@
+class AmbassadorsController < ApplicationController
+
+  
+end

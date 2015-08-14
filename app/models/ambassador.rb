@@ -8,6 +8,13 @@ class Ambassador < ActiveRecord::Base
   belongs_to :parent, class_name: :Ambassador, foreign_key: "parent_id"
   has_many :children, class_name: :Ambassador, foreign_key: "parent_id"
 
+  # Enumerations
+  enum status: [:prospective, :registered, :active]
+
+  # Tokens
+  has_secure_token :registration_token
+
+  private
   def create_unique_token
     if self.account
       begin
