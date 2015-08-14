@@ -12,7 +12,7 @@ gem 'sass-rails', '~> 5.0'
 
 # Icons
 # gem 'font-awesome-rails', '~> 4.3' # Font Awesome
-gem 'themify-icons-rails' # Themify 
+gem 'themify-icons-rails' # Themify
 
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
