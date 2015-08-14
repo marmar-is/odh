@@ -12,14 +12,14 @@ Rails.application.config.assets.version = '1.0'
 
 # Ambassador index Assets ( js )
 Rails.application.config.assets.precompile += %w(
-  flexslider.min
-  lightbox.min
-  masonry.min
-  twitterfetcher.min
-  spectragram.min
-  ytplayer.min
-  countdown.min
-  smooth-scroll
-  parallax
-  scripts
+  flexslider.min.js
+  lightbox.min.js
+  masonry.min.js
+  twitterfetcher.min.js
+  spectragram.min.js
+  ytplayer.min.js
+  countdown.min.js
+  smooth-scroll.min.js
+  parallax.js
+  scripts.js
 )

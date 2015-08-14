@@ -11,7 +11,7 @@ $(document).ready(function() { //variant-remove
     "use strict";
 
     // Smooth scroll to inner links
-    
+
     $('.inner-link').each(function(){
         var href = $(this).attr('href');
         if(href.charAt(0) !== "#"){
@@ -189,22 +189,22 @@ $(document).ready(function() { //variant-remove
     $('.module.widget-handle').click(function() {
         $(this).toggleClass('toggle-widget-handle');
     });
-    
+
     // Offscreen Nav
-    
+
     if($('.offscreen-toggle').length){
     	$('body').addClass('has-offscreen-nav');
     }
     else{
         $('body').removeClass('has-offscreen-nav');
     }
-    
+
     $('.offscreen-toggle').click(function(){
     	$('.main-container').toggleClass('reveal-nav');
     	$('nav').toggleClass('reveal-nav');
     	$('.offscreen-container').toggleClass('reveal-nav');
     });
-    
+
     $('.main-container').click(function(){
     	if($(this).hasClass('reveal-nav')){
     		$(this).removeClass('reveal-nav');
@@ -212,7 +212,7 @@ $(document).ready(function() { //variant-remove
     		$('nav').removeClass('reveal-nav');
     	}
     });
-    
+
     $('.offscreen-container a').click(function(){
     	$('.offscreen-container').removeClass('reveal-nav');
     	$('.main-container').removeClass('reveal-nav');
@@ -220,7 +220,7 @@ $(document).ready(function() { //variant-remove
     });
 
     // Populate filters
-    
+
     $('.projects').each(function() {
 
         var filters = "";
@@ -284,13 +284,13 @@ $(document).ready(function() { //variant-remove
     });
 
     // Instagram Feed
-    
+
     if($('.instafeed').length){
     	jQuery.fn.spectragram.accessData = {
 			accessToken: '1406933036.fedaafa.feec3d50f5194ce5b705a1f11a107e0b',
 			clientID: 'fedaafacf224447e8aef74872d3820a1'
-		};	
-    }   
+		};
+    }
 
     $('.instafeed').each(function() {
     	var feedID = $(this).attr('data-user-name') + '-';
@@ -305,7 +305,7 @@ $(document).ready(function() { //variant-remove
     $('.slider-all-controls').flexslider({
         start: function(slider){
             if(slider.find('.slides li:first-child').find('.fs-vid-background video').length){
-               slider.find('.slides li:first-child').find('.fs-vid-background video').get(0).play(); 
+               slider.find('.slides li:first-child').find('.fs-vid-background video').get(0).play();
             }
         },
         after: function(slider){
@@ -347,20 +347,20 @@ $(document).ready(function() { //variant-remove
         directionNav: false,
         controlNav: false
     });
-    
+
     // Lightbox gallery titles
-    
+
     $('.lightbox-grid li a').each(function(){
     	var galleryTitle = $(this).closest('.lightbox-grid').attr('data-gallery-title');
     	$(this).attr('data-lightbox', galleryTitle);
     });
-    
+
     // Multipurpose Modals
-    
+
     if($('.foundry_modal').length){
     	var modalScreen = $('<div class="modal-screen">').appendTo('body');
     }
-    
+
     $('.modal-container').each(function(index) {
         if($(this).find('iframe[src]').length){
         	$(this).find('.foundry_modal').addClass('iframe-modal');
@@ -373,7 +373,7 @@ $(document).ready(function() { //variant-remove
         $(this).find('.btn-modal').attr('modal-link', index);
         $(this).find('.foundry_modal').clone().appendTo('body').attr('modal-link', index).prepend($('<i class="ti-close close-modal">'));
     });
-    
+
     $('.btn-modal').click(function(){
     	var linkedModal = $('section').closest('body').find('.foundry_modal[modal-link="' + $(this).attr('modal-link') + '"]');
         $('.modal-screen').toggleClass('reveal-modal');
@@ -383,9 +383,9 @@ $(document).ready(function() { //variant-remove
         linkedModal.toggleClass('reveal-modal');
         return false;
     });
-    
+
     // Autoshow modals
-	
+
 	$('.foundry_modal[data-time-delay]').each(function(){
 		var modal = $(this);
 		var delay = modal.attr('data-time-delay');
@@ -404,31 +404,31 @@ $(document).ready(function() { //variant-remove
             },delay);
         }
 	});
-    
+
     $('.close-modal:not(.modal-strip .close-modal)').click(function(){
     	var modal = $(this).closest('.foundry_modal');
         modal.toggleClass('reveal-modal');
         if(typeof modal.attr('data-cookie') != "undefined"){
             mr_cookies.setItem(modal.attr('data-cookie'), "true", Infinity);
         }
-    	
+
         $('.modal-screen').toggleClass('reveal-modal');
     });
-    
+
     $('.modal-screen').click(function(){
     	$('.foundry_modal.reveal-modal').toggleClass('reveal-modal');
     	$(this).toggleClass('reveal-modal');
     });
-    
+
     $(document).keyup(function(e) {
 		 if (e.keyCode == 27) { // escape key maps to keycode `27`
 			$('.foundry_modal').removeClass('reveal-modal');
 			$('.modal-screen').removeClass('reveal-modal');
 		}
 	});
-    
+
     // Modal Strips
-    
+
     $('.modal-strip').each(function(){
     	if(!$(this).find('.close-modal').length){
     		$(this).append($('<i class="ti-close close-modal">'));
@@ -436,7 +436,7 @@ $(document).ready(function() { //variant-remove
     	var modal = $(this);
 
         if(typeof modal.attr('data-cookie') != "undefined"){
-           
+
             if(!mr_cookies.hasItem(modal.attr('data-cookie'))){
             	setTimeout(function(){
             		modal.addClass('reveal-modal');
@@ -448,7 +448,7 @@ $(document).ready(function() { //variant-remove
             },1000);
         }
     });
-    
+
     $('.modal-strip .close-modal').click(function(){
         var modal = $(this).closest('.modal-strip');
         if(typeof modal.attr('data-cookie') != "undefined"){
@@ -533,7 +533,7 @@ $(document).ready(function() { //variant-remove
     $('.map-holder').click(function() {
         $(this).addClass('interact');
     });
-    
+
     if($('.map-holder').length){
     	$(window).scroll(function() {
 			if ($('.map-holder.interact').length) {
@@ -541,7 +541,7 @@ $(document).ready(function() { //variant-remove
 			}
 		});
     }
-    
+
     // Countdown Timers
 
     if ($('.countdown').length) {
@@ -734,7 +734,7 @@ $(document).ready(function() { //variant-remove
         }
         // End contact form code
 
-    // Get referrer from URL string 
+    // Get referrer from URL string
     if (getURLParameter("ref")) {
         $('form.form-email').append('<input type="text" name="referrer" class="hidden" value="' + getURLParameter("ref") + '"/>');
     }
@@ -748,9 +748,9 @@ $(document).ready(function() { //variant-remove
     if ((/Android|iPhone|iPad|iPod|BlackBerry|Windows Phone/i).test(navigator.userAgent || navigator.vendor || window.opera)) {
         $('section').removeClass('parallax');
     }
-    
+
     // Disqus Comments
-    
+
     if($('.disqus-comments').length){
 		/* * * CONFIGURATION VARIABLES * * */
 		var disqus_shortname = $('.disqus-comments').attr('data-shortname');
@@ -771,8 +771,8 @@ $(document).ready(function() { //variant-remove
             script.type = 'text/javascript';
             script.src = 'https://maps.googleapis.com/maps/api/js?key='+apiKey+'&callback=initializeMaps';
             script.className = 'gMapsAPI';
-            document.body.appendChild(script);  
-        } 
+            document.body.appendChild(script);
+        }
     }
 
 }); //variant-remove
@@ -994,9 +994,9 @@ window.initializeMaps = function(){
                     if(address != undefined && address[0] != ""){
                             geocoder.geocode( { 'address': address[0].replace('[nomarker]','')}, function(results, status) {
                                 if (status == google.maps.GeocoderStatus.OK) {
-                                var map = new google.maps.Map(mapInstance, mapOptions); 
+                                var map = new google.maps.Map(mapInstance, mapOptions);
                                 map.setCenter(results[0].geometry.location);
-                                
+
                                 address.forEach(function(address){
                                     var markerGeoCoder = new google.maps.Geocoder();
                                     if(address.indexOf('[nomarker]') < 0){
@@ -1021,7 +1021,7 @@ window.initializeMaps = function(){
                     }
                     else if(latitude != undefined && latitude != "" && latitude != false && longitude != undefined && longitude != "" && longitude != false ){
                         mapOptions.center   = { lat: latitude, lng: longitude};
-                        map = new google.maps.Map(mapInstance, mapOptions); 
+                        map = new google.maps.Map(mapInstance, mapOptions);
                         marker              = new google.maps.Marker({
                                                     position: { lat: latitude, lng: longitude },
                                                     map: map,
@@ -1031,7 +1031,7 @@ window.initializeMaps = function(){
 
                     }
 
-                }); 
+                });
         }
     }
 }
