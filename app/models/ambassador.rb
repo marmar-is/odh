@@ -1,18 +1,19 @@
 class Ambassador < ActiveRecord::Base
   # Callbacks
-  before_create :set_unique_token
+  before_create :create_unique_token
 
   # Associations
   has_one :account, as: :meta, dependent: :destroy
 
-  belongs_to :ambassador, as: :parent
-  has_many :ambassadors, as: :children
+  belongs_to :parent, class_name: :Ambassador, foreign_key: "parent_id"
+  has_many :children, class_name: :Ambassador, foreign_key: "parent_id"
 
-  private
-  def create_unique_identifier
-    begin
-      self.token = self.initials + rand(0..999)
-    end while self.class.exists?(token: => token)
+  def create_unique_token
+    if self.account
+      begin
+        self.token = self.account.initials + sprintf('%03d', rand(0..999))
+      end while self.class.exists?(token: token)
+    end
   end
 
 end
