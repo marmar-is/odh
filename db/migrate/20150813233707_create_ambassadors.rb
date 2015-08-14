@@ -4,7 +4,7 @@ class CreateAmbassadors < ActiveRecord::Migration
       t.string :token
       t.string :registration_token
 
-      t.integer :role
+      t.integer :status
       t.integer :parent_id, foreign_key: true
 
       t.timestamps null: false

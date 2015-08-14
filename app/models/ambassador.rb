@@ -9,10 +9,10 @@ class Ambassador < ActiveRecord::Base
   has_many :children, class_name: :Ambassador, foreign_key: "parent_id"
 
   # Enumerations
-  enum role: [:prospective, :registered, :active]
+  enum status: [:prospective, :registered, :active]
 
   # Tokens
-  has_secure_token :registration_token  
+  has_secure_token :registration_token
 
   private
   def create_unique_token
