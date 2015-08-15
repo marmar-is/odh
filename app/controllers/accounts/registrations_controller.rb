@@ -17,9 +17,9 @@ class Accounts::RegistrationsController < Devise::RegistrationsController
 
       # Test sending twilio message
       $twilio_client.account.messages.create({
-        :from => "+15005550006"
-        :to => "#{resource.phone}",
-        :body => "Hello #{resouce.full_name}! Thank you for creating an account with ODH.",
+        from: "+15005550001",
+        to: "#{resource.phone}",
+        body: "Hello #{resource.full_name}! Thank you for creating an account with ODH. Your Referral Token is #{resource.meta.token}.",
         })
     end
   end

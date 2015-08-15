@@ -1659,6 +1659,7 @@ textarea {
 }
 input[type="text"],
 input[type="email"],
+input[type="tel"],
 textarea,
 select,
 input[type="password"] {
@@ -1668,6 +1669,7 @@ input[type="password"] {
 }
 .bg-secondary input[type="text"],
 .bg-secondary input[type="email"],
+.bg-secondary input[type="tel"],
 .bg-secondary textarea,
 .bg-secondary select {
   background: #fff;
@@ -1690,6 +1692,7 @@ input[type="password"] {
 }
 input[type="text"],
 input[type="email"],
+input[type="tel"],
 input[type="password"] {
   background: #f5f5f5;
   border: none;
@@ -1702,6 +1705,7 @@ input[type="password"] {
 }
 .image-bg input[type="text"],
 .image-bg input[type="email"],
+.image-bg input[type="tel"],
 .image-bg textarea {
   color: #555;
 }
@@ -1715,6 +1719,7 @@ input.transparent {
 }
 input[type="text"]:focus,
 input[type="email"]:focus,
+input[type="tel"]:focus,
 input[type="password"]:focus {
   outline: 1px solid #ccc;
 }
