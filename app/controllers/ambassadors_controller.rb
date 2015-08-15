@@ -8,11 +8,19 @@ class AmbassadorsController < ApplicationController
 
   # POST /ambassadors/refer
   def refer
-    params[:email_refers].each do |email|
-      new_referral = Ambassador.new(status: 'prospective', parent: @ambassador, account: Account.new)
-      new_referral.save
+    # Refer Emails if they haven't been referred already.
+    if !params[:email_refers].nil?
+      params[:email_refers].split(',').each do |email|
+        # made a new account for this person
+        acct = Account.new(email: email)
+        acct.save(validates: false)
 
+        new_referral = Ambassador.new(status: 'prospective', parent: @ambassador, account: acct)
+        new_referral.save
+      end
     end
+
+
   end
 
   private
