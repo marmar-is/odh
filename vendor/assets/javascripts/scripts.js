@@ -88,7 +88,7 @@ $(document).ready(function() { //variant-remove
   // Tabbed Content
 
   $('.tabbed-content').each(function() {
-    $(this).append('<ul class="content"></ul>');
+    $(this).append('<ul class="content" style="width:100%;"></ul>');
   });
 
   $('.tabs li').each(function() {

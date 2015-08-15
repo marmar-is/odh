@@ -15,7 +15,7 @@ Rails.application.config.assets.version = '1.0'
 Rails.application.config.assets.paths << Rails.root.join("vendor", "assets", "plugins")
 
 
-# Ambassador index Assets ( js )
+# Ambassador index Assets ( js & css )
 Rails.application.config.assets.precompile += %w(
   flexslider.min.js
   lightbox.min.js
@@ -27,10 +27,13 @@ Rails.application.config.assets.precompile += %w(
   smooth-scroll.min.js
   parallax.js
   scripts.js
+
+  jquery.tagsinput/jquery.tagsinput.css
+  jquery.tagsinput/jquery.tagsinput.js
 )
 
 # Register Assets (js & css)
 Rails.application.config.assets.precompile += %w(
-bootstrap-datepicker/bootstrap-datepicker3.css
-bootstrap-datepicker/bootstrap-datepicker.js
+  bootstrap-datepicker/bootstrap-datepicker3.css
+  bootstrap-datepicker/bootstrap-datepicker.js
 )
