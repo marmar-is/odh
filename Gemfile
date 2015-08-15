@@ -67,7 +67,7 @@ gem 'unicorn'
 gem 'has_secure_token'
 
 # Twilio Messages
-gme 'twilio-ruby'
+gem 'twilio-ruby'
 
 # Deployment Details (Use Capistrano for deployment)
 group :development do
