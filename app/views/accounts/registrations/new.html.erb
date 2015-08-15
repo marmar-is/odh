@@ -30,7 +30,15 @@
               <%= devise_error_messages! %>
 
               <p class="group-tag">Identity</p>
-              <%= f.email_field :email, placeholder: "Email", autofocus: true, class:"group-elem" %>
+              <div class="row">
+                <div class="col-sm-8">
+                  <%= f.email_field :email, placeholder: "Email Address", autofocus: true, class:"group-elem" %>
+                </div>
+                <div class="col-sm-4">
+                  <%= f.telephone_field :phone, placeholder: "Phone Number", class:"group-elem" %>
+                </div>
+              </div>
+
               <div class="row">
                 <div class="col-sm-6">
                   <%= f.text_field :fname, placeholder: "First Name", class:"group-elem" %>

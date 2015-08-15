@@ -14,6 +14,13 @@ class Accounts::RegistrationsController < Devise::RegistrationsController
       ambas = Ambassador.new( status: 'registered', account: resource )
       ambas.save
       ambas.update( registration_token: nil ) # nil registration_token after registering
+
+      # Test sending twilio message
+      $twilio_client.account.messages.create({
+        :from => "+15005550006"
+        :to => "#{resource.phone}",
+        :body => "Hello #{resouce.full_name}! Thank you for creating an account with ODH.",
+        })
     end
   end
 
