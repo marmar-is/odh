@@ -3,7 +3,7 @@
 
   <style>
     div.tagsinput {
-      min-height:68px;
+      height:auto!important;
     }
   </style>
 <% end %>
@@ -15,6 +15,7 @@
         <div class="tabbed-content button-tabs vertical">
           <ul class="tabs">
 
+            <!-- Dashboard -->
             <li class="active">
               <div class="tab-title">
                 <span>DASHBOARD</span>
@@ -30,13 +31,15 @@
                 </p>
               </div>
             </li>
+            <!-- /Dashboard -->
 
+            <!-- Spread the Word -->
             <li>
               <div class="tab-title">
-                <span>REFER</span>
+                <span>Spread the Word</span>
               </div>
               <div class="tab-content">
-                <h5 class="uppercase">Refer By Email Or Phone</h5>
+                <h5 class="uppercase">Send Invites By Email Or Text</h5>
                 <hr>
                 <p>
                   <div class="row" >
@@ -49,7 +52,7 @@
                             <span>E-mail</span>
                           </div>
                           <%= text_field_tag :email_refers, '', id:'tags_email_refers' %>
-                          <p class="help-block">Enter The Email Addresses <br/>You'd Like To Refer</p>
+                          <p class="help-block">Enter The Email Addresses <br/>You'd Like To Invite</p>
                         </div>
                         <!-- /Email-Referrals -->
 
@@ -59,6 +62,8 @@
                             <i class="icon ti ti-mobile"></i>
                             <span>TEXT</span>
                           </div>
+                          <%= text_field_tag :text_refers, '', id:'tags_text_refers' %>
+                          <p class="help-block">Enter The Phone Numbers <br/>You'd Like To Invite</p>
                         </div>
                         <!-- /Phone-Referrals -->
                       </div>
@@ -69,10 +74,12 @@
                 </p>
               </div>
             </li>
+            <!-- /Spread the Word -->
 
+            <!-- My People -->
             <li>
               <div class="tab-title">
-                <span>PEOPLE</span>
+                <span>MY PEOPLE</span>
               </div>
               <div class="tab-content">
                 <h5 class="uppercase">Shorter Tabs</h5>
@@ -120,9 +127,12 @@
                 </div>
               </div>
             </li>
+            <!-- /My People -->
+
+            <!-- My Account -->
             <li>
               <div class="tab-title">
-                <span>ACCOUNT</span>
+                <span>MY ACCOUNT</span>
               </div>
               <div class="tab-content">
                 <h5 class="uppercase">Longer Tabs</h5>
@@ -330,7 +340,16 @@
     'use strict';
     $('#tags_email_refers').tagsInput({
       width: '100%',
-      'defaultText':'add email',
+      defaultText: 'add email',
+      removeTitle: 'Remove Email',
+      inputReferType: 'email',
+    });
+
+    $('#tags_text_refers').tagsInput({
+      width: '100%',
+      defaultText: 'add phone',
+      removeTitle: 'Remove Phone',
+      inputReferType: 'phone',
     });
   };
 
