@@ -44,7 +44,14 @@
                   <%= f.text_field :fname, placeholder: "First Name", class:"group-elem" %>
                 </div>
                 <div class="col-sm-6">
-                  <%= f.text_field :lname, placeholder: "Last Name" %>
+                  <%= f.text_field :lname, placeholder: "Last Name", class:"group-elem" %>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-sm-12">
+                  <%#= f.date_select :dob, order: [:month, :day, :year], start_year: 1945, end_year: Date.today.year, default: 50.years.ago, with_css_classes: true %>
+                  <%= f.text_field :dob, placeholder: 'Date of Birth', data: { provide: 'datepicker', 'date-format': 'yyyy-mm-dd', 'date-end-date': "+0d", 'date-start-view': 2 } %>
                 </div>
               </div>
 
@@ -66,15 +73,6 @@
                   <%= f.text_field :zip, placeholder: "Zip Code" %>
                 </div>
               </div>
-
-              <p class="group-tag">Date of Birth</p>
-              <div class="row">
-                <div class="col-sm-12">
-                  <%#= f.date_select :dob, order: [:month, :day, :year], start_year: 1945, end_year: Date.today.year, default: 50.years.ago, with_css_classes: true %>
-                  <%= f.text_field :dob, data: { provide: 'datepicker', 'date-format': 'yyyy-mm-dd', 'date-end-date': "+0d", 'date-start-view': 2 } %>
-                </div>
-              </div>
-
 
               <p class="group-tag">Security</p>
               <%= f.password_field :password, placeholder: "Password (#{@minimum_password_length} characters minimum)", class:"group-elem", autocomplete: "off" %>

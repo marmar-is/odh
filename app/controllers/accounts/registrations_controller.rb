@@ -3,9 +3,22 @@ class Accounts::RegistrationsController < Devise::RegistrationsController
 # before_filter :configure_account_update_params, only: [:update]
 
   # GET /resource/sign_up
-  # def new
-  #   super
-  # end
+  def new
+    if !params[:registration_token].blank?
+      ambassador = Ambassador.find(params[:id])
+      if (ambassador.registration_token == params[:registration_token])
+        self.resource = ambassador.account || build_resource({})
+        set_minimum_password_length
+        yield resource if block_given?
+        respond_with ( self.resource )
+      else
+        #self.resource = Account.first
+        super
+      end
+    else
+      super
+    end
+  end
 
   # POST /resource
   def create
@@ -17,7 +30,7 @@ class Accounts::RegistrationsController < Devise::RegistrationsController
 
       # Test sending twilio message
       $twilio_client.account.messages.create({
-        from: "+15005550006",
+        from: "+15005550006", # Change to one of our numbers on production
         to: "#{resource.phone}",
         body: "Hello #{resource.full_name}! Thank you for creating an account with ODH. Your Referral Token is #{resource.meta.token}.",
         })
