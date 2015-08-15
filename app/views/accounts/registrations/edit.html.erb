@@ -1,39 +1,107 @@
-<h2>Edit <%= resource_name.to_s.humanize %></h2>
+<%= content_for :head do %>
+  <style>
+    section.overlay.cover.fullscreen {
+      min-height:1000px!important;
+    }
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
-  <%= devise_error_messages! %>
+    p.group-tag {
+      margin-bottom:0;
+    }
 
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true %>
-  </div>
+    .group-elem {
+      margin-bottom: 5px!important;
+    }
+  </style>
 
-  <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-    <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
-  <% end %>
-
-  <div class="field">
-    <%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br />
-    <%= f.password_field :password, autocomplete: "off" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "off" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
-    <%= f.password_field :current_password, autocomplete: "off" %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit "Update" %>
-  </div>
+  <%= stylesheet_link_tag 'bootstrap-datepicker/bootstrap-datepicker3.css', 'data-turbolinks-track' => true %>
 <% end %>
 
-<h3>Cancel my account</h3>
+<section class="cover fullscreen image-bg overlay">
+  <div class="background-image-holder">
+    <%= image_tag "home2.jpg", class:"background-image", alt:"image" %>
+  </div>
+  <div class="container v-align-transform">
+    <div class="row">
+      <section>
+        <div class="col-sm-6 col-sm-offset-3">
+          <div class="feature bordered text-center">
+            <h4 class="uppercase">Register Here</h4>
+            <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, class: 'text-left' }) do |f| %>
+              <%= devise_error_messages! %>
 
-<p>Unhappy? <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete %></p>
+              <p class="group-tag">Identity</p>
+              <%= f.email_field :email, placeholder: "Email", autofocus: true, class:"group-elem" %>
 
-<%= link_to "Back", :back %>
+              <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+                <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+              <% end %>
+
+              <div class="row">
+                <div class="col-sm-6">
+                  <%= f.text_field :fname, placeholder: "First Name", class:"group-elem" %>
+                </div>
+                <div class="col-sm-6">
+                  <%= f.text_field :lname, placeholder: "Last Name" %>
+                </div>
+              </div>
+
+              <p class="group-tag">Address</p>
+              <div class="row">
+                <div class="col-sm-7">
+                  <%= f.text_field :street, placeholder: "Street", class:"group-elem" %>
+                </div>
+                <div class="col-sm-5">
+                  <%= f.text_field :city, placeholder: "City", class:"group-elem" %>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-sm-9">
+                  <%= f.text_field :state, placeholder: "State", class:"group-elem" %>
+                </div>
+                <div class="col-sm-3">
+                  <%= f.text_field :zip, placeholder: "Zip Code" %>
+                </div>
+              </div>
+
+              <p class="group-tag">Date of Birth</p>
+              <div class="row">
+                <div class="col-sm-12">
+                  <%#= f.date_select :dob, order: [:month, :day, :year], start_year: 1945, end_year: Date.today.year, default: 50.years.ago, with_css_classes: true %>
+                  <%= f.text_field :dob, data: { provide: 'datepicker', 'date-format': 'yyyy-mm-dd', 'date-end-date': "+0d", 'date-start-view': 2 } %>
+                </div>
+              </div>
+
+
+              <p class="group-tag">Security</p>
+              <%= f.password_field :password, placeholder: "Password (leave blank to not change)", class:"group-elem", autocomplete: "off" %>
+              <%= f.password_field :password_confirmation, placeholder: "Confirm Password", autocomplete: "off" %>
+
+              <%= f.label :current_password %>
+              <i>(we need your current password to confirm your changes)</i><br />
+              <%= f.password_field :current_password, placeholder: "Current Password", autocomplete: "off" %>
+
+              <%= f.submit "Update" %>
+
+              <hr />
+              <%#= render "accounts/shared/links" %>
+              <p class="mb0">
+                <span>Unhappy?</span>
+                <%= link_to "Cancel My Account", registration_path(resource_name), data: { confirm: "Are you sure you wish to cancel your account?" }, method: :delete, class: 'pull-right' %>
+              </p>
+
+              <p class="mb0">
+                <i class="ti ti-arrow-circle-left"></i>
+                <%= link_to "Back", :back, class: 'pull-right' %>
+              </p>
+            <% end %>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</section>
+
+<%= content_for :js_includes do  %>
+  <%= javascript_include_tag 'bootstrap-datepicker/bootstrap-datepicker.js', 'data-turbolinks-track' => true %>
+<% end %>

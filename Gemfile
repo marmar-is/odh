@@ -66,6 +66,9 @@ gem 'unicorn'
 # Ambassador Tokens
 gem 'has_secure_token'
 
+# Twilio Messages
+gem 'twilio-ruby'
+
 # Deployment Details (Use Capistrano for deployment)
 group :development do
     gem 'capistrano',         require: false

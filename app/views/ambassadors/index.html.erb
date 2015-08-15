@@ -1,3 +1,12 @@
+<%= content_for :head do %>
+  <%= stylesheet_link_tag 'jquery.tagsinput/jquery.tagsinput.css', 'data-turbolinks-track' => true %>
+
+  <style>
+    div.tagsinput {
+      height:auto!important;
+    }
+  </style>
+<% end %>
 <section>
   <div class="container">
     <div class="row">
@@ -6,12 +15,13 @@
         <div class="tabbed-content button-tabs vertical">
           <ul class="tabs">
 
+            <!-- Dashboard -->
             <li class="active">
               <div class="tab-title">
                 <span>DASHBOARD</span>
               </div>
               <div class="tab-content">
-                <h5 class="uppercase">Let's Talk NUMBERS</h5>
+                <h5 class="uppercase">*Let's Talk NUMBERS*</h5>
                 <hr>
                 <p>
                   Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores.
@@ -21,51 +31,55 @@
                 </p>
               </div>
             </li>
+            <!-- /Dashboard -->
 
+            <!-- Spread the Word -->
             <li>
               <div class="tab-title">
-                <span>REFER</span>
+                <span>Spread the Word</span>
               </div>
               <div class="tab-content">
-                <h5 class="uppercase">Cool Tabs</h5>
+                <h5 class="uppercase">Send Invites By Email Or Text</h5>
                 <hr>
-                <div class="container">
-                  <div class="row">
-                    <div class="col-md-8 col-md-offset-2 col-sm-12 text-center">
-                      <h4 class="uppercase mb80"></h4>
-                      <div class="tabbed-content icon-tabs">
-                        <ul class="tabs">
-                          <li class="active">
-                            <div class="tab-title">
-                              <i class="icon ti ti-email"></i>
-                              <span>E-mail</span>
-                            </div>
-                            <div class="tab-content">
-                              <p> </p>
-                            </div>
-                          </li>
-                          <li>
-                            <div class="tab-title">
-                              <i class="icon ti ti-mobile"></i>
-                              <span>TEXT</span>
-                            </div>
-                            <div class="tab-content">
-                              <p>
-                                Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur?
-                              </p>
-                            </div>
-                          </li>
-                        </ul>
+                <p>
+                  <div class="row" >
+                    <div class="col-md-12 col-sm-12 text-center">
+                      <div class="row">
+                        <!-- Email-Referrals -->
+                        <div class="col-md-6">
+                          <div class="tab-title">
+                            <i class="icon ti-email"></i>
+                            <span>E-mail</span>
+                          </div>
+                          <%= text_field_tag :email_refers, '', id:'tags_email_refers' %>
+                          <p class="help-block">Enter The Email Addresses <br/>You'd Like To Invite</p>
+                        </div>
+                        <!-- /Email-Referrals -->
+
+                        <!-- Phone-Referrals -->
+                        <div class="col-md-6">
+                          <div class="tab-title">
+                            <i class="icon ti ti-mobile"></i>
+                            <span>TEXT</span>
+                          </div>
+                          <%= text_field_tag :text_refers, '', id:'tags_text_refers' %>
+                          <p class="help-block">Enter The Phone Numbers <br/>You'd Like To Invite</p>
+                        </div>
+                        <!-- /Phone-Referrals -->
                       </div>
                     </div>
                   </div>
-                </div>
+                </p>
+                <p>
+                </p>
               </div>
             </li>
+            <!-- /Spread the Word -->
 
+            <!-- My People -->
             <li>
               <div class="tab-title">
-                <span>PEOPLE</span>
+                <span>MY PEOPLE</span>
               </div>
               <div class="tab-content">
                 <h5 class="uppercase">Shorter Tabs</h5>
@@ -113,9 +127,12 @@
                 </div>
               </div>
             </li>
+            <!-- /My People -->
+
+            <!-- My Account -->
             <li>
               <div class="tab-title">
-                <span>ACCOUNT</span>
+                <span>MY ACCOUNT</span>
               </div>
               <div class="tab-content">
                 <h5 class="uppercase">Longer Tabs</h5>
@@ -315,4 +332,28 @@
   <%= javascript_include_tag 'smooth-scroll.min.js', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'parallax.js', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'scripts.js', 'data-turbolinks-track' => true %>
+
+  <%= javascript_include_tag 'jquery.tagsinput/jquery.tagsinput.js', 'data-turbolinks-track' => true %>
+
+  <script>
+  var ready = function() {
+    'use strict';
+    $('#tags_email_refers').tagsInput({
+      width: '100%',
+      defaultText: 'add email',
+      removeTitle: 'Remove Email',
+      inputReferType: 'email',
+    });
+
+    $('#tags_text_refers').tagsInput({
+      width: '100%',
+      defaultText: 'add phone',
+      removeTitle: 'Remove Phone',
+      inputReferType: 'phone',
+    });
+  };
+
+  $('document').ready(ready);
+  </script>
+
 <% end %>

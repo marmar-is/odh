@@ -1,1039 +1,1039 @@
 var mr_firstSectionHeight,
-    mr_nav,
-    mr_navOuterHeight,
-    mr_navScrolled = false,
-    mr_navFixed = false,
-    mr_outOfSight = false,
-    mr_floatingProjectSections,
-    mr_scrollTop = 0;
+mr_nav,
+mr_navOuterHeight,
+mr_navScrolled = false,
+mr_navFixed = false,
+mr_outOfSight = false,
+mr_floatingProjectSections,
+mr_scrollTop = 0;
 
 $(document).ready(function() { //variant-remove
-    "use strict";
+  "use strict";
 
-    // Smooth scroll to inner links
+  // Smooth scroll to inner links
 
-    $('.inner-link').each(function(){
-        var href = $(this).attr('href');
-        if(href.charAt(0) !== "#"){
-            $(this).removeClass('inner-link');
-        }
-    });
-
-	if($('.inner-link').length){
-		$('.inner-link').smoothScroll({
-			offset: -55,
-			speed: 800
-		});
+  $('.inner-link').each(function(){
+    var href = $(this).attr('href');
+    if(href.charAt(0) !== "#"){
+      $(this).removeClass('inner-link');
     }
+  });
 
-    // Update scroll variable for scrolling functions
+  if($('.inner-link').length){
+    $('.inner-link').smoothScroll({
+      offset: -55,
+      speed: 800
+    });
+  }
 
-    addEventListener('scroll', function() {
-        mr_scrollTop = window.pageYOffset;
-    }, false);
+  // Update scroll variable for scrolling functions
 
-    // Append .background-image-holder <img>'s as CSS backgrounds
+  addEventListener('scroll', function() {
+    mr_scrollTop = window.pageYOffset;
+  }, false);
 
+  // Append .background-image-holder <img>'s as CSS backgrounds
+
+  $('.background-image-holder').each(function() {
+    var imgSrc = $(this).children('img').attr('src');
+    $(this).css('background', 'url("' + imgSrc + '")');
+    $(this).children('img').hide();
+    $(this).css('background-position', 'initial');
+  });
+
+  // Fade in background images
+
+  setTimeout(function() {
     $('.background-image-holder').each(function() {
-        var imgSrc = $(this).children('img').attr('src');
-        $(this).css('background', 'url("' + imgSrc + '")');
-        $(this).children('img').hide();
-        $(this).css('background-position', 'initial');
+      $(this).addClass('fadeIn');
     });
+  }, 200);
 
-    // Fade in background images
+  // Initialize Tooltips
 
-    setTimeout(function() {
-        $('.background-image-holder').each(function() {
-            $(this).addClass('fadeIn');
-        });
-    }, 200);
+  $('[data-toggle="tooltip"]').tooltip();
 
-    // Initialize Tooltips
+  // Checkboxes
 
-    $('[data-toggle="tooltip"]').tooltip();
-
-    // Checkboxes
-
-    $('.checkbox-option').click(function() {
-        $(this).toggleClass('checked');
-        var checkbox = $(this).find('input');
-        if (checkbox.prop('checked') === false) {
-            checkbox.prop('checked', true);
-        } else {
-            checkbox.prop('checked', false);
-        }
-    });
-
-    // Radio Buttons
-
-    $('.radio-option').click(function() {
-        $(this).closest('form').find('.radio-option').removeClass('checked');
-        $(this).addClass('checked');
-        $(this).find('input').prop('checked', true);
-    });
-
-
-    // Accordions
-
-    $('.accordion li').click(function() {
-        if ($(this).closest('.accordion').hasClass('one-open')) {
-            $(this).closest('.accordion').find('li').removeClass('active');
-            $(this).addClass('active');
-        } else {
-            $(this).toggleClass('active');
-        }
-    });
-
-    // Tabbed Content
-
-    $('.tabbed-content').each(function() {
-        $(this).append('<ul class="content"></ul>');
-    });
-
-    $('.tabs li').each(function() {
-        var originalTab = $(this),
-            activeClass = "";
-        if (originalTab.is('.tabs>li:first-child')) {
-            activeClass = ' class="active"';
-        }
-        var tabContent = originalTab.find('.tab-content').detach().wrap('<li' + activeClass + '></li>').parent();
-        originalTab.closest('.tabbed-content').find('.content').append(tabContent);
-    });
-
-    $('.tabs li').click(function() {
-        $(this).closest('.tabs').find('li').removeClass('active');
-        $(this).addClass('active');
-        var liIndex = $(this).index() + 1;
-        $(this).closest('.tabbed-content').find('.content>li').removeClass('active');
-        $(this).closest('.tabbed-content').find('.content>li:nth-of-type(' + liIndex + ')').addClass('active');
-    });
-
-    // Progress Bars
-
-    $('.progress-bar').each(function() {
-        $(this).css('width', $(this).attr('data-progress') + '%');
-    });
-
-    // Navigation
-
-    if (!$('nav').hasClass('fixed') && !$('nav').hasClass('absolute')) {
-
-        // Make nav container height of nav
-
-        $('.nav-container').css('min-height', $('nav').outerHeight(true));
-
-        $(window).resize(function() {
-            $('.nav-container').css('min-height', $('nav').outerHeight(true));
-            console.error('nav outerheight: '+$('nav').outerHeight(true));
-        });
-
-        // Compensate the height of parallax element for inline nav
-
-        if ($(window).width() > 768) {
-            $('.parallax:nth-of-type(1) .background-image-holder').css('top', -($('nav').outerHeight(true)));
-        }
-
-        // Adjust fullscreen elements
-
-        if ($(window).width() > 768) {
-            $('section.fullscreen:nth-of-type(1)').css('height', ($(window).height() - $('nav').outerHeight(true)));
-        }
-
+  $('.checkbox-option').click(function() {
+    $(this).toggleClass('checked');
+    var checkbox = $(this).find('input');
+    if (checkbox.prop('checked') === false) {
+      checkbox.prop('checked', true);
     } else {
-        $('body').addClass('nav-is-overlay');
+      checkbox.prop('checked', false);
+    }
+  });
+
+  // Radio Buttons
+
+  $('.radio-option').click(function() {
+    $(this).closest('form').find('.radio-option').removeClass('checked');
+    $(this).addClass('checked');
+    $(this).find('input').prop('checked', true);
+  });
+
+
+  // Accordions
+
+  $('.accordion li').click(function() {
+    if ($(this).closest('.accordion').hasClass('one-open')) {
+      $(this).closest('.accordion').find('li').removeClass('active');
+      $(this).addClass('active');
+    } else {
+      $(this).toggleClass('active');
+    }
+  });
+
+  // Tabbed Content
+
+  $('.tabbed-content').each(function() {
+    $(this).append('<ul class="content" style="width:100%;"></ul>');
+  });
+
+  $('.tabs li').each(function() {
+    var originalTab = $(this),
+    activeClass = "";
+    if (originalTab.is('.tabs>li:first-child')) {
+      activeClass = ' class="active"';
+    }
+    var tabContent = originalTab.find('.tab-content').detach().wrap('<li' + activeClass + '></li>').parent();
+    originalTab.closest('.tabbed-content').find('.content').append(tabContent);
+  });
+
+  $('.tabs li').click(function() {
+    $(this).closest('.tabs').find('li').removeClass('active');
+    $(this).addClass('active');
+    var liIndex = $(this).index() + 1;
+    $(this).closest('.tabbed-content').find('.content>li').removeClass('active');
+    $(this).closest('.tabbed-content').find('.content>li:nth-of-type(' + liIndex + ')').addClass('active');
+  });
+
+  // Progress Bars
+
+  $('.progress-bar').each(function() {
+    $(this).css('width', $(this).attr('data-progress') + '%');
+  });
+
+  // Navigation
+
+  if (!$('nav').hasClass('fixed') && !$('nav').hasClass('absolute')) {
+
+    // Make nav container height of nav
+
+    $('.nav-container').css('min-height', $('nav').outerHeight(true));
+
+    $(window).resize(function() {
+      $('.nav-container').css('min-height', $('nav').outerHeight(true));
+      console.error('nav outerheight: '+$('nav').outerHeight(true));
+    });
+
+    // Compensate the height of parallax element for inline nav
+
+    if ($(window).width() > 768) {
+      $('.parallax:nth-of-type(1) .background-image-holder').css('top', -($('nav').outerHeight(true)));
     }
 
-    if ($('nav').hasClass('bg-dark')) {
-        $('.nav-container').addClass('bg-dark');
+    // Adjust fullscreen elements
+
+    if ($(window).width() > 768) {
+      $('section.fullscreen:nth-of-type(1)').css('height', ($(window).height() - $('nav').outerHeight(true)));
     }
 
+  } else {
+    $('body').addClass('nav-is-overlay');
+  }
 
-    // Fix nav to top while scrolling
+  if ($('nav').hasClass('bg-dark')) {
+    $('.nav-container').addClass('bg-dark');
+  }
 
-    mr_nav = $('body .nav-container nav:first');
-    mr_navOuterHeight = $('body .nav-container nav:first').outerHeight();
-    window.addEventListener("scroll", updateNav, false);
 
-    // Menu dropdown positioning
+  // Fix nav to top while scrolling
 
-    $('.menu > li > ul').each(function() {
-        var menu = $(this).offset();
-        var farRight = menu.left + $(this).outerWidth(true);
-        if (farRight > $(window).width() && !$(this).hasClass('mega-menu')) {
-            $(this).addClass('make-right');
-        } else if (farRight > $(window).width() && $(this).hasClass('mega-menu')) {
-            var isOnScreen = $(window).width() - menu.left;
-            var difference = $(this).outerWidth(true) - isOnScreen;
-            $(this).css('margin-left', -(difference));
-        }
-    });
+  mr_nav = $('body .nav-container nav:first');
+  mr_navOuterHeight = $('body .nav-container nav:first').outerHeight();
+  window.addEventListener("scroll", updateNav, false);
 
-    // Mobile Menu
+  // Menu dropdown positioning
 
-    $('.mobile-toggle').click(function() {
-        $('.nav-bar').toggleClass('nav-open');
-        $(this).toggleClass('active');
-    });
-
-    $('.menu li').click(function(e) {
-        if (!e) e = window.event;
-        e.stopPropagation();
-        if ($(this).find('ul').length) {
-            $(this).toggleClass('toggle-sub');
-        } else {
-            $(this).parents('.toggle-sub').removeClass('toggle-sub');
-        }
-    });
-
-    $('.module.widget-handle').click(function() {
-        $(this).toggleClass('toggle-widget-handle');
-    });
-
-    // Offscreen Nav
-
-    if($('.offscreen-toggle').length){
-    	$('body').addClass('has-offscreen-nav');
+  $('.menu > li > ul').each(function() {
+    var menu = $(this).offset();
+    var farRight = menu.left + $(this).outerWidth(true);
+    if (farRight > $(window).width() && !$(this).hasClass('mega-menu')) {
+      $(this).addClass('make-right');
+    } else if (farRight > $(window).width() && $(this).hasClass('mega-menu')) {
+      var isOnScreen = $(window).width() - menu.left;
+      var difference = $(this).outerWidth(true) - isOnScreen;
+      $(this).css('margin-left', -(difference));
     }
-    else{
-        $('body').removeClass('has-offscreen-nav');
+  });
+
+  // Mobile Menu
+
+  $('.mobile-toggle').click(function() {
+    $('.nav-bar').toggleClass('nav-open');
+    $(this).toggleClass('active');
+  });
+
+  $('.menu li').click(function(e) {
+    if (!e) e = window.event;
+    //e.stopPropagation();
+    if ($(this).find('ul').length) {
+      $(this).toggleClass('toggle-sub');
+    } else {
+      $(this).parents('.toggle-sub').removeClass('toggle-sub');
     }
+  });
 
-    $('.offscreen-toggle').click(function(){
-    	$('.main-container').toggleClass('reveal-nav');
-    	$('nav').toggleClass('reveal-nav');
-    	$('.offscreen-container').toggleClass('reveal-nav');
-    });
+  $('.module.widget-handle').click(function() {
+    $(this).toggleClass('toggle-widget-handle');
+  });
 
-    $('.main-container').click(function(){
-    	if($(this).hasClass('reveal-nav')){
-    		$(this).removeClass('reveal-nav');
-    		$('.offscreen-container').removeClass('reveal-nav');
-    		$('nav').removeClass('reveal-nav');
-    	}
-    });
+  // Offscreen Nav
 
-    $('.offscreen-container a').click(function(){
-    	$('.offscreen-container').removeClass('reveal-nav');
-    	$('.main-container').removeClass('reveal-nav');
-    	$('nav').removeClass('reveal-nav');
-    });
+  if($('.offscreen-toggle').length){
+    $('body').addClass('has-offscreen-nav');
+  }
+  else{
+    $('body').removeClass('has-offscreen-nav');
+  }
 
-    // Populate filters
+  $('.offscreen-toggle').click(function(){
+    $('.main-container').toggleClass('reveal-nav');
+    $('nav').toggleClass('reveal-nav');
+    $('.offscreen-container').toggleClass('reveal-nav');
+  });
 
-    $('.projects').each(function() {
+  $('.main-container').click(function(){
+    if($(this).hasClass('reveal-nav')){
+      $(this).removeClass('reveal-nav');
+      $('.offscreen-container').removeClass('reveal-nav');
+      $('nav').removeClass('reveal-nav');
+    }
+  });
 
-        var filters = "";
+  $('.offscreen-container a').click(function(){
+    $('.offscreen-container').removeClass('reveal-nav');
+    $('.main-container').removeClass('reveal-nav');
+    $('nav').removeClass('reveal-nav');
+  });
 
-        $(this).find('.project').each(function() {
+  // Populate filters
 
-            var filterTags = $(this).attr('data-filter').split(',');
+  $('.projects').each(function() {
 
-            filterTags.forEach(function(tagName) {
-                if (filters.indexOf(tagName) == -1) {
-                    filters += '<li data-filter="' + tagName + '">' + capitaliseFirstLetter(tagName) + '</li>';
-                }
-            });
-            $(this).closest('.projects')
-                .find('ul.filters').empty().append('<li data-filter="all" class="active">All</li>').append(filters);
-        });
-    });
+    var filters = "";
 
-    $('.filters li').click(function() {
-        var filter = $(this).attr('data-filter');
-        $(this).closest('.filters').find('li').removeClass('active');
-        $(this).addClass('active');
+    $(this).find('.project').each(function() {
 
-        $(this).closest('.projects').find('.project').each(function() {
-            var filters = $(this).data('filter');
+      var filterTags = $(this).attr('data-filter').split(',');
 
-            if (filters.indexOf(filter) == -1) {
-                $(this).addClass('inactive');
-            } else {
-                $(this).removeClass('inactive');
-            }
-        });
-
-        if (filter == 'all') {
-            $(this).closest('.projects').find('.project').removeClass('inactive');
+      filterTags.forEach(function(tagName) {
+        if (filters.indexOf(tagName) == -1) {
+          filters += '<li data-filter="' + tagName + '">' + capitaliseFirstLetter(tagName) + '</li>';
         }
+      });
+      $(this).closest('.projects')
+      .find('ul.filters').empty().append('<li data-filter="all" class="active">All</li>').append(filters);
+    });
+  });
+
+  $('.filters li').click(function() {
+    var filter = $(this).attr('data-filter');
+    $(this).closest('.filters').find('li').removeClass('active');
+    $(this).addClass('active');
+
+    $(this).closest('.projects').find('.project').each(function() {
+      var filters = $(this).data('filter');
+
+      if (filters.indexOf(filter) == -1) {
+        $(this).addClass('inactive');
+      } else {
+        $(this).removeClass('inactive');
+      }
     });
 
-    // Twitter Feed
+    if (filter == 'all') {
+      $(this).closest('.projects').find('.project').removeClass('inactive');
+    }
+  });
 
-    $('.tweets-feed').each(function(index) {
-        $(this).attr('id', 'tweets-' + index);
-    }).each(function(index) {
+  // Twitter Feed
 
-        function handleTweets(tweets) {
-            var x = tweets.length;
-            var n = 0;
-            var element = document.getElementById('tweets-' + index);
-            var html = '<ul class="slides">';
-            while (n < x) {
-                html += '<li>' + tweets[n] + '</li>';
-                n++;
-            }
-            html += '</ul>';
-            element.innerHTML = html;
-            return html;
-        }
+  $('.tweets-feed').each(function(index) {
+    $(this).attr('id', 'tweets-' + index);
+  }).each(function(index) {
 
-        twitterFetcher.fetch($('#tweets-' + index).attr('data-widget-id'), '', 5, true, true, true, '', false, handleTweets);
-
-    });
-
-    // Instagram Feed
-
-    if($('.instafeed').length){
-    	jQuery.fn.spectragram.accessData = {
-			accessToken: '1406933036.fedaafa.feec3d50f5194ce5b705a1f11a107e0b',
-			clientID: 'fedaafacf224447e8aef74872d3820a1'
-		};
+    function handleTweets(tweets) {
+      var x = tweets.length;
+      var n = 0;
+      var element = document.getElementById('tweets-' + index);
+      var html = '<ul class="slides">';
+      while (n < x) {
+        html += '<li>' + tweets[n] + '</li>';
+        n++;
+      }
+      html += '</ul>';
+      element.innerHTML = html;
+      return html;
     }
 
-    $('.instafeed').each(function() {
-    	var feedID = $(this).attr('data-user-name') + '-';
-        $(this).children('ul').spectragram('getUserFeed', {
-            query: feedID,
-            max: 12
-        });
+    twitterFetcher.fetch($('#tweets-' + index).attr('data-widget-id'), '', 5, true, true, true, '', false, handleTweets);
+
+  });
+
+  // Instagram Feed
+
+  if($('.instafeed').length){
+    jQuery.fn.spectragram.accessData = {
+      accessToken: '1406933036.fedaafa.feec3d50f5194ce5b705a1f11a107e0b',
+      clientID: 'fedaafacf224447e8aef74872d3820a1'
+    };
+  }
+
+  $('.instafeed').each(function() {
+    var feedID = $(this).attr('data-user-name') + '-';
+    $(this).children('ul').spectragram('getUserFeed', {
+      query: feedID,
+      max: 12
     });
+  });
 
-    // Image Sliders
+  // Image Sliders
 
-    $('.slider-all-controls').flexslider({
-        start: function(slider){
-            if(slider.find('.slides li:first-child').find('.fs-vid-background video').length){
-               slider.find('.slides li:first-child').find('.fs-vid-background video').get(0).play();
-            }
-        },
-        after: function(slider){
-            if(slider.find('.fs-vid-background video').length){
-                if(slider.find('li:not(.flex-active-slide)').find('.fs-vid-background video').length){
-                    slider.find('li:not(.flex-active-slide)').find('.fs-vid-background video').get(0).pause();
-                }
-                if(slider.find('.flex-active-slide').find('.fs-vid-background video').length){
-                    slider.find('.flex-active-slide').find('.fs-vid-background video').get(0).play();
-                }
-            }
+  $('.slider-all-controls').flexslider({
+    start: function(slider){
+      if(slider.find('.slides li:first-child').find('.fs-vid-background video').length){
+        slider.find('.slides li:first-child').find('.fs-vid-background video').get(0).play();
+      }
+    },
+    after: function(slider){
+      if(slider.find('.fs-vid-background video').length){
+        if(slider.find('li:not(.flex-active-slide)').find('.fs-vid-background video').length){
+          slider.find('li:not(.flex-active-slide)').find('.fs-vid-background video').get(0).pause();
         }
-    });
-    $('.slider-paging-controls').flexslider({
-        animation: "slide",
-        directionNav: false
-    });
-    $('.slider-arrow-controls').flexslider({
-        controlNav: false
-    });
-    $('.slider-thumb-controls .slides li').each(function() {
-        var imgSrc = $(this).find('img').attr('src');
-        $(this).attr('data-thumb', imgSrc);
-    });
-    $('.slider-thumb-controls').flexslider({
-        animation: "slide",
-        controlNav: "thumbnails",
-        directionNav: true
-    });
-    $('.logo-carousel').flexslider({
-        minItems: 1,
-        maxItems: 4,
-        move: 1,
-        itemWidth: 200,
-        itemMargin: 0,
-        animation: "slide",
-        slideshow: true,
-        slideshowSpeed: 3000,
-        directionNav: false,
-        controlNav: false
-    });
+        if(slider.find('.flex-active-slide').find('.fs-vid-background video').length){
+          slider.find('.flex-active-slide').find('.fs-vid-background video').get(0).play();
+        }
+      }
+    }
+  });
+  $('.slider-paging-controls').flexslider({
+    animation: "slide",
+    directionNav: false
+  });
+  $('.slider-arrow-controls').flexslider({
+    controlNav: false
+  });
+  $('.slider-thumb-controls .slides li').each(function() {
+    var imgSrc = $(this).find('img').attr('src');
+    $(this).attr('data-thumb', imgSrc);
+  });
+  $('.slider-thumb-controls').flexslider({
+    animation: "slide",
+    controlNav: "thumbnails",
+    directionNav: true
+  });
+  $('.logo-carousel').flexslider({
+    minItems: 1,
+    maxItems: 4,
+    move: 1,
+    itemWidth: 200,
+    itemMargin: 0,
+    animation: "slide",
+    slideshow: true,
+    slideshowSpeed: 3000,
+    directionNav: false,
+    controlNav: false
+  });
 
-    // Lightbox gallery titles
+  // Lightbox gallery titles
 
-    $('.lightbox-grid li a').each(function(){
-    	var galleryTitle = $(this).closest('.lightbox-grid').attr('data-gallery-title');
-    	$(this).attr('data-lightbox', galleryTitle);
-    });
+  $('.lightbox-grid li a').each(function(){
+    var galleryTitle = $(this).closest('.lightbox-grid').attr('data-gallery-title');
+    $(this).attr('data-lightbox', galleryTitle);
+  });
 
-    // Multipurpose Modals
+  // Multipurpose Modals
 
-    if($('.foundry_modal').length){
-    	var modalScreen = $('<div class="modal-screen">').appendTo('body');
+  if($('.foundry_modal').length){
+    var modalScreen = $('<div class="modal-screen">').appendTo('body');
+  }
+
+  $('.modal-container').each(function(index) {
+    if($(this).find('iframe[src]').length){
+      $(this).find('.foundry_modal').addClass('iframe-modal');
+      var iframe = $(this).find('iframe');
+      var src = iframe.attr('src');
+      iframe.attr('src', '');
+      iframe.data('data-src');
+      iframe.attr('data-src', src);
+    }
+    $(this).find('.btn-modal').attr('modal-link', index);
+    $(this).find('.foundry_modal').clone().appendTo('body').attr('modal-link', index).prepend($('<i class="ti-close close-modal">'));
+  });
+
+  $('.btn-modal').click(function(){
+    var linkedModal = $('section').closest('body').find('.foundry_modal[modal-link="' + $(this).attr('modal-link') + '"]');
+    $('.modal-screen').toggleClass('reveal-modal');
+    if(linkedModal.find('iframe').length){
+      linkedModal.find('iframe').attr('src', linkedModal.find('iframe').attr('data-src'));
+    }
+    linkedModal.toggleClass('reveal-modal');
+    return false;
+  });
+
+  // Autoshow modals
+
+  $('.foundry_modal[data-time-delay]').each(function(){
+    var modal = $(this);
+    var delay = modal.attr('data-time-delay');
+    modal.prepend($('<i class="ti-close close-modal">'));
+    if(typeof modal.attr('data-cookie') != "undefined"){
+      if(!mr_cookies.hasItem(modal.attr('data-cookie'))){
+        setTimeout(function(){
+          modal.addClass('reveal-modal');
+          $('.modal-screen').addClass('reveal-modal');
+        },delay);
+      }
+    }else{
+      setTimeout(function(){
+        modal.addClass('reveal-modal');
+        $('.modal-screen').addClass('reveal-modal');
+      },delay);
+    }
+  });
+
+  $('.close-modal:not(.modal-strip .close-modal)').click(function(){
+    var modal = $(this).closest('.foundry_modal');
+    modal.toggleClass('reveal-modal');
+    if(typeof modal.attr('data-cookie') != "undefined"){
+      mr_cookies.setItem(modal.attr('data-cookie'), "true", Infinity);
     }
 
-    $('.modal-container').each(function(index) {
-        if($(this).find('iframe[src]').length){
-        	$(this).find('.foundry_modal').addClass('iframe-modal');
-        	var iframe = $(this).find('iframe');
-        	var src = iframe.attr('src');
-        	iframe.attr('src', '');
-        	iframe.data('data-src');
-        	iframe.attr('data-src', src);
-        }
-        $(this).find('.btn-modal').attr('modal-link', index);
-        $(this).find('.foundry_modal').clone().appendTo('body').attr('modal-link', index).prepend($('<i class="ti-close close-modal">'));
-    });
+    $('.modal-screen').toggleClass('reveal-modal');
+  });
 
-    $('.btn-modal').click(function(){
-    	var linkedModal = $('section').closest('body').find('.foundry_modal[modal-link="' + $(this).attr('modal-link') + '"]');
-        $('.modal-screen').toggleClass('reveal-modal');
-        if(linkedModal.find('iframe').length){
-        	linkedModal.find('iframe').attr('src', linkedModal.find('iframe').attr('data-src'));
-        }
-        linkedModal.toggleClass('reveal-modal');
-        return false;
-    });
+  $('.modal-screen').click(function(){
+    $('.foundry_modal.reveal-modal').toggleClass('reveal-modal');
+    $(this).toggleClass('reveal-modal');
+  });
 
-    // Autoshow modals
+  $(document).keyup(function(e) {
+    if (e.keyCode == 27) { // escape key maps to keycode `27`
+      $('.foundry_modal').removeClass('reveal-modal');
+      $('.modal-screen').removeClass('reveal-modal');
+    }
+  });
 
-	$('.foundry_modal[data-time-delay]').each(function(){
-		var modal = $(this);
-		var delay = modal.attr('data-time-delay');
-		modal.prepend($('<i class="ti-close close-modal">'));
-    	if(typeof modal.attr('data-cookie') != "undefined"){
-        	if(!mr_cookies.hasItem(modal.attr('data-cookie'))){
-                setTimeout(function(){
-        			modal.addClass('reveal-modal');
-        			$('.modal-screen').addClass('reveal-modal');
-        		},delay);
-            }
-        }else{
-            setTimeout(function(){
-                modal.addClass('reveal-modal');
-                $('.modal-screen').addClass('reveal-modal');
-            },delay);
-        }
-	});
+  // Modal Strips
 
-    $('.close-modal:not(.modal-strip .close-modal)').click(function(){
-    	var modal = $(this).closest('.foundry_modal');
-        modal.toggleClass('reveal-modal');
-        if(typeof modal.attr('data-cookie') != "undefined"){
-            mr_cookies.setItem(modal.attr('data-cookie'), "true", Infinity);
-        }
+  $('.modal-strip').each(function(){
+    if(!$(this).find('.close-modal').length){
+      $(this).append($('<i class="ti-close close-modal">'));
+    }
+    var modal = $(this);
 
-        $('.modal-screen').toggleClass('reveal-modal');
-    });
+    if(typeof modal.attr('data-cookie') != "undefined"){
 
-    $('.modal-screen').click(function(){
-    	$('.foundry_modal.reveal-modal').toggleClass('reveal-modal');
-    	$(this).toggleClass('reveal-modal');
-    });
+      if(!mr_cookies.hasItem(modal.attr('data-cookie'))){
+        setTimeout(function(){
+          modal.addClass('reveal-modal');
+        },1000);
+      }
+    }else{
+      setTimeout(function(){
+        modal.addClass('reveal-modal');
+      },1000);
+    }
+  });
 
-    $(document).keyup(function(e) {
-		 if (e.keyCode == 27) { // escape key maps to keycode `27`
-			$('.foundry_modal').removeClass('reveal-modal');
-			$('.modal-screen').removeClass('reveal-modal');
-		}
-	});
-
-    // Modal Strips
-
-    $('.modal-strip').each(function(){
-    	if(!$(this).find('.close-modal').length){
-    		$(this).append($('<i class="ti-close close-modal">'));
-    	}
-    	var modal = $(this);
-
-        if(typeof modal.attr('data-cookie') != "undefined"){
-
-            if(!mr_cookies.hasItem(modal.attr('data-cookie'))){
-            	setTimeout(function(){
-            		modal.addClass('reveal-modal');
-            	},1000);
-            }
-        }else{
-            setTimeout(function(){
-                    modal.addClass('reveal-modal');
-            },1000);
-        }
-    });
-
-    $('.modal-strip .close-modal').click(function(){
-        var modal = $(this).closest('.modal-strip');
-        if(typeof modal.attr('data-cookie') != "undefined"){
-            mr_cookies.setItem(modal.attr('data-cookie'), "true", Infinity);
-        }
-    	$(this).closest('.modal-strip').removeClass('reveal-modal');
-    	return false;
-    });
+  $('.modal-strip .close-modal').click(function(){
+    var modal = $(this).closest('.modal-strip');
+    if(typeof modal.attr('data-cookie') != "undefined"){
+      mr_cookies.setItem(modal.attr('data-cookie'), "true", Infinity);
+    }
+    $(this).closest('.modal-strip').removeClass('reveal-modal');
+    return false;
+  });
 
 
-    // Video Modals
-    $('section').closest('body').find('.modal-video[video-link]').remove();
+  // Video Modals
+  $('section').closest('body').find('.modal-video[video-link]').remove();
 
-    $('.modal-video-container').each(function(index) {
-        $(this).find('.play-button').attr('video-link', index);
-        $(this).find('.modal-video').clone().appendTo('body').attr('video-link', index);
-    });
+  $('.modal-video-container').each(function(index) {
+    $(this).find('.play-button').attr('video-link', index);
+    $(this).find('.modal-video').clone().appendTo('body').attr('video-link', index);
+  });
 
-    $('.modal-video-container .play-button').click(function() {
-        var linkedVideo = $('section').closest('body').find('.modal-video[video-link="' + $(this).attr('video-link') + '"]');
-        linkedVideo.toggleClass('reveal-modal');
+  $('.modal-video-container .play-button').click(function() {
+    var linkedVideo = $('section').closest('body').find('.modal-video[video-link="' + $(this).attr('video-link') + '"]');
+    linkedVideo.toggleClass('reveal-modal');
 
-        if (linkedVideo.find('video').length) {
-            linkedVideo.find('video').get(0).play();
-        }
-
-        if (linkedVideo.find('iframe').length) {
-            var iframe = linkedVideo.find('iframe');
-            var iframeSrc = iframe.attr('data-src');
-            var autoplayMsg;
-            if(iframeSrc.indexOf('vimeo') > -1){
-            	autoplayMsg = '&autoplay=1';
-            }else{
-            	autoplayMsg = '?autoplay-1';
-            }
-            var iframeSrc = iframe.attr('data-src') + autoplayMsg;
-            iframe.attr('src', iframeSrc);
-        }
-    });
-
-    $('section').closest('body').find('.close-iframe').click(function() {
-        $(this).closest('.modal-video').toggleClass('reveal-modal');
-        $(this).siblings('iframe').attr('src', '');
-        $(this).siblings('video').get(0).pause();
-    });
-
-    // Local Videos
-
-    $('section').closest('body').find('.local-video-container .play-button').click(function() {
-        $(this).siblings('.background-image-holder').removeClass('fadeIn');
-        $(this).siblings('.background-image-holder').css('z-index', -1);
-        $(this).css('opacity', 0);
-        $(this).siblings('video').get(0).play();
-    });
-
-    // Youtube Videos
-
-    $('section').closest('body').find('.player').each(function() {
-        var section = $(this).closest('section');
-        section.find('.container').addClass('fadeOut');
-        var src = $(this).attr('data-video-id');
-        var startat = $(this).attr('data-start-at');
-        $(this).attr('data-property', "{videoURL:'http://youtu.be/" + src + "',containment:'self',autoPlay:true, mute:true, startAt:" + startat + ", opacity:1, showControls:false}");
-    });
-
-	if($('.player').length){
-        $('.player').each(function(){
-
-            var section = $(this).closest('section');
-            var player = section.find('.player');
-            player.YTPlayer();
-            player.on("YTPStart",function(e){
-                section.find('.container').removeClass('fadeOut');
-                section.find('.masonry-loader').addClass('fadeOut');
-            });
-
-        });
+    if (linkedVideo.find('video').length) {
+      linkedVideo.find('video').get(0).play();
     }
 
-    // Interact with Map once the user has clicked (to prevent scrolling the page = zooming the map
+    if (linkedVideo.find('iframe').length) {
+      var iframe = linkedVideo.find('iframe');
+      var iframeSrc = iframe.attr('data-src');
+      var autoplayMsg;
+      if(iframeSrc.indexOf('vimeo') > -1){
+        autoplayMsg = '&autoplay=1';
+      }else{
+        autoplayMsg = '?autoplay-1';
+      }
+      var iframeSrc = iframe.attr('data-src') + autoplayMsg;
+      iframe.attr('src', iframeSrc);
+    }
+  });
 
-    $('.map-holder').click(function() {
-        $(this).addClass('interact');
+  $('section').closest('body').find('.close-iframe').click(function() {
+    $(this).closest('.modal-video').toggleClass('reveal-modal');
+    $(this).siblings('iframe').attr('src', '');
+    $(this).siblings('video').get(0).pause();
+  });
+
+  // Local Videos
+
+  $('section').closest('body').find('.local-video-container .play-button').click(function() {
+    $(this).siblings('.background-image-holder').removeClass('fadeIn');
+    $(this).siblings('.background-image-holder').css('z-index', -1);
+    $(this).css('opacity', 0);
+    $(this).siblings('video').get(0).play();
+  });
+
+  // Youtube Videos
+
+  $('section').closest('body').find('.player').each(function() {
+    var section = $(this).closest('section');
+    section.find('.container').addClass('fadeOut');
+    var src = $(this).attr('data-video-id');
+    var startat = $(this).attr('data-start-at');
+    $(this).attr('data-property', "{videoURL:'http://youtu.be/" + src + "',containment:'self',autoPlay:true, mute:true, startAt:" + startat + ", opacity:1, showControls:false}");
+  });
+
+  if($('.player').length){
+    $('.player').each(function(){
+
+      var section = $(this).closest('section');
+      var player = section.find('.player');
+      player.YTPlayer();
+      player.on("YTPStart",function(e){
+        section.find('.container').removeClass('fadeOut');
+        section.find('.masonry-loader').addClass('fadeOut');
+      });
+
     });
+  }
 
-    if($('.map-holder').length){
-    	$(window).scroll(function() {
-			if ($('.map-holder.interact').length) {
-				$('.map-holder.interact').removeClass('interact');
-			}
-		});
-    }
+  // Interact with Map once the user has clicked (to prevent scrolling the page = zooming the map
 
-    // Countdown Timers
+  $('.map-holder').click(function() {
+    $(this).addClass('interact');
+  });
 
-    if ($('.countdown').length) {
-        $('.countdown').each(function() {
-            var date = $(this).attr('data-date');
-            $(this).countdown(date, function(event) {
-                $(this).text(
-                    event.strftime('%D days %H:%M:%S')
-                );
-            });
-        });
-    }
+  if($('.map-holder').length){
+    $(window).scroll(function() {
+      if ($('.map-holder.interact').length) {
+        $('.map-holder.interact').removeClass('interact');
+      }
+    });
+  }
 
-    // Contact form code
+  // Countdown Timers
 
-    $('form.form-email, form.form-newsletter').submit(function(e) {
+  if ($('.countdown').length) {
+    $('.countdown').each(function() {
+      var date = $(this).attr('data-date');
+      $(this).countdown(date, function(event) {
+        $(this).text(
+          event.strftime('%D days %H:%M:%S')
+        );
+      });
+    });
+  }
 
-        // return false so form submits through jQuery rather than reloading page.
-        if (e.preventDefault) e.preventDefault();
-        else e.returnValue = false;
+  // Contact form code
 
-        var thisForm = $(this).closest('form.form-email, form.form-newsletter'),
-            error = 0,
-            originalError = thisForm.attr('original-error'),
-            loadingSpinner, iFrame, userEmail, userFullName, userFirstName, userLastName, successRedirect;
+  $('form.form-email, form.form-newsletter').submit(function(e) {
 
-        // Mailchimp/Campaign Monitor Mail List Form Scripts
-        iFrame = $(thisForm).find('iframe.mail-list-form');
+    // return false so form submits through jQuery rather than reloading page.
+    if (e.preventDefault) e.preventDefault();
+    else e.returnValue = false;
 
-        thisForm.find('.form-error, .form-success').remove();
-        thisForm.append('<div class="form-error" style="display: none;">' + thisForm.attr('data-error') + '</div>');
-        thisForm.append('<div class="form-success" style="display: none;">' + thisForm.attr('data-success') + '</div>');
+    var thisForm = $(this).closest('form.form-email, form.form-newsletter'),
+    error = 0,
+    originalError = thisForm.attr('original-error'),
+    loadingSpinner, iFrame, userEmail, userFullName, userFirstName, userLastName, successRedirect;
+
+    // Mailchimp/Campaign Monitor Mail List Form Scripts
+    iFrame = $(thisForm).find('iframe.mail-list-form');
+
+    thisForm.find('.form-error, .form-success').remove();
+    thisForm.append('<div class="form-error" style="display: none;">' + thisForm.attr('data-error') + '</div>');
+    thisForm.append('<div class="form-success" style="display: none;">' + thisForm.attr('data-success') + '</div>');
 
 
-        if ((iFrame.length) && (typeof iFrame.attr('srcdoc') !== "undefined") && (iFrame.attr('srcdoc') !== "")) {
+    if ((iFrame.length) && (typeof iFrame.attr('srcdoc') !== "undefined") && (iFrame.attr('srcdoc') !== "")) {
 
-            console.log('Mail list form signup detected.');
-            userEmail = $(thisForm).find('.signup-email-field').val();
-            userFullName = $(thisForm).find('.signup-name-field').val();
-            if ($(thisForm).find('input.signup-first-name-field').length) {
-                userFirstName = $(thisForm).find('input.signup-first-name-field').val();
-            } else {
-                userFirstName = $(thisForm).find('.signup-name-field').val();
-            }
-            userLastName = $(thisForm).find('.signup-last-name-field').val();
+      console.log('Mail list form signup detected.');
+      userEmail = $(thisForm).find('.signup-email-field').val();
+      userFullName = $(thisForm).find('.signup-name-field').val();
+      if ($(thisForm).find('input.signup-first-name-field').length) {
+        userFirstName = $(thisForm).find('input.signup-first-name-field').val();
+      } else {
+        userFirstName = $(thisForm).find('.signup-name-field').val();
+      }
+      userLastName = $(thisForm).find('.signup-last-name-field').val();
 
-            // validateFields returns 1 on error;
-            if (validateFields(thisForm) !== 1) {
-                console.log('Mail list signup form validation passed.');
-                console.log(userEmail);
-                console.log(userLastName);
-                console.log(userFirstName);
-                console.log(userFullName);
+      // validateFields returns 1 on error;
+      if (validateFields(thisForm) !== 1) {
+        console.log('Mail list signup form validation passed.');
+        console.log(userEmail);
+        console.log(userLastName);
+        console.log(userFirstName);
+        console.log(userFullName);
 
-                iFrame.contents().find('#mce-EMAIL, #fieldEmail').val(userEmail);
-                iFrame.contents().find('#mce-LNAME, #fieldLastName').val(userLastName);
-                iFrame.contents().find('#mce-FNAME, #fieldFirstName').val(userFirstName);
-                iFrame.contents().find('#mce-NAME, #fieldName').val(userFullName);
-                iFrame.contents().find('form').attr('target', '_blank').submit();
+        iFrame.contents().find('#mce-EMAIL, #fieldEmail').val(userEmail);
+        iFrame.contents().find('#mce-LNAME, #fieldLastName').val(userLastName);
+        iFrame.contents().find('#mce-FNAME, #fieldFirstName').val(userFirstName);
+        iFrame.contents().find('#mce-NAME, #fieldName').val(userFullName);
+        iFrame.contents().find('form').attr('target', '_blank').submit();
+        successRedirect = thisForm.attr('success-redirect');
+        // For some browsers, if empty `successRedirect` is undefined; for others,
+        // `successRedirect` is false.  Check for both.
+        if (typeof successRedirect !== typeof undefined && successRedirect !== false && successRedirect !== "") {
+          window.location = successRedirect;
+        }
+      } else {
+        thisForm.find('.form-error').fadeIn(1000);
+        setTimeout(function() {
+          thisForm.find('.form-error').fadeOut(500);
+        }, 5000);
+      }
+    } else {
+      console.log('Send email form detected.');
+      if (typeof originalError !== typeof undefined && originalError !== false) {
+        thisForm.find('.form-error').text(originalError);
+      }
+
+
+      error = validateFields(thisForm);
+
+
+      if (error === 1) {
+        $(this).closest('form').find('.form-error').fadeIn(200);
+        setTimeout(function() {
+          $(thisForm).find('.form-error').fadeOut(500);
+        }, 3000);
+      } else {
+        // Hide the error if one was shown
+        $(this).closest('form').find('.form-error').fadeOut(200);
+        // Create a new loading spinner while hiding the submit button.
+        loadingSpinner = jQuery('<div />').addClass('form-loading').insertAfter($(thisForm).find('input[type="submit"]'));
+        $(thisForm).find('input[type="submit"]').hide();
+
+        jQuery.ajax({
+          type: "POST",
+          url: "mail/mail.php",
+          data: thisForm.serialize(),
+          success: function(response) {
+            // Swiftmailer always sends back a number representing numner of emails sent.
+            // If this is numeric (not Swift Mailer error text) AND greater than 0 then show success message.
+            $(thisForm).find('.form-loading').remove();
+
+            $(thisForm).find('input[type="submit"]').show();
+            if ($.isNumeric(response)) {
+              if (parseInt(response) > 0) {
+                // For some browsers, if empty 'successRedirect' is undefined; for others,
+                // 'successRedirect' is false.  Check for both.
                 successRedirect = thisForm.attr('success-redirect');
-                // For some browsers, if empty `successRedirect` is undefined; for others,
-                // `successRedirect` is false.  Check for both.
                 if (typeof successRedirect !== typeof undefined && successRedirect !== false && successRedirect !== "") {
-                    window.location = successRedirect;
+                  window.location = successRedirect;
                 }
-            } else {
-                thisForm.find('.form-error').fadeIn(1000);
+                thisForm.find('input[type="text"]').val("");
+                thisForm.find('textarea').val("");
+                thisForm.find('.form-success').fadeIn(1000);
+
+                thisForm.find('.form-error').fadeOut(1000);
                 setTimeout(function() {
-                    thisForm.find('.form-error').fadeOut(500);
+                  thisForm.find('.form-success').fadeOut(500);
                 }, 5000);
+              }
             }
-        } else {
-            console.log('Send email form detected.');
-            if (typeof originalError !== typeof undefined && originalError !== false) {
-                thisForm.find('.form-error').text(originalError);
+            // If error text was returned, put the text in the .form-error div and show it.
+            else {
+              // Keep the current error text in a data attribute on the form
+              thisForm.find('.form-error').attr('original-error', thisForm.find('.form-error').text());
+              // Show the error with the returned error text.
+              thisForm.find('.form-error').text(response).fadeIn(1000);
+              thisForm.find('.form-success').fadeOut(1000);
             }
+          },
+          error: function(errorObject, errorText, errorHTTP) {
+            // Keep the current error text in a data attribute on the form
+            thisForm.find('.form-error').attr('original-error', thisForm.find('.form-error').text());
+            // Show the error with the returned error text.
+            thisForm.find('.form-error').text(errorHTTP).fadeIn(1000);
+            thisForm.find('.form-success').fadeOut(1000);
+            $(thisForm).find('.form-loading').remove();
+            $(thisForm).find('input[type="submit"]').show();
+          }
+        });
+      }
+    }
+    return false;
+  });
 
+  $('.validate-required, .validate-email').on('blur change', function() {
+    validateFields($(this).closest('form'));
+  });
 
-            error = validateFields(thisForm);
+  $('form').each(function() {
+    if ($(this).find('.form-error').length) {
+      $(this).attr('original-error', $(this).find('.form-error').text());
+    }
+  });
 
+  function validateFields(form) {
+    var name, error, originalErrorMessage;
 
-            if (error === 1) {
-                $(this).closest('form').find('.form-error').fadeIn(200);
-                setTimeout(function() {
-                    $(thisForm).find('.form-error').fadeOut(500);
-                }, 3000);
-            } else {
-                // Hide the error if one was shown
-                $(this).closest('form').find('.form-error').fadeOut(200);
-                // Create a new loading spinner while hiding the submit button.
-                loadingSpinner = jQuery('<div />').addClass('form-loading').insertAfter($(thisForm).find('input[type="submit"]'));
-                $(thisForm).find('input[type="submit"]').hide();
-
-                jQuery.ajax({
-                    type: "POST",
-                    url: "mail/mail.php",
-                    data: thisForm.serialize(),
-                    success: function(response) {
-                        // Swiftmailer always sends back a number representing numner of emails sent.
-                        // If this is numeric (not Swift Mailer error text) AND greater than 0 then show success message.
-                        $(thisForm).find('.form-loading').remove();
-
-                        $(thisForm).find('input[type="submit"]').show();
-                        if ($.isNumeric(response)) {
-                            if (parseInt(response) > 0) {
-                                // For some browsers, if empty 'successRedirect' is undefined; for others,
-                                // 'successRedirect' is false.  Check for both.
-                                successRedirect = thisForm.attr('success-redirect');
-                                if (typeof successRedirect !== typeof undefined && successRedirect !== false && successRedirect !== "") {
-                                    window.location = successRedirect;
-                                }
-                                thisForm.find('input[type="text"]').val("");
-                                thisForm.find('textarea').val("");
-                                thisForm.find('.form-success').fadeIn(1000);
-
-                                thisForm.find('.form-error').fadeOut(1000);
-                                setTimeout(function() {
-                                    thisForm.find('.form-success').fadeOut(500);
-                                }, 5000);
-                            }
-                        }
-                        // If error text was returned, put the text in the .form-error div and show it.
-                        else {
-                            // Keep the current error text in a data attribute on the form
-                            thisForm.find('.form-error').attr('original-error', thisForm.find('.form-error').text());
-                            // Show the error with the returned error text.
-                            thisForm.find('.form-error').text(response).fadeIn(1000);
-                            thisForm.find('.form-success').fadeOut(1000);
-                        }
-                    },
-                    error: function(errorObject, errorText, errorHTTP) {
-                        // Keep the current error text in a data attribute on the form
-                        thisForm.find('.form-error').attr('original-error', thisForm.find('.form-error').text());
-                        // Show the error with the returned error text.
-                        thisForm.find('.form-error').text(errorHTTP).fadeIn(1000);
-                        thisForm.find('.form-success').fadeOut(1000);
-                        $(thisForm).find('.form-loading').remove();
-                        $(thisForm).find('input[type="submit"]').show();
-                    }
-                });
-            }
-        }
-        return false;
+    $(form).find('.validate-required[type="checkbox"]').each(function() {
+      if (!$('[name="' + $(this).attr('name') + '"]:checked').length) {
+        error = 1;
+        name = $(this).attr('name').replace('[]', '');
+        form.find('.form-error').text('Please tick at least one ' + name + ' box.');
+      }
     });
 
-    $('.validate-required, .validate-email').on('blur change', function() {
-        validateFields($(this).closest('form'));
+    $(form).find('.validate-required').each(function() {
+      if ($(this).val() === '') {
+        $(this).addClass('field-error');
+        error = 1;
+      } else {
+        $(this).removeClass('field-error');
+      }
     });
 
-    $('form').each(function() {
-        if ($(this).find('.form-error').length) {
-            $(this).attr('original-error', $(this).find('.form-error').text());
-        }
+    $(form).find('.validate-email').each(function() {
+      if (!(/(.+)@(.+){2,}\.(.+){2,}/.test($(this).val()))) {
+        $(this).addClass('field-error');
+        error = 1;
+      } else {
+        $(this).removeClass('field-error');
+      }
     });
 
-    function validateFields(form) {
-            var name, error, originalErrorMessage;
-
-            $(form).find('.validate-required[type="checkbox"]').each(function() {
-                if (!$('[name="' + $(this).attr('name') + '"]:checked').length) {
-                    error = 1;
-                    name = $(this).attr('name').replace('[]', '');
-                    form.find('.form-error').text('Please tick at least one ' + name + ' box.');
-                }
-            });
-
-            $(form).find('.validate-required').each(function() {
-                if ($(this).val() === '') {
-                    $(this).addClass('field-error');
-                    error = 1;
-                } else {
-                    $(this).removeClass('field-error');
-                }
-            });
-
-            $(form).find('.validate-email').each(function() {
-                if (!(/(.+)@(.+){2,}\.(.+){2,}/.test($(this).val()))) {
-                    $(this).addClass('field-error');
-                    error = 1;
-                } else {
-                    $(this).removeClass('field-error');
-                }
-            });
-
-            if (!form.find('.field-error').length) {
-                form.find('.form-error').fadeOut(1000);
-            }
-
-            return error;
-        }
-        // End contact form code
-
-    // Get referrer from URL string
-    if (getURLParameter("ref")) {
-        $('form.form-email').append('<input type="text" name="referrer" class="hidden" value="' + getURLParameter("ref") + '"/>');
+    if (!form.find('.field-error').length) {
+      form.find('.form-error').fadeOut(1000);
     }
 
-    function getURLParameter(name) {
-        return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search) || [, ""])[1].replace(/\+/g, '%20')) || null;
+    return error;
+  }
+  // End contact form code
+
+  // Get referrer from URL string
+  if (getURLParameter("ref")) {
+    $('form.form-email').append('<input type="text" name="referrer" class="hidden" value="' + getURLParameter("ref") + '"/>');
+  }
+
+  function getURLParameter(name) {
+    return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search) || [, ""])[1].replace(/\+/g, '%20')) || null;
+  }
+
+  // Disable parallax on mobile
+
+  if ((/Android|iPhone|iPad|iPod|BlackBerry|Windows Phone/i).test(navigator.userAgent || navigator.vendor || window.opera)) {
+    $('section').removeClass('parallax');
+  }
+
+  // Disqus Comments
+
+  if($('.disqus-comments').length){
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = $('.disqus-comments').attr('data-shortname');
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  }
+
+  // Load Google MAP API JS with callback to initialise when fully loaded
+  if(document.querySelector('[data-maps-api-key]') && !document.querySelector('.gMapsAPI')){
+    if($('[data-maps-api-key]').length){
+      var script = document.createElement('script');
+      var apiKey = $('[data-maps-api-key]:first').attr('data-maps-api-key');
+      script.type = 'text/javascript';
+      script.src = 'https://maps.googleapis.com/maps/api/js?key='+apiKey+'&callback=initializeMaps';
+      script.className = 'gMapsAPI';
+      document.body.appendChild(script);
     }
-
-    // Disable parallax on mobile
-
-    if ((/Android|iPhone|iPad|iPod|BlackBerry|Windows Phone/i).test(navigator.userAgent || navigator.vendor || window.opera)) {
-        $('section').removeClass('parallax');
-    }
-
-    // Disqus Comments
-
-    if($('.disqus-comments').length){
-		/* * * CONFIGURATION VARIABLES * * */
-		var disqus_shortname = $('.disqus-comments').attr('data-shortname');
-
-		/* * * DON'T EDIT BELOW THIS LINE * * */
-		(function() {
-			var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-			dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-			(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-		})();
-    }
-
-    // Load Google MAP API JS with callback to initialise when fully loaded
-    if(document.querySelector('[data-maps-api-key]') && !document.querySelector('.gMapsAPI')){
-        if($('[data-maps-api-key]').length){
-            var script = document.createElement('script');
-            var apiKey = $('[data-maps-api-key]:first').attr('data-maps-api-key');
-            script.type = 'text/javascript';
-            script.src = 'https://maps.googleapis.com/maps/api/js?key='+apiKey+'&callback=initializeMaps';
-            script.className = 'gMapsAPI';
-            document.body.appendChild(script);
-        }
-    }
+  }
 
 }); //variant-remove
 
 $(window).load(function() { //variant-remove
-    "use strict";
+  "use strict";
 
-    // Initialize Masonry
+  // Initialize Masonry
 
-    if ($('.masonry').length) {
-        var container = document.querySelector('.masonry');
-        var msnry = new Masonry(container, {
-            itemSelector: '.masonry-item'
+  if ($('.masonry').length) {
+    var container = document.querySelector('.masonry');
+    var msnry = new Masonry(container, {
+      itemSelector: '.masonry-item'
+    });
+
+    msnry.on('layoutComplete', function() {
+
+      mr_firstSectionHeight = $('.main-container section:nth-of-type(1)').outerHeight(true);
+
+      // Fix floating project filters to bottom of projects container
+
+      if ($('.filters.floating').length) {
+        setupFloatingProjectFilters();
+        updateFloatingFilters();
+        window.addEventListener("scroll", updateFloatingFilters, false);
+      }
+
+      $('.masonry').addClass('fadeIn');
+      $('.masonry-loader').addClass('fadeOut');
+      if ($('.masonryFlyIn').length) {
+        masonryFlyIn();
+      }
+    });
+
+    msnry.layout();
+  }
+
+  // Initialize twitter feed
+
+  var setUpTweets = setInterval(function() {
+    if ($('.tweets-slider').find('li.flex-active-slide').length) {
+      clearInterval(setUpTweets);
+      return;
+    } else {
+      if ($('.tweets-slider').length) {
+        $('.tweets-slider').flexslider({
+          directionNav: false,
+          controlNav: false
         });
-
-        msnry.on('layoutComplete', function() {
-
-            mr_firstSectionHeight = $('.main-container section:nth-of-type(1)').outerHeight(true);
-
-            // Fix floating project filters to bottom of projects container
-
-            if ($('.filters.floating').length) {
-                setupFloatingProjectFilters();
-                updateFloatingFilters();
-                window.addEventListener("scroll", updateFloatingFilters, false);
-            }
-
-            $('.masonry').addClass('fadeIn');
-            $('.masonry-loader').addClass('fadeOut');
-            if ($('.masonryFlyIn').length) {
-                masonryFlyIn();
-            }
-        });
-
-        msnry.layout();
+      }
     }
+  }, 500);
 
-    // Initialize twitter feed
-
-    var setUpTweets = setInterval(function() {
-        if ($('.tweets-slider').find('li.flex-active-slide').length) {
-            clearInterval(setUpTweets);
-            return;
-        } else {
-            if ($('.tweets-slider').length) {
-                $('.tweets-slider').flexslider({
-                    directionNav: false,
-                    controlNav: false
-                });
-            }
-        }
-    }, 500);
-
-    mr_firstSectionHeight = $('.main-container section:nth-of-type(1)').outerHeight(true);
+  mr_firstSectionHeight = $('.main-container section:nth-of-type(1)').outerHeight(true);
 
 
 }); //variant-remove
 
 function updateNav() {
 
-    var scrollY = mr_scrollTop;
+  var scrollY = mr_scrollTop;
 
-    if (scrollY <= 0) {
-        if (mr_navFixed) {
-            mr_navFixed = false;
-            mr_nav.removeClass('fixed');
+  if (scrollY <= 0) {
+    if (mr_navFixed) {
+      mr_navFixed = false;
+      mr_nav.removeClass('fixed');
+    }
+    if (mr_outOfSight) {
+      mr_outOfSight = false;
+      mr_nav.removeClass('outOfSight');
+    }
+    if (mr_navScrolled) {
+      mr_navScrolled = false;
+      mr_nav.removeClass('scrolled');
+    }
+    return;
+  }
+
+  if (scrollY > mr_firstSectionHeight) {
+    if (!mr_navScrolled) {
+      mr_nav.addClass('scrolled');
+      mr_navScrolled = true;
+      return;
+    }
+  } else {
+    if (scrollY > mr_navOuterHeight) {
+      if (!mr_navFixed) {
+        mr_nav.addClass('fixed');
+        mr_navFixed = true;
+      }
+
+      if (scrollY > mr_navOuterHeight * 2) {
+        if (!mr_outOfSight) {
+          mr_nav.addClass('outOfSight');
+          mr_outOfSight = true;
         }
+      } else {
         if (mr_outOfSight) {
-            mr_outOfSight = false;
-            mr_nav.removeClass('outOfSight');
+          mr_outOfSight = false;
+          mr_nav.removeClass('outOfSight');
         }
-        if (mr_navScrolled) {
-            mr_navScrolled = false;
-            mr_nav.removeClass('scrolled');
-        }
-        return;
-    }
-
-    if (scrollY > mr_firstSectionHeight) {
-        if (!mr_navScrolled) {
-            mr_nav.addClass('scrolled');
-            mr_navScrolled = true;
-            return;
-        }
+      }
     } else {
-        if (scrollY > mr_navOuterHeight) {
-            if (!mr_navFixed) {
-                mr_nav.addClass('fixed');
-                mr_navFixed = true;
-            }
-
-            if (scrollY > mr_navOuterHeight * 2) {
-                if (!mr_outOfSight) {
-                    mr_nav.addClass('outOfSight');
-                    mr_outOfSight = true;
-                }
-            } else {
-                if (mr_outOfSight) {
-                    mr_outOfSight = false;
-                    mr_nav.removeClass('outOfSight');
-                }
-            }
-        } else {
-            if (mr_navFixed) {
-                mr_navFixed = false;
-                mr_nav.removeClass('fixed');
-            }
-            if (mr_outOfSight) {
-                mr_outOfSight = false;
-                mr_nav.removeClass('outOfSight');
-            }
-        }
-
-        if (mr_navScrolled) {
-            mr_navScrolled = false;
-            mr_nav.removeClass('scrolled');
-        }
-
+      if (mr_navFixed) {
+        mr_navFixed = false;
+        mr_nav.removeClass('fixed');
+      }
+      if (mr_outOfSight) {
+        mr_outOfSight = false;
+        mr_nav.removeClass('outOfSight');
+      }
     }
+
+    if (mr_navScrolled) {
+      mr_navScrolled = false;
+      mr_nav.removeClass('scrolled');
+    }
+
+  }
 }
 
 function capitaliseFirstLetter(string) {
-    return string.charAt(0).toUpperCase() + string.slice(1);
+  return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
 function masonryFlyIn() {
-    var $items = $('.masonryFlyIn .masonry-item');
-    var time = 0;
+  var $items = $('.masonryFlyIn .masonry-item');
+  var time = 0;
 
-    $items.each(function() {
-        var item = $(this);
-        setTimeout(function() {
-            item.addClass('fadeIn');
-        }, time);
-        time += 170;
-    });
+  $items.each(function() {
+    var item = $(this);
+    setTimeout(function() {
+      item.addClass('fadeIn');
+    }, time);
+    time += 170;
+  });
 }
 
 function setupFloatingProjectFilters() {
-    mr_floatingProjectSections = [];
-    $('.filters.floating').closest('section').each(function() {
-        var section = $(this);
+  mr_floatingProjectSections = [];
+  $('.filters.floating').closest('section').each(function() {
+    var section = $(this);
 
-        mr_floatingProjectSections.push({
-            section: section.get(0),
-            outerHeight: section.outerHeight(),
-            elemTop: section.offset().top,
-            elemBottom: section.offset().top + section.outerHeight(),
-            filters: section.find('.filters.floating'),
-            filersHeight: section.find('.filters.floating').outerHeight(true)
-        });
+    mr_floatingProjectSections.push({
+      section: section.get(0),
+      outerHeight: section.outerHeight(),
+      elemTop: section.offset().top,
+      elemBottom: section.offset().top + section.outerHeight(),
+      filters: section.find('.filters.floating'),
+      filersHeight: section.find('.filters.floating').outerHeight(true)
     });
+  });
 }
 
 function updateFloatingFilters() {
-    var l = mr_floatingProjectSections.length;
-    while (l--) {
-        var section = mr_floatingProjectSections[l];
+  var l = mr_floatingProjectSections.length;
+  while (l--) {
+    var section = mr_floatingProjectSections[l];
 
-        if ((section.elemTop < mr_scrollTop) && typeof window.mr_variant == "undefined" ) {
-            section.filters.css({
-                position: 'fixed',
-                top: '16px',
-                bottom: 'auto'
-            });
-            if (mr_navScrolled) {
-                section.filters.css({
-                    transform: 'translate3d(-50%,48px,0)'
-                });
-            }
-            if (mr_scrollTop > (section.elemBottom - 70)) {
-                section.filters.css({
-                    position: 'absolute',
-                    bottom: '16px',
-                    top: 'auto'
-                });
-                section.filters.css({
-                    transform: 'translate3d(-50%,0,0)'
-                });
-            }
-        } else {
-            section.filters.css({
-                position: 'absolute',
-                transform: 'translate3d(-50%,0,0)'
-            });
-        }
+    if ((section.elemTop < mr_scrollTop) && typeof window.mr_variant == "undefined" ) {
+      section.filters.css({
+        position: 'fixed',
+        top: '16px',
+        bottom: 'auto'
+      });
+      if (mr_navScrolled) {
+        section.filters.css({
+          transform: 'translate3d(-50%,48px,0)'
+        });
+      }
+      if (mr_scrollTop > (section.elemBottom - 70)) {
+        section.filters.css({
+          position: 'absolute',
+          bottom: '16px',
+          top: 'auto'
+        });
+        section.filters.css({
+          transform: 'translate3d(-50%,0,0)'
+        });
+      }
+    } else {
+      section.filters.css({
+        position: 'absolute',
+        transform: 'translate3d(-50%,0,0)'
+      });
     }
+  }
 }
 
 window.initializeMaps = function(){
-    if(typeof google !== "undefined"){
-        if(typeof google.maps !== "undefined"){
-            $('.map-canvas[data-maps-api-key]').each(function(){
-                    var mapInstance   = this,
-                        mapJSON       = typeof $(this).attr('data-map-style') !== "undefined" ? $(this).attr('data-map-style'): false,
-                        mapStyle      = JSON.parse(mapJSON) || [{"featureType":"landscape","stylers":[{"saturation":-100},{"lightness":65},{"visibility":"on"}]},{"featureType":"poi","stylers":[{"saturation":-100},{"lightness":51},{"visibility":"simplified"}]},{"featureType":"road.highway","stylers":[{"saturation":-100},{"visibility":"simplified"}]},{"featureType":"road.arterial","stylers":[{"saturation":-100},{"lightness":30},{"visibility":"on"}]},{"featureType":"road.local","stylers":[{"saturation":-100},{"lightness":40},{"visibility":"on"}]},{"featureType":"transit","stylers":[{"saturation":-100},{"visibility":"simplified"}]},{"featureType":"administrative.province","stylers":[{"visibility":"off"}]},{"featureType":"water","elementType":"labels","stylers":[{"visibility":"on"},{"lightness":-25},{"saturation":-100}]},{"featureType":"water","elementType":"geometry","stylers":[{"hue":"#ffff00"},{"lightness":-25},{"saturation":-97}]}],
-                        zoomLevel     = (typeof $(this).attr('data-map-zoom') !== "undefined" && $(this).attr('data-map-zoom') !== "") ? $(this).attr('data-map-zoom') * 1: 17,
-                        latlong       = typeof $(this).attr('data-latlong') != "undefined" ? $(this).attr('data-latlong') : false,
-                        latitude      = latlong ? 1 *latlong.substr(0, latlong.indexOf(',')) : false,
-                        longitude     = latlong ? 1 * latlong.substr(latlong.indexOf(",") + 1) : false,
-                        geocoder      = new google.maps.Geocoder(),
-                        address       = typeof $(this).attr('data-address') !== "undefined" ? $(this).attr('data-address').split(';'): false,
-                        markerTitle   = "We Are Here",
-                        isDraggable = $(document).width() > 766 ? true : false,
-                        map, marker, markerImage,
-                        mapOptions = {
-                            draggable: isDraggable,
-                            scrollwheel: false,
-                            zoom: zoomLevel,
-                            disableDefaultUI: true,
-                            styles: mapStyle
-                        };
+  if(typeof google !== "undefined"){
+    if(typeof google.maps !== "undefined"){
+      $('.map-canvas[data-maps-api-key]').each(function(){
+        var mapInstance   = this,
+        mapJSON       = typeof $(this).attr('data-map-style') !== "undefined" ? $(this).attr('data-map-style'): false,
+        mapStyle      = JSON.parse(mapJSON) || [{"featureType":"landscape","stylers":[{"saturation":-100},{"lightness":65},{"visibility":"on"}]},{"featureType":"poi","stylers":[{"saturation":-100},{"lightness":51},{"visibility":"simplified"}]},{"featureType":"road.highway","stylers":[{"saturation":-100},{"visibility":"simplified"}]},{"featureType":"road.arterial","stylers":[{"saturation":-100},{"lightness":30},{"visibility":"on"}]},{"featureType":"road.local","stylers":[{"saturation":-100},{"lightness":40},{"visibility":"on"}]},{"featureType":"transit","stylers":[{"saturation":-100},{"visibility":"simplified"}]},{"featureType":"administrative.province","stylers":[{"visibility":"off"}]},{"featureType":"water","elementType":"labels","stylers":[{"visibility":"on"},{"lightness":-25},{"saturation":-100}]},{"featureType":"water","elementType":"geometry","stylers":[{"hue":"#ffff00"},{"lightness":-25},{"saturation":-97}]}],
+        zoomLevel     = (typeof $(this).attr('data-map-zoom') !== "undefined" && $(this).attr('data-map-zoom') !== "") ? $(this).attr('data-map-zoom') * 1: 17,
+        latlong       = typeof $(this).attr('data-latlong') != "undefined" ? $(this).attr('data-latlong') : false,
+        latitude      = latlong ? 1 *latlong.substr(0, latlong.indexOf(',')) : false,
+        longitude     = latlong ? 1 * latlong.substr(latlong.indexOf(",") + 1) : false,
+        geocoder      = new google.maps.Geocoder(),
+        address       = typeof $(this).attr('data-address') !== "undefined" ? $(this).attr('data-address').split(';'): false,
+        markerTitle   = "We Are Here",
+        isDraggable = $(document).width() > 766 ? true : false,
+        map, marker, markerImage,
+        mapOptions = {
+          draggable: isDraggable,
+          scrollwheel: false,
+          zoom: zoomLevel,
+          disableDefaultUI: true,
+          styles: mapStyle
+        };
 
-                    if($(this).attr('data-marker-title') != undefined && $(this).attr('data-marker-title') != "" )
-                    {
-                        markerTitle = $(this).attr('data-marker-title');
-                    }
-
-                    if(address != undefined && address[0] != ""){
-                            geocoder.geocode( { 'address': address[0].replace('[nomarker]','')}, function(results, status) {
-                                if (status == google.maps.GeocoderStatus.OK) {
-                                var map = new google.maps.Map(mapInstance, mapOptions);
-                                map.setCenter(results[0].geometry.location);
-
-                                address.forEach(function(address){
-                                    var markerGeoCoder = new google.maps.Geocoder();
-                                    if(address.indexOf('[nomarker]') < 0){
-                                        markerGeoCoder.geocode( { 'address': address.replace('[nomarker]','')}, function(results, status) {
-                                            if (status == google.maps.GeocoderStatus.OK) {
-                                                markerImage = {url: window.mr_variant == undefined ? 'img/mapmarker.png' : '../img/mapmarker.png', size: new google.maps.Size(50,50), scaledSize: new google.maps.Size(50,50)},
-                                                marker = new google.maps.Marker({
-                                                    map: map,
-                                                    icon: markerImage,
-                                                    title: markerTitle,
-                                                    position: results[0].geometry.location,
-                                                    optimised: false
-                                                });
-                                            }
-                                        });
-                                    }
-                                });
-                            } else {
-                                console.log('There was a problem geocoding the address.');
-                            }
-                        });
-                    }
-                    else if(latitude != undefined && latitude != "" && latitude != false && longitude != undefined && longitude != "" && longitude != false ){
-                        mapOptions.center   = { lat: latitude, lng: longitude};
-                        map = new google.maps.Map(mapInstance, mapOptions);
-                        marker              = new google.maps.Marker({
-                                                    position: { lat: latitude, lng: longitude },
-                                                    map: map,
-                                                    icon: markerImage,
-                                                    title: markerTitle
-                                                });
-
-                    }
-
-                });
+        if($(this).attr('data-marker-title') != undefined && $(this).attr('data-marker-title') != "" )
+        {
+          markerTitle = $(this).attr('data-marker-title');
         }
+
+        if(address != undefined && address[0] != ""){
+          geocoder.geocode( { 'address': address[0].replace('[nomarker]','')}, function(results, status) {
+            if (status == google.maps.GeocoderStatus.OK) {
+              var map = new google.maps.Map(mapInstance, mapOptions);
+              map.setCenter(results[0].geometry.location);
+
+              address.forEach(function(address){
+                var markerGeoCoder = new google.maps.Geocoder();
+                if(address.indexOf('[nomarker]') < 0){
+                  markerGeoCoder.geocode( { 'address': address.replace('[nomarker]','')}, function(results, status) {
+                    if (status == google.maps.GeocoderStatus.OK) {
+                      markerImage = {url: window.mr_variant == undefined ? 'img/mapmarker.png' : '../img/mapmarker.png', size: new google.maps.Size(50,50), scaledSize: new google.maps.Size(50,50)},
+                      marker = new google.maps.Marker({
+                        map: map,
+                        icon: markerImage,
+                        title: markerTitle,
+                        position: results[0].geometry.location,
+                        optimised: false
+                      });
+                    }
+                  });
+                }
+              });
+            } else {
+              console.log('There was a problem geocoding the address.');
+            }
+          });
+        }
+        else if(latitude != undefined && latitude != "" && latitude != false && longitude != undefined && longitude != "" && longitude != false ){
+          mapOptions.center   = { lat: latitude, lng: longitude};
+          map = new google.maps.Map(mapInstance, mapOptions);
+          marker              = new google.maps.Marker({
+            position: { lat: latitude, lng: longitude },
+            map: map,
+            icon: markerImage,
+            title: markerTitle
+          });
+
+        }
+
+      });
     }
+  }
 }
 initializeMaps();
 
@@ -1074,14 +1074,14 @@ var mr_cookies = {
     if (vEnd) {
       switch (vEnd.constructor) {
         case Number:
-          sExpires = vEnd === Infinity ? "; expires=Fri, 31 Dec 9999 23:59:59 GMT" : "; max-age=" + vEnd;
-          break;
+        sExpires = vEnd === Infinity ? "; expires=Fri, 31 Dec 9999 23:59:59 GMT" : "; max-age=" + vEnd;
+        break;
         case String:
-          sExpires = "; expires=" + vEnd;
-          break;
+        sExpires = "; expires=" + vEnd;
+        break;
         case Date:
-          sExpires = "; expires=" + vEnd.toUTCString();
-          break;
+        sExpires = "; expires=" + vEnd.toUTCString();
+        break;
       }
     }
     document.cookie = encodeURIComponent(sKey) + "=" + encodeURIComponent(sValue) + sExpires + (sDomain ? "; domain=" + sDomain : "") + (sPath ? "; path=" + sPath : "") + (bSecure ? "; secure" : "");
