@@ -5,6 +5,14 @@
     div.tagsinput {
       height:auto!important;
     }
+
+    div.tab-title {
+      height:50px;
+    }
+
+    div.tab-title .icon {
+      font-size:32px;
+    }
   </style>
 <% end %>
 <section>
@@ -52,7 +60,6 @@
                             <span>E-mail</span>
                           </div>
                           <%= text_field_tag :email_refers, '', id:'tags_email_refers' %>
-                          <p class="help-block">Enter The Email Addresses <br/>You'd Like To Invite</p>
                         </div>
                         <!-- /Email-Referrals -->
 
@@ -63,9 +70,10 @@
                             <span>TEXT</span>
                           </div>
                           <%= text_field_tag :text_refers, '', id:'tags_text_refers' %>
-                          <p class="help-block">Enter The Phone Numbers <br/>You'd Like To Invite</p>
                         </div>
                         <!-- /Phone-Referrals -->
+
+                        <p class="help-block">Enter The Email Addresses or Phone Numbers You'd Like To Invite</p>
                       </div>
                     </div>
                   </div>
