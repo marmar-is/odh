@@ -4,9 +4,15 @@ class Accounts::RegistrationsController < Devise::RegistrationsController
 
   # GET /resource/sign_up
   def new
-    if !params[:registration_token].blank?
-      ambassador = Ambassador.find(params[:id])
-      if (ambassador.registration_token == params[:registration_token])
+    super do |resource|
+
+      if !params[:registration_token].blank? && !params[:id].blank? && (Ambassador.find(params[:id]).registration_token == params[:registration_token])
+        @ambassador = Ambassador.find(params[:id])
+        @account = @ambassador.account
+      end
+    end
+=begin
+      if
         self.resource = ambassador.account || build_resource({})
         set_minimum_password_length
         yield resource if block_given?
@@ -18,6 +24,7 @@ class Accounts::RegistrationsController < Devise::RegistrationsController
     else
       super
     end
+=end
   end
 
   # POST /resource
