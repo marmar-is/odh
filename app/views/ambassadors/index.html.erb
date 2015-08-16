@@ -2,24 +2,23 @@
 <%= stylesheet_link_tag 'jquery.tagsinput/jquery.tagsinput.css', 'data-turbolinks-track' => true %>
 
 <style>
-div.tagsinput {
-  height:auto!important;
-}
+  div.tagsinput {
+    height:auto!important;
+  }
+  div.tab-title {
+    height:50px;
+  }
+  div.tab-title .icon {
+    font-size:32px;
+  }
 
-div.tab-title {
-  height:50px;
-}
-
-div.tab-title .icon {
-  font-size:32px;
-}
 </style>
 <% end %>
-<section>
+<section class="pb0">
   <div class="container">
     <div class="row">
       <div class="col-md-8 col-md-offset-2 col-sm-12 text-center">
-        <h4 class="uppercase mb80">MY ACCOUNT</h4>
+        <h4 class="uppercase mb24">MY ACCOUNT</h4>
         <div class="tabbed-content text-tabs">
           <ul class="tabs">
             <li class="active">
@@ -67,17 +66,15 @@ div.tab-title .icon {
       </div>
     </div>
   </div>
-
 </section>
 
 <section>
   <div class="container">
     <div class="row">
       <div class="col-sm-12">
-        <h4 class="uppercase mb80">AMBASSADOR CONSOLE</h4>
+        <h4 class="uppercase mb24">AMBASSADOR CONSOLE</h4>
         <div class="tabbed-content button-tabs vertical">
           <ul class="tabs">
-
             <!-- Dashboard -->
             <li class="active">
               <div class="tab-title">
@@ -89,13 +86,12 @@ div.tab-title .icon {
                 <p>
                   Determine what may be useful/possible here
                 </p>
-
               </div>
             </li>
             <!-- /Dashboard -->
 
             <!-- Spread the Word -->
-            <li>
+            <li id="spread-the-word">
               <div class="tab-title">
                 <span>Spread the Word</span>
               </div>
@@ -108,123 +104,95 @@ div.tab-title .icon {
                       <div class="row">
 
                         <%= form_tag send_referrals_path do %>
-                          <!-- Email-Referrals -->
-                          <div class="col-md-6">
-                            <div class="tab-title">
-                              <i class="icon ti-email"></i>
-                              <span>E-mail</span>
-                            </div>
-                            <%= text_field_tag :email_refers, '', id:'tags_email_refers' %>
+                        <!-- Email-Referrals -->
+                        <div class="col-md-6">
+                          <div class="tab-title">
+                            <i class="icon ti-email"></i>
+                            <span>E-mail</span>
                           </div>
-                          <!-- /Email-Referrals -->
+                          <%= text_field_tag :email_refers, '', id:'tags_email_refers' %>
+                        </div>
+                        <!-- /Email-Referrals -->
 
-                          <!-- Phone-Referrals -->
-                          <div class="col-md-6">
-                            <div class="tab-title">
-                              <i class="icon ti ti-mobile"></i>
-                              <span>TEXT</span>
-                            </div>
-                            <%= text_field_tag :text_refers, '', id:'tags_text_refers' %>
+                        <!-- Phone-Referrals -->
+                        <div class="col-md-6">
+                          <div class="tab-title">
+                            <i class="icon ti ti-mobile"></i>
+                            <span>TEXT</span>
                           </div>
-                          <!-- /Phone-Referrals -->
+                          <%= text_field_tag :text_refers, '', id:'tags_text_refers' %>
+                        </div>
+                        <!-- /Phone-Referrals -->
 
-                          <p class="help-block">Enter The Email Addresses or Phone Numbers You'd Like To Invite</p>
+                        <p class="help-block">Enter The Email Addresses or Phone Numbers You'd Like To Invite</p>
 
-                          <div class="col-md-12">
-                            <%= submit_tag "Invite" %>
-                          </div>
+                        <div class="col-md-12">
+                          <%= submit_tag "Invite" %>
+                        </div>
                         <% end %>
                       </div>
                     </div>
                   </div>
-                </p>
-                <p>
                 </p>
               </div>
             </li>
             <!-- /Spread the Word -->
 
             <!-- My People -->
-            <li>
+            <li id="my-people">
               <div class="tab-title">
                 <span>MY PEOPLE</span>
               </div>
               <div class="tab-content">
-
                 <h5 class="uppercase">Prospects & Successes</h5>
                 <hr>
-                <div class="container">
+                <p>
                   <div class="row">
-                    <div class="col-md-3 col-sm-4">
-                    <ul>
-                      <li>
+                    <!-- Prospects -->
+                    <div class="col-md-4 col-md-offset-1">
                       <div class="widget">
-                        <h6 class="title">Prospects</h6>
+                        <h6 class="title text-center">Prospects</h6>
                         <hr>
                         <ul class="link-list">
+                          <%- @child_prospects.each do |cp| %>
                           <li>
-                            <a href="#">John Smith</a>
+                            <a href="#"><%= display_child_label(cp) %></a>
                           </li>
-                          <li>
-                            <a href="#">Eric Clapton</a>
-                          </li>
-                          <li>
-                            <a href="#">Kareem Abdul Jabar</a>
-                          </li>
-                          <li>
-                            <a href="#">Roy Mcllroy</a>
-                          </li>
+                          <% end -%>
                         </ul>
-                       </li>
-                       </ul>
-                      </div>
-                      <div class="col-md-3 col-sm-4">
-                      <ul>
-                        <li>
-                        <div class="widget">
-                          <h6 class="title">Registered</h6>
-                          <hr>
-                          <ul class="link-list">
-                            <li>
-                              <a href="#">John Smith</a>
-                            </li>
-                            <li>
-                              <a href="#">Eric Clapton</a>
-                            </li>
-                            <li>
-                              <a href="#">Kareem Abdul Jabar</a>
-                            </li>
-                            <li>
-                              <a href="#">Roy Mcllroy</a>
-                            </li>
-                          </ul>
-                         </li>
-                         </ul>
-                        </div>
-
-                    </div>
+                      </li>
+                    </ul>
                   </div>
-                </li>
-              </ul>
-            </div>
-          </div>
+                  <!-- /Prospects -->
+
+                  <!-- Successes -->
+                  <div class="col-md-4 col-md-offset-1">
+                    <div class="widget">
+                        <h6 class="title text-center">Successes</h6>
+                        <hr>
+                        <ul class="link-list">
+                          <%- @child_successes.each do |cs| %>
+                            <li>
+                              <a href="#"><%= cs.full_name %></a>
+                            </li>
+                          <% end -%>
+                        </ul>
+                      </div>
+                    </div>
+                    <!-- /Successes -->
+                  </div>
+                </p>
+              </div>
+            </li>
+            <!-- /My People -->
+          </ul>
         </div>
       </div>
     </div>
-  </li>
-  <!-- /My People -->
-
-  <!-- My Account -->
-
-</div>
-</li>
-</ul>
-</div>
-</div>
-</div>
-</div>
+  </div>
 </section>
 
+<!--
 <section>
   <div class="container">
     <div class="row">
@@ -348,6 +316,7 @@ div.tab-title .icon {
     </div>
   </div>
 </section>
+-->
 
 <%= content_for :js_includes do %>
 <%= javascript_include_tag 'flexslider.min.js', 'data-turbolinks-track' => true %>
