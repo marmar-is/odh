@@ -17,14 +17,23 @@ class Accounts::RegistrationsController < Devise::RegistrationsController
 
   # POST /resource
   def create
-    ambas = Ambassador.new(ambassador_params)
+    if !params[:registration_token].blank? && !params[:id].blank?
+      if Ambassador.find(params[:id]).registration_token == params[:registration_token]
+        ambas = Ambassador.find(params[:id])
+      else
+        raise "Attempted trickery (RegistrationsController.rb:24)"
+      end
+    else
+      ambas = Ambassador.new
+    end
+    ambas.assign_attributes(ambassador_params) # update ambassador object (without saving)
 
-    if ambas.save
-      ambas.update( status: 'registered', parent: Ambassador.find_by_token(params[:referrer_token]),
-      registration_token: nil, email: params[:account][:email] )
-
+    if ambas.valid?
       @ambassador = ambas
       super do |resource|
+        # save the ambassador & set it as the newly created account's meta
+        ambas.update( status: 'registered', parent: Ambassador.find_by_token(params[:referrer_token]),
+        registration_token: nil, email: params[:account][:email] )
         resource.update(meta: ambas)
       end
     else

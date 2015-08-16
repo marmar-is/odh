@@ -1,7 +1,7 @@
 <%= content_for :head do %>
   <style>
     section.overlay.cover.fullscreen {
-      min-height:950px!important;
+      min-height:1000px!important;
     }
 
     p.group-tag {
@@ -79,7 +79,10 @@
                 <%= f.password_field :password_confirmation, placeholder: "Confirm Password", autocomplete: "off" %>
 
                 <p class="group-tag">Referred By A Member?</p>
-                <%= text_field_tag :referrer_token, @ambassador.parent.try(:token), placeholder: "Enter Their Referral Token" %>
+                <%= text_field_tag :referrer_token, @ambassador.parent.try(:token), placeholder: "Enter Their Referral Token", readonly: !@ambassador.parent.nil? %>
+
+                <%= hidden_field_tag 'registration_token', params[:registration_token] %>
+                <%= hidden_field_tag 'id', params[:id] %>
 
                 <%= f.submit "Register" %>
 
