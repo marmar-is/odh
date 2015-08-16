@@ -7,7 +7,7 @@ class DefaultMailer < ApplicationMailer
 
     headers['X-SMTPAPI'] = {
       category: 'Referral',
-      to: referree.email
+      to: [] << referree.email,
     }.to_json
 
     mail( from: 'invitations@odh.com', to: referree.email, subject: 'You have been invited to ODH' )
