@@ -10,6 +10,6 @@ ActionMailer::Base.smtp_settings = {
   :authentication => :plain,
   :user_name      => Rails.application.secrets.sendgrid_username,
   :password       => Rails.application.secrets.sendgrid_password,
-  :domain         => 'odh.com',
+  :domain         => '104.154.78.68',
   :enable_starttls_auto => true
 }
