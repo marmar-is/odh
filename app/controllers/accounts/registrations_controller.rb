@@ -41,15 +41,6 @@ class Accounts::RegistrationsController < Devise::RegistrationsController
     end
   end
 
-=begin
-  # Test sending twilio message
-  $twilio_client.account.messages.create({
-    from: "+15005550006", # Change to one of our numbers on production
-    to: "#{resource.phone}",
-    body: "Hello #{resource.full_name}! Thank you for creating an account with ODH. Your Referral Token is #{resource.meta.token}.",
-    })
-=end
-
   # GET /resource/edit
   def edit
     @ambassador = current_account.meta
