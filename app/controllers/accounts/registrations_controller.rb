@@ -51,6 +51,7 @@ class Accounts::RegistrationsController < Devise::RegistrationsController
   def update
     super do |resource|
       current_account.meta.update(ambassador_params)
+      current_account.meta.update( email: params[:account][:email] )
     end
   end
 
