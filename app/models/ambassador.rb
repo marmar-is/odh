@@ -1,7 +1,7 @@
 class Ambassador < ActiveRecord::Base
   # Callbacks
-  before_save :create_unique_token
-  before_create :set_registration_token
+  before_save :set_unique_token
+  after_create :set_registration_token
 
   # Associations
   has_one :account, as: :meta, dependent: :destroy
@@ -25,27 +25,33 @@ class Ambassador < ActiveRecord::Base
     self.fname.first + self.lname.first
   end
 
-  def create_unique_token
-    if self.registered?
-      begin
-        self.token = self.initials + sprintf('%03d', rand(0..999))
-      end while self.class.exists?(token: token)
-    end
-  end
-
   # Overwrite phone setter to strip non-numerics
   def phone=(phone)
     write_attribute(:phone, phone.gsub(/\D/, ''))
   end
 
   private
+    # Set & Generate Unique Token
+    def set_unique_token
+      return if self.prospective?
+      self.token = generate_unique_token
+    end
+
+    def generate_unique_token
+      begin
+        token = self.initials + sprintf('%03d', rand(0..999))
+      end while self.class.exists?(token: token)
+      return token
+    end
+
+    # Set & Generate Registration Token
     def set_registration_token
-      return if self.prospective? #registration_token.present?
-      self.registration_token = generate_registration_token
+      return if !self.prospective?
+      self.update(registration_token: generate_registration_token)
     end
 
     def generate_registration_token
-      SecureRandom.uuid.gsub(/\-/,'')
+      SecureRandom.uuid.gsub(/\-/,'')+SecureRandom.uuid.gsub(/\-/,'')
     end
 
 end
