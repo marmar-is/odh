@@ -31,20 +31,14 @@ class Accounts::RegistrationsController < Devise::RegistrationsController
       respond_to.html { render :new }
     end
   end
-=begin
-     do |resource|
-      # TODO: params to determine type of account (when not all are ambassadors)
-      ambas = Ambassador.new( status: 'registered', account: resource )
-      ambas.save
-      ambas.update( registration_token: nil ) # nil registration_token after registering
 
-      # Test sending twilio message
-      $twilio_client.account.messages.create({
-        from: "+15005550006", # Change to one of our numbers on production
-        to: "#{resource.phone}",
-        body: "Hello #{resource.full_name}! Thank you for creating an account with ODH. Your Referral Token is #{resource.meta.token}.",
-        })
-    end
+=begin
+  # Test sending twilio message
+  $twilio_client.account.messages.create({
+    from: "+15005550006", # Change to one of our numbers on production
+    to: "#{resource.phone}",
+    body: "Hello #{resource.full_name}! Thank you for creating an account with ODH. Your Referral Token is #{resource.meta.token}.",
+    })
 =end
 
   # GET /resource/edit

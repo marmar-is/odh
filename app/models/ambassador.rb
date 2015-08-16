@@ -1,6 +1,6 @@
 class Ambassador < ActiveRecord::Base
   # Callbacks
-  before_create :create_unique_token
+  before_save :create_unique_token
 
   # Associations
   has_one :account, as: :meta, dependent: :destroy
@@ -14,11 +14,20 @@ class Ambassador < ActiveRecord::Base
   # Tokens
   has_secure_token :registration_token
 
-  private
+  # Methods
+  # Get Full Name
+  def full_name
+    self.fname + " " + self.lname
+  end
+
+  def initials
+    self.fname.first + self.lname.first
+  end
+
   def create_unique_token
-    if self.account
+    if self.registered?
       begin
-        self.token = self.account.initials + sprintf('%03d', rand(0..999))
+        self.token = self.initials + sprintf('%03d', rand(0..999))
       end while self.class.exists?(token: token)
     end
   end

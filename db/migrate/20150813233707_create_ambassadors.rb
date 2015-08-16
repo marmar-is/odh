@@ -3,7 +3,7 @@ class CreateAmbassadors < ActiveRecord::Migration
     create_table :ambassadors do |t|
       t.string :email, default: ""
       t.string :phone, default: ""
-      
+
       t.string :fname, default: ""
       t.string :lname, default: ""
       t.date   :dob

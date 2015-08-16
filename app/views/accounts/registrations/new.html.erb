@@ -78,6 +78,9 @@
                 <%= f.password_field :password, placeholder: "Password (#{@minimum_password_length} characters minimum)", class:"group-elem", autocomplete: "off" %>
                 <%= f.password_field :password_confirmation, placeholder: "Confirm Password", autocomplete: "off" %>
 
+                <p class="group-tag">Referred By A Member?</p>
+                <%= text_field_tag :referrer_token, @ambassador.parent.try(:token), placeholder: "Enter Their Referral Token" %>
+
                 <%= f.submit "Register" %>
 
                 <hr />
