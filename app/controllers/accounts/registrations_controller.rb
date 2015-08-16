@@ -51,14 +51,17 @@ class Accounts::RegistrationsController < Devise::RegistrationsController
 =end
 
   # GET /resource/edit
-  # def edit
-  #   super
-  # end
+  def edit
+    @ambassador = current_account.meta
+    super
+  end
 
   # PUT /resource
-  # def update
-  #   super
-  # end
+  def update
+    super do |resource|
+      current_account.meta.update(ambassador_params)
+    end
+  end
 
   # DELETE /resource
   # def destroy

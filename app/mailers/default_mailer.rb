@@ -1,16 +1,16 @@
 class DefaultMailer < ApplicationMailer
 
   # Send the new referral an email
-  def send_new_referral_email(referrer, referred)
+  def send_new_referral_email(referrer, referree)
     @referrer = referrer
-    @referree = referred
+    @referree = referree
 
     headers['X-SMTPAPI'] = {
       category: 'Referral',
-      to: email
+      to: referree.email
     }.to_json
 
-    mail( to: referred.email, subject: 'You have been invited to ODH' )
+    mail( from: 'invitations@odh.com', to: referree.email, subject: 'You have been invited to ODH' )
   end
 
 end
