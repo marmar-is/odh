@@ -1,9 +1,11 @@
 class AmbassadorsController < ApplicationController
   before_filter :authenticate_account!
-  before_filter :set_ambassador, only: [ :refer ]
+  before_filter :set_ambassador, only: [ :index, :refer ]
 
   # GET /ambassadors (TODO: ask Kurt, is index the root?)
   def index
+    @child_prospects = @ambassador.children.where(status: 0)
+    @child_successes = @ambassador.children.where(status: [ 1, 2 ])
   end
 
   # POST /ambassadors/refer
@@ -27,7 +29,7 @@ class AmbassadorsController < ApplicationController
     if !params[:text_refers].nil?
       params[:text_refers].split(',').each do |phone|
         # Make a new account for this person if they don't exist
-        if !Ambassador.where(phone: phone).any?
+        if !Ambassador.where(phone: phone.gsub(/\D/, '') ).any?
           new_referral = Ambassador.new(phone: phone, status: 'prospective', parent: @ambassador )
           new_referral.save
           DefaultMailer.send_new_referral_text( @ambassador, new_referral ).deliver

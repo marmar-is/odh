@@ -32,4 +32,9 @@ class Ambassador < ActiveRecord::Base
     end
   end
 
+  # Overwrite phone setter to strip non-numerics
+  def phone=(phone)
+    write_attribute(:phone, phone.gsub(/\D/, ''))
+  end
+
 end
