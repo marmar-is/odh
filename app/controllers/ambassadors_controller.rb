@@ -1,6 +1,6 @@
 class AmbassadorsController < ApplicationController
   before_filter :authenticate_account!
-  before_filter :set_ambassador!, only: [ :refer ]
+  before_filter :set_ambassador, only: [ :refer ]
 
   # GET /ambassadors (TODO: ask Kurt, is index the root?)
   def index
@@ -31,8 +31,9 @@ class AmbassadorsController < ApplicationController
   end
 
   private
-  def set_ambassador!
-    @ambassador = current_account.meta
-  end
+    # Use callbacks to share common setup or constraints between actions.
+    def set_ambassador
+      @ambassador = current_account.meta
+    end
 
 end

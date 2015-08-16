@@ -5,13 +5,11 @@ class AccountParams < Devise::ParameterSanitizer
   end
 
   def sign_up
-    default_params.permit(:fname, :lname, :email, :phone, :dob,
-    :street, :city, :state, :zip, :password, :password_confirmation)
+    default_params.permit(:email, :password, :password_confirmation)
   end
 
   def account_update
-    default_params.permit(:fname, :lname, :email, :phone, :dob, :street, :city,
-    :state, :zip, :password, :password_confirmation, :current_password)
+    default_params.permit(:email, :password, :password_confirmation, :current_password)
   end
 
 end

@@ -36,14 +36,6 @@ ActiveRecord::Schema.define(version: 20150813233707) do
     t.datetime "locked_at"
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
-    t.string   "fname",                  default: ""
-    t.string   "lname",                  default: ""
-    t.string   "phone",                  default: ""
-    t.string   "street",                 default: ""
-    t.string   "city",                   default: ""
-    t.string   "state",                  default: ""
-    t.string   "zip",                    default: ""
-    t.date     "dob"
     t.integer  "meta_id"
     t.string   "meta_type"
   end
@@ -55,12 +47,21 @@ ActiveRecord::Schema.define(version: 20150813233707) do
   add_index "accounts", ["unlock_token"], name: "index_accounts_on_unlock_token", unique: true, using: :btree
 
   create_table "ambassadors", force: :cascade do |t|
+    t.string   "email",              default: ""
+    t.string   "phone",              default: ""
+    t.string   "fname",              default: ""
+    t.string   "lname",              default: ""
+    t.date     "dob"
+    t.string   "street",             default: ""
+    t.string   "city",               default: ""
+    t.string   "state",              default: ""
+    t.string   "zip",                default: ""
     t.string   "token"
     t.string   "registration_token"
     t.integer  "status"
     t.integer  "parent_id"
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
   end
 
   add_index "ambassadors", ["parent_id"], name: "index_ambassadors_on_parent_id", using: :btree

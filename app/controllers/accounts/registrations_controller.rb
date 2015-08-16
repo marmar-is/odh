@@ -4,32 +4,27 @@ class Accounts::RegistrationsController < Devise::RegistrationsController
 
   # GET /resource/sign_up
   def new
-    super do |resource|
-
-      if !params[:registration_token].blank? && !params[:id].blank? && (Ambassador.find(params[:id]).registration_token == params[:registration_token])
-        @ambassador = Ambassador.find(params[:id])
-        @account = @ambassador.account
-      end
-    end
-=begin
-      if
-        self.resource = ambassador.account || build_resource({})
-        set_minimum_password_length
-        yield resource if block_given?
-        respond_with ( self.resource )
-      else
-        #self.resource = Account.first
-        super
-      end
-    else
-      super
-    end
-=end
+    super
   end
 
   # POST /resource
   def create
-    super do |resource|
+    ambas = Ambassador.new(ambassador_params)
+
+    respond_to do |format|
+      if ambas.save
+        ambas.update(status: 'registered', parent: Ambassador.find_by_token(params[:referrer_token]), registration_token: nil)
+
+        super do |resource|
+          resource.update(meta: ambas)
+        end
+      else
+        format.html { render :new }
+      end
+    end
+  end
+=begin
+     do |resource|
       # TODO: params to determine type of account (when not all are ambassadors)
       ambas = Ambassador.new( status: 'registered', account: resource )
       ambas.save
@@ -42,7 +37,7 @@ class Accounts::RegistrationsController < Devise::RegistrationsController
         body: "Hello #{resource.full_name}! Thank you for creating an account with ODH. Your Referral Token is #{resource.meta.token}.",
         })
     end
-  end
+=end
 
   # GET /resource/edit
   # def edit
@@ -89,4 +84,10 @@ class Accounts::RegistrationsController < Devise::RegistrationsController
   # def after_inactive_sign_up_path_for(resource)
   #   super(resource)
   # end
+
+  private
+    # Never trust parameters from the scary internet, only allow the white list through.
+    def ambassador_params
+      params.require(:ambassador).permit(:email, :phone, :fname, :lname, :dob, :street, :city, :state, :zip)
+    end
 end
