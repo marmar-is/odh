@@ -33,7 +33,7 @@ class Accounts::RegistrationsController < Devise::RegistrationsController
       super do |resource|
         # save the ambassador & set it as the newly created account's meta
         ambas.update( status: 'registered', parent: Ambassador.find_by_token(params[:referrer_token]),
-        email: params[:account][:email] )
+        registration_token: nil, email: params[:account][:email] )
         resource.update(meta: ambas)
       end
     else
