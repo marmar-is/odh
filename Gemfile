@@ -64,7 +64,7 @@ gem 'letter_opener', group: :development
 gem 'unicorn'
 
 # Ambassador Tokens
-gem 'has_secure_token'
+# gem 'has_secure_token'
 
 # Twilio Messages
 gem 'twilio-ruby'

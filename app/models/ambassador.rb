@@ -1,6 +1,7 @@
 class Ambassador < ActiveRecord::Base
   # Callbacks
   before_save :create_unique_token
+  before_create :set_registration_token
 
   # Associations
   has_one :account, as: :meta, dependent: :destroy
@@ -12,7 +13,7 @@ class Ambassador < ActiveRecord::Base
   enum status: [ :prospective, :registered, :active ]
 
   # Tokens
-  has_secure_token :registration_token
+  #has_secure_token :registration_token
 
   # Methods
   # Get Full Name
@@ -36,5 +37,15 @@ class Ambassador < ActiveRecord::Base
   def phone=(phone)
     write_attribute(:phone, phone.gsub(/\D/, ''))
   end
+
+  private
+    def set_registration_token
+      return if self.prospective? #registration_token.present?
+      self.registration_token = generate_registration_token
+    end
+
+    def generate_registration_token
+      SecureRandom.uuid.gsub(/\-/,'')
+    end
 
 end
