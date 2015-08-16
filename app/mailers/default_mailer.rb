@@ -18,7 +18,7 @@ class DefaultMailer < ApplicationMailer
     $twilio_client.account.messages.create({
       from: "+13105983640",#{}"+15005550006", # Change to one of our numbers on production
       to: "#{referree.phone}",
-      body: "Hello, you have been invited to use ODH by #{referrer.full_name} %> Sign Up by clicking the following link: #{new_account_registration_url(registration_token: referree.registration_token, id: referree.id)}",
+      body: "Hello, you have been invited to use ODH by #{referrer.full_name}. Sign Up by clicking the following link: #{new_account_registration_url(registration_token: referree.registration_token, id: referree.id)}",
     })
   end
 

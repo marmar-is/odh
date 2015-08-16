@@ -15,11 +15,9 @@ class AmbassadorsController < ApplicationController
       params[:email_refers].split(',').each do |email|
         # Make a new account for this person if they don't exist
         if Ambassador.find_by_email(email).nil?
-
           new_referral = Ambassador.new(email: email, status: 'prospective', parent: @ambassador )
-          new_referral.save
-
           DefaultMailer.send_new_referral_email( @ambassador, new_referral ).deliver
+          new_referral.save
         else
           fails << email
         end
@@ -31,9 +29,8 @@ class AmbassadorsController < ApplicationController
         # Make a new account for this person if they don't exist
         if !Ambassador.where(phone: phone).any?
           new_referral = Ambassador.new(phone: phone, status: 'prospective', parent: @ambassador )
-          new_referral.save
-
           DefaultMailer.send_new_referral_text( @ambassador, new_referral ).deliver
+          new_referral.save
         else
           fails << phone
         end

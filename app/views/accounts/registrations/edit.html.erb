@@ -25,13 +25,20 @@
       <section>
         <div class="col-sm-6 col-sm-offset-3">
           <div class="feature bordered text-center">
-            <h4 class="uppercase">Register Here</h4>
+            <h4 class="uppercase">My Settings</h4>
             <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, class: 'text-left' }) do |f| %>
               <%= fields_for :ambassador do |ff| %>
                 <%= devise_error_messages! %>
 
                 <p class="group-tag">Identity</p>
-                <%= f.email_field :email, placeholder: "Email", autofocus: true, class:"group-elem" %>
+                <div class="row">
+                  <div class="col-sm-8">
+                    <%= f.email_field :email, placeholder: "Email", autofocus: true, class:"group-elem" %>
+                  </div>
+                  <div class="col-sm-4">
+                    <%= ff.telephone_field :phone, placeholder: "Phone Number", class:"group-elem" %>
+                  </div>
+                </div>
 
                 <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
                   <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
@@ -42,7 +49,13 @@
                     <%= ff.text_field :fname, placeholder: "First Name", class:"group-elem" %>
                   </div>
                   <div class="col-sm-6">
-                    <%= ff.text_field :lname, placeholder: "Last Name" %>
+                    <%= ff.text_field :lname, placeholder: "Last Name", class:"group-elem" %>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-sm-12">
+                    <%= ff.text_field :dob, placeholder: 'Date of Birth', data: { provide: 'datepicker', 'date-format': 'yyyy-mm-dd', 'date-end-date': "+0d", 'date-start-view': 2 } %>
                   </div>
                 </div>
 
@@ -65,14 +78,6 @@
                   </div>
                 </div>
 
-                <p class="group-tag">Date of Birth</p>
-                <div class="row">
-                  <div class="col-sm-12">
-                    <%= ff.text_field :dob, data: { provide: 'datepicker', 'date-format': 'yyyy-mm-dd', 'date-end-date': "+0d", 'date-start-view': 2 } %>
-                  </div>
-                </div>
-
-
                 <p class="group-tag">Security</p>
                 <%= f.password_field :password, placeholder: "Password (leave blank to not change)", class:"group-elem", autocomplete: "off" %>
                 <%= f.password_field :password_confirmation, placeholder: "Confirm Password", autocomplete: "off" %>
@@ -84,7 +89,6 @@
                 <%= f.submit "Update" %>
 
                 <hr />
-                <%#= render "accounts/shared/links" %>
                 <p class="mb0">
                   <span>Unhappy?</span>
                   <%= link_to "Cancel My Account", registration_path(resource_name), data: { confirm: "Are you sure you wish to cancel your account?" }, method: :delete, class: 'pull-right' %>
