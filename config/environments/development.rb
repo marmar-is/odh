@@ -17,10 +17,7 @@ Rails.application.configure do
   config.action_mailer.raise_delivery_errors = true
 
   # Use letter_opener for development emails
-  #config.action_mailer.delivery_method = :letter_opener
-  # Action Mailer Delivery Configuration
-  config.action_mailer.delivery_method = :smtp
-  config.action_mailer.perform_deliveries = true
+  config.action_mailer.delivery_method = :letter_opener
 
   # Default mailer url
   config.action_mailer.default_url_options = { host: 'localhost', port: 8080 }
