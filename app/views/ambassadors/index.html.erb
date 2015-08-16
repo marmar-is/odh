@@ -2,17 +2,16 @@
 <%= stylesheet_link_tag 'jquery.tagsinput/jquery.tagsinput.css', 'data-turbolinks-track' => true %>
 
 <style>
-div.tagsinput {
-  height:auto!important;
-}
+  div.tagsinput {
+    height:auto!important;
+  }
+  div.tab-title {
+    height:50px;
+  }
+  div.tab-title .icon {
+    font-size:32px;
+  }
 
-div.tab-title {
-  height:50px;
-}
-
-div.tab-title .icon {
-  font-size:32px;
-}
 </style>
 <% end %>
 <section class="pb0">
@@ -92,7 +91,7 @@ div.tab-title .icon {
             <!-- /Dashboard -->
 
             <!-- Spread the Word -->
-            <li>
+            <li id="spread-the-word">
               <div class="tab-title">
                 <span>Spread the Word</span>
               </div>
@@ -140,7 +139,7 @@ div.tab-title .icon {
             <!-- /Spread the Word -->
 
             <!-- My People -->
-            <li>
+            <li id="my-people">
               <div class="tab-title">
                 <span>MY PEOPLE</span>
               </div>
@@ -170,42 +169,6 @@ div.tab-title .icon {
                       <div class="widget">
                         <h6 class="title text-center">Successes</h6>
                         <hr>
-                        <div class="col-sm-6">
-                            <h5 class="uppercase mb40">One At A Time</h5>
-                            <ul class="accordion accordion-2 one-open">
-                                <li class="active">
-                                    <div class="title">
-                                        <span>Simple Panels</span>
-                                    </div>
-                                    <div class="content">
-                                        <p>
-                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                                        </p>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="title">
-                                        <span>Toggle Information</span>
-                                    </div>
-                                    <div class="content">
-                                        <p>
-                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                                        </p>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="title">
-                                        <span>Nice Touch</span>
-                                    </div>
-                                    <div class="content">
-                                        <p>
-                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                                        </p>
-                                    </div>
-                                </li>
-                            </ul>
-                            <!--end of accordion-->
-                        </div>
                         <ul class="link-list">
                           <%- @child_successes.each do |cs| %>
                             <li>
@@ -227,7 +190,6 @@ div.tab-title .icon {
     </div>
   </div>
 </section>
-
 
 <!--
 <section>
