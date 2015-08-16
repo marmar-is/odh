@@ -49,6 +49,7 @@ class AmbassadorsController < ApplicationController
 
   # PUT /ambassadors/update_prospect/1
   def update_prospect
+
   end
 
   private
