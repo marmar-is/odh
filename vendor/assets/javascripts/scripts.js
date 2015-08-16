@@ -76,12 +76,12 @@ $(document).ready(function() { //variant-remove
 
   // Accordions
 
-  $('.accordion li').click(function() {
+  $('.accordion li .title').click(function() {
     if ($(this).closest('.accordion').hasClass('one-open')) {
       $(this).closest('.accordion').find('li').removeClass('active');
       $(this).addClass('active');
     } else {
-      $(this).toggleClass('active');
+      $(this).parent('li').toggleClass('active');
     }
   });
 
@@ -104,9 +104,11 @@ $(document).ready(function() { //variant-remove
   $('.tabs li').click(function() {
     $(this).closest('.tabs').find('li').removeClass('active');
     $(this).addClass('active');
+    //console.log($(this).attr('id'));
     var liIndex = $(this).index() + 1;
     $(this).closest('.tabbed-content').find('.content>li').removeClass('active');
     $(this).closest('.tabbed-content').find('.content>li:nth-of-type(' + liIndex + ')').addClass('active');
+    $(this).closest('.tabbed-content').find('.content>li:nth-of-type(' + liIndex + ')').attr("id",  $(this).attr('id'));
   });
 
   // Progress Bars

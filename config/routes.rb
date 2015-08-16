@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   root 'ambassadors#index'
 
   post 'ambassadors/refer' => 'ambassadors#refer', as: :send_referrals
+  put  'ambassadors/update_prospect/:id' => 'ambassadors#update_prospect', as: :update_prospect
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
