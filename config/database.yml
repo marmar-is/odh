@@ -80,6 +80,11 @@ test:
 #
 production:
   <<: *default
-  database: odh_production
-  username: odh
-  password: <%= ENV['ODH_DATABASE_PASSWORD'] %>
+  host: Rails.application.secrets.odh_db_host
+  port: Rails.application.secrets.odh_db_port
+  database: Rails.application.secrets.odh_db_db
+  username: Rails.application.secrets.odh_db_user
+  password: Rails.application.secrets.odh_db_pass
+  #database: odh_production
+  #username: odh
+  #password: <%= ENV['ODH_DATABASE_PASSWORD'] %>
