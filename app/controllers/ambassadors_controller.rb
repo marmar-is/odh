@@ -14,8 +14,10 @@ class AmbassadorsController < ApplicationController
         # Make a new account for this person if they don't exist
         if Account.find_by_email(email).nil?
 
-          new_referral = Ambassador.new(email: email, status: 'prospective', parent: @ambassador )#, account: acct)
+          new_referral = Ambassador.new(email: email, status: 'prospective', parent: @ambassador )
           new_referral.save
+
+          DefaultMailer.send_new_referral_email( @ambassador, new_referral ).deliver
         end
       end
     end
