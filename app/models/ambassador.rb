@@ -33,7 +33,7 @@ class Ambassador < ActiveRecord::Base
   private
     # Set & Generate Unique Token
     def set_unique_token
-      return if self.prospective?
+      return if (self.prospective? || token.present?)
       self.token = generate_unique_token
     end
 
