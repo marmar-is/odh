@@ -4,6 +4,14 @@ class Accounts::RegistrationsController < Devise::RegistrationsController
 
   # GET /resource/sign_up
   def new
+    if (!params[:registration_token].blank? && !params[:id].blank?) && (Ambassador.find(params[:id]).registration_token == params[:registration_token])
+      @title = "ODH Sign Up - Referral"
+      @ambassador = Ambassador.find(params[:id])
+    else
+      @title = "ODH Sign Up"
+      @ambassador = Ambassador.new
+    end
+
     super
   end
 
@@ -11,16 +19,16 @@ class Accounts::RegistrationsController < Devise::RegistrationsController
   def create
     ambas = Ambassador.new(ambassador_params)
 
-    respond_to do |format|
-      if ambas.save
-        ambas.update(status: 'registered', parent: Ambassador.find_by_token(params[:referrer_token]), registration_token: nil)
+    if ambas.save
+      ambas.update( status: 'registered', parent: Ambassador.find_by_token(params[:referrer_token]),
+      registration_token: nil, email: params[:account][:email] )
 
-        super do |resource|
-          resource.update(meta: ambas)
-        end
-      else
-        format.html { render :new }
+      @ambassador = ambas
+      super do |resource|
+        resource.update(meta: ambas)
       end
+    else
+      respond_to.html { render :new }
     end
   end
 =begin
@@ -88,6 +96,6 @@ class Accounts::RegistrationsController < Devise::RegistrationsController
   private
     # Never trust parameters from the scary internet, only allow the white list through.
     def ambassador_params
-      params.require(:ambassador).permit(:email, :phone, :fname, :lname, :dob, :street, :city, :state, :zip)
+      params.require(:ambassador).permit(:phone, :fname, :lname, :dob, :street, :city, :state, :zip)
     end
 end
