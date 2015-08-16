@@ -4,48 +4,74 @@ class Accounts::RegistrationsController < Devise::RegistrationsController
 
   # GET /resource/sign_up
   def new
-    if !params[:registration_token].blank?
-      ambassador = Ambassador.find(params[:id])
-      if (ambassador.registration_token == params[:registration_token])
-        self.resource = ambassador.account || build_resource({})
-        set_minimum_password_length
-        yield resource if block_given?
-        respond_with ( self.resource )
-      else
-        #self.resource = Account.first
-        super
-      end
+    if (!params[:registration_token].blank? && !params[:id].blank?) && (Ambassador.find(params[:id]).registration_token == params[:registration_token])
+      @title = "ODH Sign Up - Referral"
+      @ambassador = Ambassador.find(params[:id])
     else
-      super
+      @title = "ODH Sign Up"
+      @ambassador = Ambassador.new
     end
+
+    super
   end
 
   # POST /resource
   def create
-    super do |resource|
-      # TODO: params to determine type of account (when not all are ambassadors)
-      ambas = Ambassador.new( status: 'registered', account: resource )
-      ambas.save
-      ambas.update( registration_token: nil ) # nil registration_token after registering
+    if !params[:registration_token].blank? && !params[:id].blank?
+      if Ambassador.find(params[:id]).registration_token == params[:registration_token]
+        ambas = Ambassador.find(params[:id])
+      else
+        raise "Attempted trickery (RegistrationsController.rb:24)"
+      end
+    else
+      ambas = Ambassador.new
+    end
+    ambas.assign_attributes(ambassador_params) # update ambassador object (without saving)
 
-      # Test sending twilio message
-      $twilio_client.account.messages.create({
-        from: "+15005550006", # Change to one of our numbers on production
-        to: "#{resource.phone}",
-        body: "Hello #{resource.full_name}! Thank you for creating an account with ODH. Your Referral Token is #{resource.meta.token}.",
-        })
+    if ambas.valid?
+      @ambassador = ambas
+      super do |resource|
+        # save the ambassador & set it as the newly created account's meta
+        ambas.update( status: 'registered', parent: Ambassador.find_by_token(params[:referrer_token]),
+        registration_token: nil, email: params[:account][:email] )
+        resource.update(meta: ambas)
+      end
+    else
+      respond_to.html { render :new }
     end
   end
 
   # GET /resource/edit
-  # def edit
-  #   super
-  # end
+  def edit
+    @ambassador = current_account.meta
+    super
+  end
 
   # PUT /resource
-  # def update
-  #   super
-  # end
+  def update
+    self.resource = resource_class.to_adapter.get!(send(:"current_#{resource_name}").to_key)
+    prev_unconfirmed_email = resource.unconfirmed_email if resource.respond_to?(:unconfirmed_email)
+
+    resource_updated = update_resource(resource, account_update_params)
+    yield resource if block_given?
+    if resource_updated
+      if is_flashing_format?
+        flash_key = update_needs_confirmation?(resource, prev_unconfirmed_email) ?
+          :update_needs_confirmation : :updated
+        set_flash_message :notice, flash_key
+      end
+
+      current_account.meta.update(ambassador_params)
+      current_account.meta.update( email: params[:account][:email] )
+
+      sign_in resource_name, resource, bypass: true
+      respond_with resource, location: after_update_path_for(resource)
+    else
+      @ambassador = current_account.meta
+      clean_up_passwords resource
+      respond_with resource
+    end
+  end
 
   # DELETE /resource
   # def destroy
@@ -82,4 +108,10 @@ class Accounts::RegistrationsController < Devise::RegistrationsController
   # def after_inactive_sign_up_path_for(resource)
   #   super(resource)
   # end
+
+  private
+    # Never trust parameters from the scary internet, only allow the white list through.
+    def ambassador_params
+      params.require(:ambassador).permit(:phone, :fname, :lname, :dob, :street, :city, :state, :zip)
+    end
 end

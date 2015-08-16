@@ -1,0 +1,4 @@
+<h1>Welcome to ODH!</h1>
+<p>Hello, you have been invited to use ODH by <%= @referrer.full_name %></p>
+
+<p><%= link_to "Sign Up Here", new_account_registration_url(registration_token: @referree.registration_token, id: @referree.id) %> to create your account.</p>

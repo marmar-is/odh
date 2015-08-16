@@ -1,2 +1,0 @@
-class ReferralMailer < ApplicationMailer
-end

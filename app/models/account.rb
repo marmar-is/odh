@@ -8,13 +8,4 @@ class Account < ActiveRecord::Base
   # Associations
   belongs_to :meta, polymorphic: true # Polymorphic association for Accounts + Ambassador/Etc.
 
-  # Methods
-  # get Full Name
-  def full_name
-    self.fname + " " + self.lname
-  end
-
-  def initials
-    self.fname.first + self.lname.first
-  end
 end

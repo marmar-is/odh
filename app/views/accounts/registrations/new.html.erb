@@ -1,7 +1,7 @@
 <%= content_for :head do %>
   <style>
     section.overlay.cover.fullscreen {
-      min-height:950px!important;
+      min-height:1000px!important;
     }
 
     p.group-tag {
@@ -27,61 +27,68 @@
           <div class="feature bordered text-center">
             <h4 class="uppercase">Register Here</h4>
             <%= form_for(resource, html: { class: 'text-left' }, as: resource_name, url: registration_path(resource_name)) do |f| %>
-              <%= devise_error_messages! %>
+              <%= fields_for :ambassador do |ff| %>
+                <%= devise_error_messages! %>
 
-              <p class="group-tag">Identity</p>
-              <div class="row">
-                <div class="col-sm-8">
-                  <%= f.email_field :email, placeholder: "Email Address", autofocus: true, class:"group-elem" %>
+                <p class="group-tag">Identity</p>
+                <div class="row">
+                  <div class="col-sm-8">
+                    <%= f.email_field :email, placeholder: "Email Address", autofocus: true, class:"group-elem", value: @ambassador.email %>
+                  </div>
+                  <div class="col-sm-4">
+                    <%= ff.telephone_field :phone, placeholder: "Phone Number", class:"group-elem" %>
+                  </div>
                 </div>
-                <div class="col-sm-4">
-                  <%= f.telephone_field :phone, placeholder: "Phone Number", class:"group-elem" %>
-                </div>
-              </div>
 
-              <div class="row">
-                <div class="col-sm-6">
-                  <%= f.text_field :fname, placeholder: "First Name", class:"group-elem" %>
+                <div class="row">
+                  <div class="col-sm-6">
+                    <%= ff.text_field :fname, placeholder: "First Name", class:"group-elem" %>
+                  </div>
+                  <div class="col-sm-6">
+                    <%= ff.text_field :lname, placeholder: "Last Name", class:"group-elem" %>
+                  </div>
                 </div>
-                <div class="col-sm-6">
-                  <%= f.text_field :lname, placeholder: "Last Name", class:"group-elem" %>
-                </div>
-              </div>
 
-              <div class="row">
-                <div class="col-sm-12">
-                  <%#= f.date_select :dob, order: [:month, :day, :year], start_year: 1945, end_year: Date.today.year, default: 50.years.ago, with_css_classes: true %>
-                  <%= f.text_field :dob, placeholder: 'Date of Birth', data: { provide: 'datepicker', 'date-format': 'yyyy-mm-dd', 'date-end-date': "+0d", 'date-start-view': 2 } %>
+                <div class="row">
+                  <div class="col-sm-12">
+                    <%= ff.text_field :dob, placeholder: 'Date of Birth', data: { provide: 'datepicker', 'date-format': 'yyyy-mm-dd', 'date-end-date': "+0d", 'date-start-view': 2 } %>
+                  </div>
                 </div>
-              </div>
 
-              <p class="group-tag">Address</p>
-              <div class="row">
-                <div class="col-sm-7">
-                  <%= f.text_field :street, placeholder: "Street", class:"group-elem" %>
+                <p class="group-tag">Address</p>
+                <div class="row">
+                  <div class="col-sm-7">
+                    <%= ff.text_field :street, placeholder: "Street", class:"group-elem" %>
+                  </div>
+                  <div class="col-sm-5">
+                    <%= ff.text_field :city, placeholder: "City", class:"group-elem" %>
+                  </div>
                 </div>
-                <div class="col-sm-5">
-                  <%= f.text_field :city, placeholder: "City", class:"group-elem" %>
+
+                <div class="row">
+                  <div class="col-sm-9">
+                    <%= ff.text_field :state, placeholder: "State", class:"group-elem" %>
+                  </div>
+                  <div class="col-sm-3">
+                    <%= ff.text_field :zip, placeholder: "Zip Code" %>
+                  </div>
                 </div>
-              </div>
 
-              <div class="row">
-                <div class="col-sm-9">
-                  <%= f.text_field :state, placeholder: "State", class:"group-elem" %>
-                </div>
-                <div class="col-sm-3">
-                  <%= f.text_field :zip, placeholder: "Zip Code" %>
-                </div>
-              </div>
+                <p class="group-tag">Security</p>
+                <%= f.password_field :password, placeholder: "Password (#{@minimum_password_length} characters minimum)", class:"group-elem", autocomplete: "off" %>
+                <%= f.password_field :password_confirmation, placeholder: "Confirm Password", autocomplete: "off" %>
 
-              <p class="group-tag">Security</p>
-              <%= f.password_field :password, placeholder: "Password (#{@minimum_password_length} characters minimum)", class:"group-elem", autocomplete: "off" %>
-              <%= f.password_field :password_confirmation, placeholder: "Confirm Password", autocomplete: "off" %>
+                <p class="group-tag">Referred By A Member?</p>
+                <%= text_field_tag :referrer_token, @ambassador.parent.try(:token), placeholder: "Enter Their Referral Token", readonly: !@ambassador.parent.nil? %>
 
-              <%= f.submit "Register" %>
+                <%= hidden_field_tag 'registration_token', params[:registration_token] %>
+                <%= hidden_field_tag 'id', params[:id] %>
 
-              <hr />
-              <%= render "accounts/shared/links" %>
+                <%= f.submit "Register" %>
+
+                <hr />
+                <%= render "accounts/shared/links" %>
+              <% end %>
             <% end %>
             <p class="mb0">By signing up, you agree to our
               <a href="#">Terms Of Use</a>

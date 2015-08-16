@@ -1,8 +1,11 @@
 Rails.application.routes.draw do
 
-devise_for :accounts, controllers: { registrations: 'accounts/registrations' }
+  devise_for :accounts, controllers: { registrations: 'accounts/registrations' }
 
   root 'ambassadors#index'
+
+  post 'ambassadors/refer' => 'ambassadors#refer', as: :send_referrals
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

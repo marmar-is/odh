@@ -106,27 +106,34 @@ div.tab-title .icon {
                   <div class="row" >
                     <div class="col-md-12 col-sm-12 text-center">
                       <div class="row">
-                        <!-- Email-Referrals -->
-                        <div class="col-md-6">
-                          <div class="tab-title">
-                            <i class="icon ti-email"></i>
-                            <span>E-mail</span>
-                          </div>
-                          <%= text_field_tag :email_refers, '', id:'tags_email_refers' %>
-                        </div>
-                        <!-- /Email-Referrals -->
 
-                        <!-- Phone-Referrals -->
-                        <div class="col-md-6">
-                          <div class="tab-title">
-                            <i class="icon ti ti-mobile"></i>
-                            <span>TEXT</span>
+                        <%= form_tag send_referrals_path do %>
+                          <!-- Email-Referrals -->
+                          <div class="col-md-6">
+                            <div class="tab-title">
+                              <i class="icon ti-email"></i>
+                              <span>E-mail</span>
+                            </div>
+                            <%= text_field_tag :email_refers, '', id:'tags_email_refers' %>
                           </div>
-                          <%= text_field_tag :text_refers, '', id:'tags_text_refers' %>
-                        </div>
-                        <!-- /Phone-Referrals -->
+                          <!-- /Email-Referrals -->
 
-                        <p class="help-block">Enter The Email Addresses or Phone Numbers You'd Like To Invite</p>
+                          <!-- Phone-Referrals -->
+                          <div class="col-md-6">
+                            <div class="tab-title">
+                              <i class="icon ti ti-mobile"></i>
+                              <span>TEXT</span>
+                            </div>
+                            <%= text_field_tag :text_refers, '', id:'tags_text_refers' %>
+                          </div>
+                          <!-- /Phone-Referrals -->
+
+                          <p class="help-block">Enter The Email Addresses or Phone Numbers You'd Like To Invite</p>
+
+                          <div class="col-md-12">
+                            <%= submit_tag "Invite" %>
+                          </div>
+                        <% end %>
                       </div>
                     </div>
                   </div>
