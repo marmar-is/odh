@@ -210,10 +210,10 @@
                                   <%= form_tag update_prospect_path(id: cp.id), method: :put do %>
                                     <div class="row">
                                       <div class="col-md-7 input-r">
-                                        <%= text_field_tag :email, '', placeholder: 'Email', value: cp.email, class:'group-elem', readonly: (cp.referred_via == 'email')%>
+                                        <%= text_field_tag :email, '', placeholder: 'Email', value: cp.email, class:'group-elem', readonly: (cp.referred_via != 'email')%>
                                       </div>
                                       <div class="col-md-5 input-l">
-                                        <%= text_field_tag :phone, '', placeholder: 'Phone', value: number_to_phone(cp.phone, area_code: true), class:'group-elem', readonly: (cp.referred_via == 'phone')%>
+                                        <%= text_field_tag :phone, '', placeholder: 'Phone', value: number_to_phone(cp.phone, area_code: true), class:'group-elem', readonly: (cp.referred_via != 'phone')%>
                                       </div>
                                     </div>
 
