@@ -62,7 +62,7 @@ class AmbassadorsController < ApplicationController
     respond_to do |format|
       child.assign_attributes(child_params)
       if child.changed?
-        if child.update(child_params)
+        if child.save
           format.html {redirect_to root_path, notice: "Successfully Updated Child #{display_child_label(child)}."}
           format.js { render "update_prospect", locals: {child: child} }
         else
