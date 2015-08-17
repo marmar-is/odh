@@ -1,6 +1,7 @@
 // Place all the styles related to the Ambassadors controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+/* Referral Input Tags */
 #spread-the-word div.tagsinput {
   height:auto!important;
 }
@@ -11,7 +12,7 @@
   font-size:32px;
 }
 
-/* custom accordion css */
+/* Prospect & Success Accordions */
 #my-people .accordion-2 .title {
   color: #f9ad19;
   font-weight: 600;
@@ -20,12 +21,10 @@
 
   margin-bottom: 0;
 }
-
 #my-people .accordion-2 .title span {
   text-transform: none;
   font-weight: bold;
 }
-
 #my-people .accordion-2 li.active .content {
   padding-left: 16px;
   padding-right: 16px;
@@ -37,7 +36,7 @@
   border-bottom: 1px dashed #ccc;
   border-right: 1px dashed #ccc;
 }
-
+/* Prospect/Success Form & Inputs */
 #my-people form {
   padding-bottom: 8px;
 }
@@ -64,6 +63,7 @@
 #my-people .btn-div button i {
   font-weight: 600;
 }
+/* Child Success Status Icon */
 #my-people div.row.status {
   position:relative;
 }
@@ -86,6 +86,7 @@
 #my-people .status.active div:after {
   content: "\e60c";
 }
+
 /* AJAX Overlay */
 #overlay-ajax {
   position: absolute;

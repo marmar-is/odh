@@ -1,25 +1,25 @@
 <form>
-    <div class="row">
-      <div class="col-md-7 input-r">
-        <%= text_field_tag :email, child.email, class:'group-elem', readonly: true %>
-      </div>
-      <div class="col-md-5 input-l">
-        <%= text_field_tag :phone, number_to_phone(child.phone, area_code: true), class:'group-elem', readonly: true%>
-      </div>
+  <div class="row">
+    <div class="col-md-7 input-r">
+      <%= text_field_tag :email, child.email, class:'group-elem', readonly: true %>
     </div>
+    <div class="col-md-5 input-l">
+      <%= text_field_tag :phone, number_to_phone(child.phone, area_code: true), class:'group-elem', readonly: true%>
+    </div>
+  </div>
 
-    <div class="row">
-      <div class="col-md-5 input-r">
-        <%= text_field_tag :fname, child.fname, class:'group-elem', readonly: true %>
-      </div>
-      <div class="col-md-7 input-l">
-        <%= text_field_tag :lname, child.lname, class:'group-elem', readonly: true %>
-      </div>
+  <div class="row">
+    <div class="col-md-5 input-r">
+      <%= text_field_tag :fname, child.fname, class:'group-elem', readonly: true %>
     </div>
+    <div class="col-md-7 input-l">
+      <%= text_field_tag :lname, child.lname, class:'group-elem', readonly: true %>
+    </div>
+  </div>
 
-    <div class="row status <%= child.status %>">
-      <div class="col-md-5 col-md-offset-7">
-        <%= text_field_tag :status, child.status.capitalize, class:'group-elem', readonly: true %>
-      </div>
+  <div class="row status <%= child.status %>">
+    <div class="col-md-5 col-md-offset-7">
+      <%= text_field_tag :status, child.status.capitalize, class:'group-elem', readonly: true %>
     </div>
+  </div>
 </form>
