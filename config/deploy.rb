@@ -4,7 +4,7 @@ server ENV['ODH_WEB_IP'], port: 22, roles: [:web, :app, :db], primary: true
 set :repo_url,        'git@54.187.122.146:matt/odh.git'
 set :application,     'odh'
 set :user,            'marmaris'
-set :branch, :production # Push from production branch
+set :branch,          :production # Push from production branch
 
 #set :linked_files, fetch(:linked_files, []).push('config/database.yml')
 #set :linked_dirs, fetch(:linked_dirs, []).push('shared/log', 'shared/tmp/pids', 'shared/tmp/cache', 'shared/tmp/sockets', 'vendor/bundle', 'public/system')
@@ -69,10 +69,7 @@ namespace :deploy do
   desc 'Restart application'
   task :restart do
     on roles(:app), in: :sequence, wait: 5 do
-      invoke 'unicorn:restart'
-      #invoke 'unicorn:stop'
-      #invoke 'unicorn:stop'
-      #invoke 'unicorn:start'
+      invoke 'unicorn:reload'
     end
   end
 
