@@ -1,65 +1,6 @@
 <%= content_for :head do %>
-<%= stylesheet_link_tag 'jquery.tagsinput/jquery.tagsinput.css', 'data-turbolinks-track' => true %>
-
-<style>
-  div.tagsinput {
-    height:auto!important;
-  }
-  div.tab-title {
-    height:50px;
-  }
-  div.tab-title .icon {
-    font-size:32px;
-  }
-  /* custom accordion css */
-  #my-people .accordion-2 .title {
-    color: #f9ad19;
-    font-weight: 600;
-    font-size: 13px;
-    border-bottom-style: dashed;
-
-    margin-bottom: 0;
-  }
-
-  #my-people .accordion-2 li.active .content {
-    padding-left: 16px;
-    padding-right: 16px;
-    padding-top: 16px;
-
-    border-left: 1px dashed #ccc;
-    border-bottom: 1px dashed #ccc;
-    border-right: 1px dashed #ccc;
-  }
-
-  #my-people form {
-    padding-bottom: 8px;
-  }
-  #my-people div input {
-    height: 35px;
-  }
-  #my-people div.input-r {
-    padding-right: 3px;
-  }
-  #my-people div.input-l {
-    padding-left: 3px;
-  }
-  #my-people .group-elem {
-    margin-bottom: 5px!important;
-  }
-  #my-people .btn-div {
-    margin-left: 76.5%;
-    margin-right: 0;
-  }
-  #my-people .btn-div {
-    margin-left: 76%;
-    margin-bottom: 8px;
-  }
-  #my-people .btn-div button i {
-    font-weight: 600;
-  }
-
-
-</style>
+  <%= stylesheet_link_tag 'jquery.tagsinput/jquery.tagsinput.css', 'data-turbolinks-track' => true %>
+  <%= stylesheet_link_tag 'ambassadors', 'data-turbolinks-track' => true %>
 <% end %>
 <section id="my-account" class="pb0">
   <div class="container">
@@ -206,31 +147,8 @@
                               <div class="title">
                                 <span><%= display_child_label(cp) %></span>
                               </div>
-                              <div class="content">
-                                  <%= form_tag update_prospect_path(id: cp.id), method: :put do %>
-                                    <div class="row">
-                                      <div class="col-md-7 input-r">
-                                        <%= text_field_tag :email, '', placeholder: 'Email', value: cp.email, class:'group-elem', readonly: (cp.referred_via != 'email')%>
-                                      </div>
-                                      <div class="col-md-5 input-l">
-                                        <%= text_field_tag :phone, '', placeholder: 'Phone', value: number_to_phone(cp.phone, area_code: true), class:'group-elem', readonly: (cp.referred_via != 'phone')%>
-                                      </div>
-                                    </div>
-
-                                    <div class="row">
-                                      <div class="col-md-5 input-r">
-                                        <%= text_field_tag :fname, '', placeholder: 'First Name', value: cp.fname, class:'group-elem' %>
-                                      </div>
-                                      <div class="col-md-7 input-l">
-                                        <%= text_field_tag :lname, '', placeholder: 'Last Name', value: cp.lname, class:'group-elem' %>
-                                      </div>
-                                    </div>
-                                    <div class="col-xs-4 btn-div">
-                                      <%= button_tag(type: 'submit') do %>
-                                        <i class="ti-save"> Save</i>
-                                      <% end %>
-                                    </div>
-                                  <% end %>
+                              <div id="child-<%= cp.id %>" class="content">
+                                <%= render partial: 'ambassadors/prospect', locals: { cp: cp } %>
                               </div>
                             </li>
                           <% end -%>

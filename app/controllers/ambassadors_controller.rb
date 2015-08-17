@@ -1,4 +1,5 @@
 class AmbassadorsController < ApplicationController
+  include AmbassadorsHelper
   before_filter :authenticate_account!
   before_filter :set_ambassador, only: [ :index, :refer ]
 
@@ -49,13 +50,39 @@ class AmbassadorsController < ApplicationController
 
   # PUT /ambassadors/update_prospect/1
   def update_prospect
+    child = Ambassador.find(params[:id])
+    if child.referred_via == 'email'
+      raise "Trickery Detected (AmbassadorsController.rb:55)" if child.email != params[:child][:email]
+    elsif child.referred_via == 'phone'
+      raise "Trickery Detected (AmbassadorsController.rb:57)" if child.phone != params[:child][:phone].gsub(/\D/, '')
+    else
+      raise "Invalid Referred (AmbassadorsController.rb:59)"
+    end
 
+    respond_to do |format|
+      child.assign_attributes(child_params)
+      if child.changed?
+        if child.save
+          format.html {redirect_to root_path, notice: "Successfully Updated Child #{display_child_label(child)}."}
+          format.js { render "update_prospect", locals: {child: child} }
+        else
+          format.html {redirect_to root_path, notice: "Error While Updating Child #{display_child_label(child)}."}
+        end
+      else
+        format.js { render "update_prospect_nochange", locals: {child: child} }
+      end
+    end
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_ambassador
       @ambassador = current_account.meta
+    end
+
+    # Never trust parameters from the scary internet, only allow the white list through.
+    def child_params
+      params.require(:child).permit(:email, :phone, :fname, :lname)
     end
 
 end

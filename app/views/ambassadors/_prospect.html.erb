@@ -1,0 +1,26 @@
+<%= form_tag update_prospect_path(id: cp.id), method: :put, remote: true do %>
+  <%= fields_for :child do |f| %>
+    <div class="row">
+      <div class="col-md-7 input-r">
+        <%= f.text_field :email, placeholder: 'Email', value: cp.email, class:'group-elem', readonly: (cp.referred_via == 'email')%>
+      </div>
+      <div class="col-md-5 input-l">
+        <%= f.text_field :phone, placeholder: 'Phone', value: number_to_phone(cp.phone, area_code: true), class:'group-elem', readonly: (cp.referred_via == 'phone')%>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-5 input-r">
+        <%= f.text_field :fname, placeholder: 'First Name', value: cp.fname, class:'group-elem' %>
+      </div>
+      <div class="col-md-7 input-l">
+        <%= f.text_field :lname, placeholder: 'Last Name', value: cp.lname, class:'group-elem' %>
+      </div>
+    </div>
+    <div class="col-md-4 btn-div">
+      <%= button_tag(type: 'submit') do %>
+        <i class="ti-save"> Save</i>
+      <% end %>
+    </div>
+  <% end %>
+<% end %>

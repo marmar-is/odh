@@ -30,6 +30,8 @@ Rails.application.config.assets.precompile += %w(
 
   jquery.tagsinput/jquery.tagsinput.css
   jquery.tagsinput/jquery.tagsinput.js
+
+  ambassadors.css
 )
 
 # Register Assets (js & css)
