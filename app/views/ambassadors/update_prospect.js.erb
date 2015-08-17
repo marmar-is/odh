@@ -1,6 +1,7 @@
-$("<%= '#' + child.id.to_s %>").addClass('content-ajax');
+$("#child-<%= child.id.to_s %>").append("<div id='overlay-ajax'><img src=<%= asset_path('loading.gif') %> class='loading-gif' alt='loading' /></div>");
 
 var finishLoad = function(){
-  $("<%= '#' + child.id.to_s %>").removeClass('content-ajax')
+  $('#overlay-ajax').remove();
 };
-setTimeout(finishLoad, 1500);
+
+setTimeout(finishLoad, 2000);

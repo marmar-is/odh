@@ -26,6 +26,8 @@
   padding-right: 16px;
   padding-top: 16px;
 
+  position:relative;
+
   border-left: 1px dashed #ccc;
   border-bottom: 1px dashed #ccc;
   border-right: 1px dashed #ccc;
@@ -59,7 +61,15 @@
 }
 
 /* AJAX Overlay */
-.content-ajax {
-  background-color:#fff;
-  opacity:0.1;
+#overlay-ajax {
+  position: absolute;
+  width: 100%;
+  top: 0;
+  left:0;
+  padding-bottom:16px;
+  z-index: 1001;
+}
+#overlay-ajax img.loading-gif {
+  opacity:0.8;
+  z-index: 1002;
 }

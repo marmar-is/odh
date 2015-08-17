@@ -60,11 +60,16 @@ class AmbassadorsController < ApplicationController
     end
 
     respond_to do |format|
-      if child.update(child_params)
-        format.html {redirect_to root_path, notice: "Successfully Updated Child #{display_child_label(child)}."}
-        format.js { render "update_prospect", locals: {child: child} }
+      child.assign_attributes(child_params)
+      if child.changed?
+        if child.update(child_params)
+          format.html {redirect_to root_path, notice: "Successfully Updated Child #{display_child_label(child)}."}
+          format.js { render "update_prospect", locals: {child: child} }
+        else
+          format.html {redirect_to root_path, notice: "Error While Updating Child #{display_child_label(child)}."}
+        end
       else
-        format.html {redirect_to root_path, notice: "Error While Updating Child #{display_child_label(child)}."}
+        format.js { render "update_prospect_nochange", locals: {child: child} }
       end
     end
   end
