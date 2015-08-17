@@ -21,6 +21,11 @@
   margin-bottom: 0;
 }
 
+#my-people .accordion-2 .title span {
+  text-transform: none;
+  font-weight: bold;
+}
+
 #my-people .accordion-2 li.active .content {
   padding-left: 16px;
   padding-right: 16px;
@@ -59,7 +64,28 @@
 #my-people .btn-div button i {
   font-weight: 600;
 }
-
+#my-people div.row.status {
+  position:relative;
+}
+#my-people .status div:after  {
+  font-family: themify;
+  font-size:16px;
+  height:35px;
+  font-weight:bold;
+  position: absolute;
+  top:0;
+  right:20px;
+  line-height: 35px;
+}
+#my-people .status input {
+  padding-left:20px;
+}
+#my-people .status.registered div:after {
+  content: "\e64c";
+}
+#my-people .status.active div:after {
+  content: "\e60c";
+}
 /* AJAX Overlay */
 #overlay-ajax {
   position: absolute;
