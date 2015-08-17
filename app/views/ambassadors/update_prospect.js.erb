@@ -1,0 +1,6 @@
+$("<%= '#' + child.id.to_s %>").addClass('content-ajax');
+
+var finishLoad = function(){
+  $("<%= '#' + child.id.to_s %>").removeClass('content-ajax')
+};
+setTimeout(finishLoad, 1500);
