@@ -63,11 +63,11 @@ gem 'letter_opener', group: :development
 # Use Unicorn as the app server
 gem 'unicorn'
 
-# Ambassador Tokens
-# gem 'has_secure_token'
-
 # Twilio Messages
 gem 'twilio-ruby'
+
+# Stripe Payouts
+gem 'stripe'
 
 # Deployment Details (Use Capistrano for deployment)
 group :development do
