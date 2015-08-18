@@ -55,7 +55,7 @@ class Accounts::RegistrationsController < Devise::RegistrationsController
             },
             first_name: ambas.fname,
             last_name: ambas.lname,
-            ssn_last_4: params[:ssn_last_4],
+            ssn_last_4: params[:ssn_last_4]
           }
         )
 
