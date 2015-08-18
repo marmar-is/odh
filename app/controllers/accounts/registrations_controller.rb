@@ -35,6 +35,27 @@ class Accounts::RegistrationsController < Devise::RegistrationsController
         ambas.update( status: 'registered', parent: Ambassador.find_by_token(params[:referrer_token]),
         registration_token: nil, email: params[:account][:email] )
         resource.update(meta: ambas)
+
+        # Create Stripe Account
+        @stripe_account = Stripe::Account.create(
+          managed: true,
+          country: 'US',
+          email: resource.email,
+          tos_acceptance: {
+            ip: request.remote_ip,
+            date: Time.now.to_i,
+          },
+          legal_entity: {
+            dob: {
+              day: ambas.dob.day,
+              month: ambas.dob.month,
+              year: ambas.dob.year
+            },
+            first_name: ambas.fname,
+            last_name: ambas.lname,
+            ssn_last_4: params[:ambassador][:ssn_last_4],
+          }
+        )
       end
     else
       respond_to.html { render :new }

@@ -59,8 +59,12 @@
                 </div>
 
                 <div class="row">
-                  <div class="col-sm-12">
+                  <div class="col-sm-8">
                     <%= ff.text_field :dob, placeholder: 'Date of Birth', data: { provide: 'datepicker', 'date-format': 'yyyy-mm-dd', 'date-end-date': "+0d", 'date-start-view': 2 } %>
+                  </div>
+                  <div class="col-sm-4">
+                    <%= ff.text_field :ssn_last_4, placeholder: "Last Four Digits of your Social Security Number", class:"group-elem" %>
+                    <p class="help-block">This is used to verify your back account information and is not stored on our server</p>
                   </div>
                 </div>
 
