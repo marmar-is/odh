@@ -145,7 +145,7 @@
                           <%- @child_prospects.each do |cp| %>
                             <li>
                               <div class="title">
-                                <span><%= display_child_label(cp) %></span>
+                                <span id="title-<%= cp.id %>"><%= display_child_label(cp) %></span>
                               </div>
                               <div id="child-<%= cp.id %>" class="content">
                                 <%= render partial: 'ambassadors/prospect', locals: { child: cp } %>
