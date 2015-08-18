@@ -40,12 +40,14 @@ class Accounts::RegistrationsController < Devise::RegistrationsController
         @stripe_account = Stripe::Account.create(
           managed: true,
           country: 'US',
+          default_currency: 'USD',
           email: resource.email,
           tos_acceptance: {
             ip: request.remote_ip,
             date: Time.now.to_i,
           },
           legal_entity: {
+            type: 'individual',
             dob: {
               day: ambas.dob.day,
               month: ambas.dob.month,
@@ -56,6 +58,13 @@ class Accounts::RegistrationsController < Devise::RegistrationsController
             ssn_last_4: params[:ssn_last_4],
           }
         )
+
+        if @stripe_account
+          resource.update(
+            stripe_account_id: @stripe_account.id
+          )
+        end
+
       end
     else
       respond_to.html { render :new }
