@@ -11,6 +11,15 @@
     .group-elem {
       margin-bottom: 5px!important;
     }
+
+    form input {
+      height: 35px!important;
+    }
+
+    form input[type="submit"] {
+      height: inherit!important;
+    }
+
   </style>
 
   <%= stylesheet_link_tag 'bootstrap-datepicker/bootstrap-datepicker3.css', 'data-turbolinks-track' => true %>
@@ -67,6 +76,7 @@
 
                 <div class="row">
                   <div class="col-sm-9">
+                    <%# TODO: Make this a select tag %>
                     <%= ff.text_field :state, placeholder: "State", class:"group-elem" %>
                   </div>
                   <div class="col-sm-3">
