@@ -39,7 +39,7 @@ class Ambassador < ActiveRecord::Base
 
     def generate_unique_token
       begin
-        token = self.initials + sprintf('%03d', rand(0..999))
+        token = self.initials.upcase + sprintf('%03d', rand(0..999))
       end while self.class.exists?(token: token)
       return token
     end
