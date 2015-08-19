@@ -100,10 +100,16 @@ class Accounts::RegistrationsController < Devise::RegistrationsController
         rescue Stripe::CardError => e
           error = e.json_body[:error][:message]
           flash[:error] = "Charge failed! #{error}"
+
+          Stripe::Account.retrieve(stripe_account.id).delete # remove stripe account if card is declined
+
           render :new # Will describe why card failed
         rescue
           clean_up_passwords resource
           set_minimum_password_length
+
+          Stripe::Account.retrieve(stripe_account.id).delete # remove stripe account if there is an error during creation
+
           render :new # TODO: add error messages (using stripe errors)
         end
         # /begin
