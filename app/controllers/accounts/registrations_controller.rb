@@ -26,21 +26,25 @@ class Accounts::RegistrationsController < Devise::RegistrationsController
     else
       @ambassador = Ambassador.new
     end
-    @ambassador.assign_attributes(ambassador_params) # update ambassador object (without saving)
 
-    if @ambassador.valid?
-      #@ambassador = ambas
+    #ActiveRecord::Base.transaction do
+      #super do |resource|
 
-      ActiveRecord::Base.transaction do
-        super do |resource|
+      build_resource(sign_up_params)
+      @ambassador.assign_attributes( ambassador_params.merge(email: params[:account][:email].downcase) ) # update ambassador object (without saving)
 
-          if resource.persisted?
-            # save the ambassador & set it as the newly created account's meta
-            @ambassador.update( status: 'registered', parent: Ambassador.find_by_token(params[:referrer_token]),
-            registration_token: nil, email: resource.email )
-            resource.update(meta: @ambassador)
+      if resource.valid?
 
-            # Create Stripe Account
+        if @ambassador.valid?
+
+          # update the ambassador & set it as the newly created account's meta
+          @ambassador.assign_attributes( status: 'registered', parent: Ambassador.find_by_token(params[:referrer_token]),
+          registration_token: nil, email: resource.email )
+
+          resource.assign_attributes(meta: @ambassador)
+
+          # Create Stripe Account
+          begin
             @stripe_account = Stripe::Account.create(
               managed: true,
               country: 'US',
@@ -65,21 +69,40 @@ class Accounts::RegistrationsController < Devise::RegistrationsController
                 organization: 'odh'
               }
             )
+          rescue
+            clean_up_passwords resource
+            set_minimum_password_length
+            render :new # TODO: add error messages
+          end
 
-            if @stripe_account
-              resource.update(stripe_account_id: @stripe_account.id)
-            else
-              raise ActiveRecord::Rollback # rollback if error in creating stripe account
-            end
-          #end
-          # /resource.persisted?
+          if @stripe_account
+            #resource.update(stripe_account_id: @stripe_account.id)
+          else
+            #raise ActiveRecord::Rollback # rollback if error in creating stripe account
+          end
+
+        else
+          clean_up_passwords resource
+          set_minimum_password_length
+          render :new # TODO: add error messages
+          #raise ActiveRecord::Rollback # rollback if error in creating ambassador
         end
-        # /super
+        # /ambassador.valid?
+      else
+        clean_up_passwords resource
+        set_minimum_password_length
+        respond_with resource
       end
-      # /transaction
-    else
-      respond_to.html { render :new }
-    end
+      # /resource.valid?
+      #end
+      # /super
+    #end
+    # /transaction
+
+    #else
+    #  respond_to.html { render :new }
+    #end
+
   end
 
   # GET /resource/edit

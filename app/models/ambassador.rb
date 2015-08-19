@@ -15,6 +15,9 @@ class Ambassador < ActiveRecord::Base
   # Order
   default_scope { order('created_at DESC') }
 
+  # Validations
+  validates :dob, presence: true
+
   # Methods
   # Get Full Name
   def full_name
