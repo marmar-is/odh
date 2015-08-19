@@ -12,8 +12,8 @@ class Ambassador < ActiveRecord::Base
   # Enumerations
   enum status: [ :prospective, :registered, :active ]
 
-  # Tokens
-  #has_secure_token :registration_token
+  # Order
+  default_scope { order('created_at DESC') }
 
   # Methods
   # Get Full Name
