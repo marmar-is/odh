@@ -69,9 +69,14 @@ class Accounts::RegistrationsController < Devise::RegistrationsController
 
           # Charge Subscription Fee
           customer = Stripe::Customer.create({
-            source:     params[:token],
-            email:      resource.email,
-            plan:       params[:plan_id]
+            source:       params[:token],
+            email:        resource.email,
+            plan:         params[:plan_id],
+            description:  "Subscription to ODH",
+            metadata: {
+              connect_account: stripe_account.id,
+              odh_account:     resource.id
+            }
           })
 
           # hold onto the Stripe Account ID and Stripe Customer ID
