@@ -1,7 +1,7 @@
 <%= content_for :head do %>
   <style>
     section.overlay.cover.fullscreen {
-      min-height:1000px!important;
+      min-height:1500px!important;
     }
 
     p.group-tag {
@@ -98,12 +98,14 @@
                 <%= hidden_field_tag 'registration_token', params[:registration_token] %>
                 <%= hidden_field_tag 'id', params[:id] %>
 
-                <%= f.submit "Register" %>
+                <%#= f.submit "Register" %>
+                <input type="submit" id="register-btn" value="Register"/>
 
                 <hr />
                 <%= render "accounts/shared/links" %>
               <% end %>
             <% end %>
+
             <p class="mb0">By signing up, you agree to our
               <a href="#">Terms Of Use</a>
             </p>
@@ -116,4 +118,38 @@
 
 <%= content_for :js_includes do  %>
   <%= javascript_include_tag 'bootstrap-datepicker/bootstrap-datepicker.js', 'data-turbolinks-track' => true %>
+  <script src="https://checkout.stripe.com/checkout.js"></script>
+  <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+
+  <script type="text/javascript">
+
+    var handler = StripeCheckout.configure({
+      key: "<%= Rails.application.secrets.stripe_publishable_key %>",
+      token: function(token) {
+        submitting = true
+        $('form').first().find('input[name=token]').val( token.id )
+        $('form').first().get(0).submit()
+        // Use the token to create the charge with a server-side script.
+        // You can access the token ID with `token.id`
+      }
+    });
+
+    $('#register-btn').on('click', function(e) {
+      e.preventDefault();
+      // Open Checkout with further options
+      handler.open({
+        name: 'marmaris',
+        description: '2 widgets',
+        zipCode: true,
+        amount: 2000,
+        email: $('input[type=email]').val()
+      });
+      e.preventDefault();
+    });
+
+    // Close Checkout on page navigation
+    $(window).on('popstate', function() {
+      //handler.close();
+    });
+  </script>
 <% end %>
