@@ -55,28 +55,28 @@
                 <p class="group-tag">Identity</p>
                 <div class="row">
                   <div class="col-sm-7">
-                    <%= f.email_field :email, placeholder: "Email Address", autofocus: true, class:"group-elem", value: @ambassador.email, required: true %>
+                    <%= f.email_field :email, placeholder: "Email Address", autofocus: true, class:"group-elem", value: @ambassador.email %>
                   </div>
                   <div class="col-sm-5">
-                    <%= ff.telephone_field :phone, placeholder: "Phone Number", class:"group-elem", required: true %>
+                    <%= ff.telephone_field :phone, placeholder: "Phone Number", class:"group-elem" %>
                   </div>
                 </div>
 
                 <div class="row">
                   <div class="col-sm-6">
-                    <%= ff.text_field :fname, placeholder: "First Name", class:"group-elem", required: true %>
+                    <%= ff.text_field :fname, placeholder: "First Name", class:"group-elem" %>
                   </div>
                   <div class="col-sm-6">
-                    <%= ff.text_field :lname, placeholder: "Last Name", class:"group-elem", required: true %>
+                    <%= ff.text_field :lname, placeholder: "Last Name", class:"group-elem" %>
                   </div>
                 </div>
 
                 <div class="row">
                   <div class="col-sm-5">
-                    <%= ff.text_field :dob, placeholder: 'Date of Birth', data: { provide: 'datepicker', 'date-format': 'yyyy-mm-dd', 'date-end-date': "+0d", 'date-start-view': 2 }, required: true %>
+                    <%= ff.text_field :dob, placeholder: 'Date of Birth', data: { provide: 'datepicker', 'date-format': 'yyyy-mm-dd', 'date-end-date': "+0d", 'date-start-view': 2 } %>
                   </div>
                   <div class="col-sm-7">
-                    <%= text_field_tag :ssn_last_4, '', placeholder: "Last 4 Of SSN", class:"group-elem", required: true, minlength: 4, maxlength: 4 %>
+                    <%= text_field_tag :ssn_last_4, '', placeholder: "Last 4 Of SSN", class:"group-elem", maxlength: 4 %>
                     <p class="help-block">This is used to verify your identity information and is not stored on our server</p>
                   </div>
                 </div>
@@ -134,94 +134,8 @@
 
 <%= content_for :js_includes do  %>
   <%= javascript_include_tag 'bootstrap-datepicker/bootstrap-datepicker.js', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'jquery.scrollintoview.js', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'jquery.scrollintoview/jquery.scrollintoview.js', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'register.js', 'data-turbolinks-track' => true %>
   <script src="https://checkout.stripe.com/checkout.js"></script>
 
-  <script type="text/javascript">
-
-  $(document).ready(function(){
-    form = $('form#new_account');
-    plan = {id: 'subscription', name: '1 Year of Standard ODH Services', amount: 350000}; // TODO: add ability to select a plan
-
-    form.validate({
-      rules: {
-        'account[email]': {
-          required: true,
-          email: true
-        },
-        'ambassador[phone]': {
-          phoneUS: true,
-        }
-      },
-      showErrors: function(errorMap, errorList) {
-        // Clean up any tooltips for valid elements
-        $.each(this.validElements(), function (index, element) {
-          var $element = $(element);
-          // Clear the title - there is no error associated anymore
-          $element.data("title", "").removeClass("error").tooltip("destroy");
-        });
-
-        // Create new tooltips for invalid elements
-        $.each(errorList, function (index, error) {
-          var $element = $(error.element);
-          // Destroy any pre-existing tooltip so we can repopulate with new tooltip content
-          // Create a new tooltip based on the error messsage we just set in the title
-          $element.tooltip("destroy").data({"title": error.message}).addClass("error").tooltip();
-
-          //$element.tooltip('show');
-        });
-      },
-      focusInvalid: true,
-      invalidHandler: function(form, validator) {
-        if (!validator.numberOfInvalids())
-        return;
-
-        /*$('html, body').animate({
-          scrollTop: $(validator.errorList[0].element).offset().top - 50
-        }, "slow");*/
-        $(validator.errorList[0].element).scrollintoview({ duration: "slow", padding: {T: 55} });
-
-        var applyFocus = function(){
-          $(validator.errorList[0].element).focus();
-          //$(validator.errorList[0].element).tooltip("show");
-        };
-        window.setTimeout(applyFocus, "slow");
-      }
-    });
-
-    var handler = StripeCheckout.configure({
-      key: "<%= Rails.application.secrets.stripe_publishable_key %>",
-      allowRememberMe: false,
-      token: function(token) {
-        submitting = true
-        form.find('input[name=token]').val( token.id )
-        form.find('input[name=plan_id]').val( plan.id )
-        form.get(0).submit()
-        // Use the token to create the charge with a server-side script.
-        // You can access the token ID with `token.id`
-      }
-    });
-
-    $('#register-btn').on('click', function(e) {
-      e.preventDefault();
-
-      if (form.valid()) {
-        // Open Checkout with further options
-        handler.open({
-          name: 'ODH Yearly Subscription',
-          description: plan.name,
-          amount: plan.amount,
-          email: $('input[type=email]').val(),
-        });
-      } else {
-        //$("html, body").animate({ scrollTop: 0 }, "slow");
-      }
-    });
-
-    // Close Checkout on page navigation
-    $(window).on('popstate', function() {
-      handler.close();
-    });
-  });
-  </script>
 <% end %>
