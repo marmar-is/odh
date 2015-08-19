@@ -17,6 +17,6 @@
  *= require ytplayer
  *= require theme-chipotle
 
- *= require_tree .
  *= require_self
+ * require_tree .
  */
