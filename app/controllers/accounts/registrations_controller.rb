@@ -42,7 +42,7 @@ class Accounts::RegistrationsController < Devise::RegistrationsController
 
         # Create Stripe Account
         begin
-          @stripe_account = Stripe::Account.create(
+          stripe_account = Stripe::Account.create(
             managed: true,
             country: 'US',
             default_currency: 'USD',
@@ -67,10 +67,15 @@ class Accounts::RegistrationsController < Devise::RegistrationsController
             }
           )
 
-          resource.assign_attributes(stripe_account_id: @stripe_account.id) # hold onto the Stripe Account ID
-
           # Charge Subscription Fee
+          customer = Stripe::Customer.create({
+            source:     params[:token],
+            email:      resource.email,
+            plan:       params[:plan_id]
+          })
 
+          # hold onto the Stripe Account ID and Stripe Customer ID
+          resource.assign_attributes(stripe_account_id: stripe_account.id, stripe_subscription_id: customer.id)
 
           # Successful Create! Save Everything
           resource.save
@@ -87,6 +92,9 @@ class Accounts::RegistrationsController < Devise::RegistrationsController
             respond_with resource, location: after_inactive_sign_up_path_for(resource)
           end
 
+        rescue Stripe::CardError => e
+          error = e.json_body[:error][:message]
+          flash[:error] = "Charge failed! #{error}"
         rescue
           clean_up_passwords resource
           set_minimum_password_length

@@ -38,6 +38,7 @@
             <%= form_for(resource, html: { class: 'text-left' }, as: resource_name, url: registration_path(resource_name)) do |f| %>
               <%= fields_for :ambassador do |ff| %>
                 <%= devise_error_messages! %>
+                <%= flash[:error] %>
 
                 <p class="group-tag">Identity</p>
                 <div class="row">
@@ -101,7 +102,7 @@
                 <%= hidden_field_tag 'token' %>
                 <%= hidden_field_tag 'plan_id' %>
 
-                <%= f.submit "Register" %>
+                <%#= f.submit "Register" %>
                 <input type="submit" id="register-btn" value="Register"/>
 
                 <hr />
@@ -130,14 +131,19 @@
     form = $('form#new_account');
     plan = {id: 'subscription', name: '1 Year of Standard ODH Services', amount: 350000}; // TODO: add ability to select a plan
 
+    function validateForm(form) {
+      // Ensure presence of all fields
+      if (form)
+    };
+
     var handler = StripeCheckout.configure({
       key: "<%= Rails.application.secrets.stripe_publishable_key %>",
       allowRememberMe: false,
       token: function(token) {
         submitting = true
-        $form.find('input[name=token]').val( token.id )
-        $form.find('input[name=plan_id]').val( plan )
-        $form.get(0).submit()
+        form.find('input[name=token]').val( token.id )
+        form.find('input[name=plan_id]').val( plan.id )
+        form.get(0).submit()
         // Use the token to create the charge with a server-side script.
         // You can access the token ID with `token.id`
       }
@@ -145,14 +151,21 @@
 
     $('#register-btn').on('click', function(e) {
       e.preventDefault();
-      // Open Checkout with further options
-      handler.open({
-        name: 'ODH Yearly Subscription',
-        description: plan.name,
-        zipCode: true,
-        amount: plan.amount,
-        email: $('input[type=email]').val(),
-      });
+      // Easy Validate the Form Before Opening Handler
+      if (validateForm(form)) {
+
+        // Open Checkout with further options
+        handler.open({
+          name: 'ODH Yearly Subscription',
+          description: plan.name,
+          amount: plan.amount,
+          email: $('input[type=email]').val(),
+        });
+      } else {
+        // print errors
+        alert('error')
+      }
+
     });
 
     // Close Checkout on page navigation
