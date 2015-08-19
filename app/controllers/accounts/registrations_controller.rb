@@ -27,92 +27,85 @@ class Accounts::RegistrationsController < Devise::RegistrationsController
       @ambassador = Ambassador.new
     end
 
-    #ActiveRecord::Base.transaction do
-      #super do |resource|
+    build_resource(sign_up_params) # Build the devise account
 
-      build_resource(sign_up_params)
-      @ambassador.assign_attributes( ambassador_params.merge(email: params[:account][:email].downcase) ) # update ambassador object (without saving)
+    # Update Ambassador object (without saving)
+    @ambassador.assign_attributes( ambassador_params.merge(email: params[:account][:email].downcase) )
 
-      if resource.valid?
+    if resource.valid?
+      if @ambassador.valid?
+        # update the ambassador & set it as the newly created account's meta
+        @ambassador.assign_attributes( status: 'registered', parent: Ambassador.find_by_token(params[:referrer_token]),
+        registration_token: nil, email: resource.email )
 
-        if @ambassador.valid?
+        resource.assign_attributes(meta: @ambassador)
 
-          # update the ambassador & set it as the newly created account's meta
-          @ambassador.assign_attributes( status: 'registered', parent: Ambassador.find_by_token(params[:referrer_token]),
-          registration_token: nil, email: resource.email )
-
-          resource.assign_attributes(meta: @ambassador)
-
-          # Create Stripe Account
-          begin
-            @stripe_account = Stripe::Account.create(
-              managed: true,
-              country: 'US',
-              default_currency: 'USD',
-              email: resource.email,
-              tos_acceptance: {
-                ip: request.remote_ip,
-                date: Time.now.to_i,
+        # Create Stripe Account
+        begin
+          @stripe_account = Stripe::Account.create(
+            managed: true,
+            country: 'US',
+            default_currency: 'USD',
+            email: resource.email,
+            tos_acceptance: {
+              ip: request.remote_ip,
+              date: Time.now.to_i,
+            },
+            legal_entity: {
+              type: 'individual',
+              dob: {
+                day: @ambassador.dob.day,
+                month: @ambassador.dob.month,
+                year: @ambassador.dob.year
               },
-              legal_entity: {
-                type: 'individual',
-                dob: {
-                  day: @ambassador.dob.day,
-                  month: @ambassador.dob.month,
-                  year: @ambassador.dob.year
-                },
-                first_name: @ambassador.fname,
-                last_name: @ambassador.lname,
-                ssn_last_4: params[:ssn_last_4]
-              },
-              metadata: {
-                organization: 'odh'
-              }
-            )
+              first_name: @ambassador.fname,
+              last_name: @ambassador.lname,
+              ssn_last_4: params[:ssn_last_4]
+            },
+            metadata: {
+              organization: 'odh'
+            }
+          )
 
-            resource.assign_attributes(stripe_account_id: @stripe_account.id) # hold onto the Stripe Account ID
+          resource.assign_attributes(stripe_account_id: @stripe_account.id) # hold onto the Stripe Account ID
 
-            # Charge Subscription Fee
-            
+          # Charge Subscription Fee
 
-            # Successful Create! Save Everything
-            resource.save
-            @ambassador.save
 
-            # Taken from Devise
-            if resource.active_for_authentication?
-              set_flash_message :notice, :signed_up if is_flashing_format?
-              sign_up(resource_name, resource)
-              respond_with resource, location: after_sign_up_path_for(resource)
-            else
-              set_flash_message :notice, :"signed_up_but_#{resource.inactive_message}" if is_flashing_format?
-              expire_data_after_sign_in!
-              respond_with resource, location: after_inactive_sign_up_path_for(resource)
-            end
+          # Successful Create! Save Everything
+          resource.save
+          @ambassador.save
 
-          rescue
-            clean_up_passwords resource
-            set_minimum_password_length
-            render :new # TODO: add error messages
+          # Taken from Devise
+          if resource.active_for_authentication?
+            set_flash_message :notice, :signed_up if is_flashing_format?
+            sign_up(resource_name, resource)
+            respond_with resource, location: after_sign_up_path_for(resource)
+          else
+            set_flash_message :notice, :"signed_up_but_#{resource.inactive_message}" if is_flashing_format?
+            expire_data_after_sign_in!
+            respond_with resource, location: after_inactive_sign_up_path_for(resource)
           end
 
-        else
+        rescue
           clean_up_passwords resource
           set_minimum_password_length
           render :new # TODO: add error messages
         end
-        # /ambassador.valid?
+
       else
         clean_up_passwords resource
         set_minimum_password_length
-        respond_with resource
+        render :new # TODO: add error messages
       end
-      # /resource.valid?
-      #end
-      # /super
-    #end
-    # /transaction
+      # /ambassador.valid?
 
+    else
+      clean_up_passwords resource
+      set_minimum_password_length
+      respond_with resource
+    end
+    # /resource.valid?
   end
 
   # GET /resource/edit
