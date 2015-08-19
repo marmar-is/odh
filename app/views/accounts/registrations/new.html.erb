@@ -42,7 +42,7 @@
                 <p class="group-tag">Identity</p>
                 <div class="row">
                   <div class="col-sm-7">
-                    <%= f.email_field :email, placeholder: "Email Address", autofocus: true, class:"group-elem", value: @ambassador.email %>
+                    <%= f.email_field :email, placeholder: "Email Address", autofocus: true, class:"group-elem", value: @ambassador.email, required: true %>
                   </div>
                   <div class="col-sm-5">
                     <%= ff.telephone_field :phone, placeholder: "Phone Number", class:"group-elem" %>
@@ -98,7 +98,10 @@
                 <%= hidden_field_tag 'registration_token', params[:registration_token] %>
                 <%= hidden_field_tag 'id', params[:id] %>
 
-                <%#= f.submit "Register" %>
+                <%= hidden_field_tag 'token' %>
+                <%= hidden_field_tag 'plan_id' %>
+
+                <%= f.submit "Register" %>
                 <input type="submit" id="register-btn" value="Register"/>
 
                 <hr />
@@ -123,12 +126,18 @@
 
   <script type="text/javascript">
 
+  $(document).ready(function(){
+    form = $('form#new_account');
+    plan = {id: 'subscription', name: '1 Year of Standard ODH Services', amount: 350000}; // TODO: add ability to select a plan
+
     var handler = StripeCheckout.configure({
       key: "<%= Rails.application.secrets.stripe_publishable_key %>",
+      allowRememberMe: false,
       token: function(token) {
         submitting = true
-        $('form').first().find('input[name=token]').val( token.id )
-        $('form').first().get(0).submit()
+        $form.find('input[name=token]').val( token.id )
+        $form.find('input[name=plan_id]').val( plan )
+        $form.get(0).submit()
         // Use the token to create the charge with a server-side script.
         // You can access the token ID with `token.id`
       }
@@ -138,18 +147,18 @@
       e.preventDefault();
       // Open Checkout with further options
       handler.open({
-        name: 'marmaris',
-        description: '2 widgets',
+        name: 'ODH Yearly Subscription',
+        description: plan.name,
         zipCode: true,
-        amount: 2000,
-        email: $('input[type=email]').val()
+        amount: plan.amount,
+        email: $('input[type=email]').val(),
       });
-      e.preventDefault();
     });
 
     // Close Checkout on page navigation
     $(window).on('popstate', function() {
-      //handler.close();
+      handler.close();
     });
+  });
   </script>
 <% end %>

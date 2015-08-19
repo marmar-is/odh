@@ -19,56 +19,64 @@ class Accounts::RegistrationsController < Devise::RegistrationsController
   def create
     if !params[:registration_token].blank? && !params[:id].blank?
       if Ambassador.find(params[:id]).registration_token == params[:registration_token]
-        ambas = Ambassador.find(params[:id])
+        @ambassador = Ambassador.find(params[:id])
       else
         raise "Attempted trickery (RegistrationsController.rb:24)"
       end
     else
-      ambas = Ambassador.new
+      @ambassador = Ambassador.new
     end
-    ambas.assign_attributes(ambassador_params) # update ambassador object (without saving)
+    @ambassador.assign_attributes(ambassador_params) # update ambassador object (without saving)
 
-    if ambas.valid?
-      @ambassador = ambas
-      super do |resource|
-        # save the ambassador & set it as the newly created account's meta
-        ambas.update( status: 'registered', parent: Ambassador.find_by_token(params[:referrer_token]),
-        registration_token: nil, email: params[:account][:email] )
-        resource.update(meta: ambas)
+    if @ambassador.valid?
+      #@ambassador = ambas
 
-        # Create Stripe Account
-        @stripe_account = Stripe::Account.create(
-          managed: true,
-          country: 'US',
-          default_currency: 'USD',
-          email: resource.email,
-          tos_acceptance: {
-            ip: request.remote_ip,
-            date: Time.now.to_i,
-          },
-          legal_entity: {
-            type: 'individual',
-            dob: {
-              day: ambas.dob.day,
-              month: ambas.dob.month,
-              year: ambas.dob.year
-            },
-            first_name: ambas.fname,
-            last_name: ambas.lname,
-            ssn_last_4: params[:ssn_last_4]
-          },
-          meta_data: {
-            organization: 'odh'
-          }
-        )
+      ActiveRecord::Base.transaction do
+        super do |resource|
 
-        if @stripe_account
-          resource.update(
-            stripe_account_id: @stripe_account.id
-          )
+          if resource.persisted?
+            # save the ambassador & set it as the newly created account's meta
+            @ambassador.update( status: 'registered', parent: Ambassador.find_by_token(params[:referrer_token]),
+            registration_token: nil, email: resource.email )
+            resource.update(meta: @ambassador)
+
+            # Create Stripe Account
+            @stripe_account = Stripe::Account.create(
+              managed: true,
+              country: 'US',
+              default_currency: 'USD',
+              email: resource.email,
+              tos_acceptance: {
+                ip: request.remote_ip,
+                date: Time.now.to_i,
+              },
+              legal_entity: {
+                type: 'individual',
+                dob: {
+                  day: @ambassador.dob.day,
+                  month: @ambassador.dob.month,
+                  year: @ambassador.dob.year
+                },
+                first_name: @ambassador.fname,
+                last_name: @ambassador.lname,
+                ssn_last_4: params[:ssn_last_4]
+              },
+              metadata: {
+                organization: 'odh'
+              }
+            )
+
+            if @stripe_account
+              resource.update(stripe_account_id: @stripe_account.id)
+            else
+              raise ActiveRecord::Rollback # rollback if error in creating stripe account
+            end
+          #end
+          # /resource.persisted?
         end
-
+        # /super
       end
+      # /transaction
     else
       respond_to.html { render :new }
     end
