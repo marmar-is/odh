@@ -16,7 +16,7 @@ class Ambassador < ActiveRecord::Base
   default_scope { order('created_at DESC') }
 
   # Validations
-  validates :email,  presence: true
+  validates :email,  presence: true # validated through devise 
   validates :phone,  presence: true, numericality: { only_integer: true }
   validates :fname,  presence: true, length: { minimum: 2 }
   validates :lname,  presence: true, length: { minimum: 2 }

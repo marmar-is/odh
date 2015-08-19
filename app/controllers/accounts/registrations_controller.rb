@@ -100,16 +100,18 @@ class Accounts::RegistrationsController < Devise::RegistrationsController
         rescue Stripe::CardError => e
           error = e.json_body[:error][:message]
           flash[:error] = "Charge failed! #{error}"
+          render :new # Will describe why card failed
         rescue
           clean_up_passwords resource
           set_minimum_password_length
-          render :new # TODO: add error messages
+          render :new # TODO: add error messages (using stripe errors)
         end
+        # /begin
 
       else
         clean_up_passwords resource
         set_minimum_password_length
-        render :new # TODO: add error messages
+        render :new # TODO: add error messages (invalid ambassador)
       end
       # /ambassador.valid?
 
