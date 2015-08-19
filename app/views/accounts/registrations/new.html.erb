@@ -26,7 +26,7 @@
     }
     form .tooltip .tooltip-inner {
       background-color: #b94a48!important;
-      border-radius: 5px;
+      border-radius: 2px;
     }
     form .tooltip .tooltip-arrow {
       border-top-color: #b94a48!important;
@@ -77,7 +77,7 @@
                   </div>
                   <div class="col-sm-7">
                     <%= text_field_tag :ssn_last_4, '', placeholder: "Last 4 Of SSN", class:"group-elem", required: true, minlength: 4, maxlength: 4 %>
-                    <p class="help-block">This is used to verify your bank account information and is not stored on our server</p>
+                    <p class="help-block">This is used to verify your identity information and is not stored on our server</p>
                   </div>
                 </div>
 
@@ -134,8 +134,8 @@
 
 <%= content_for :js_includes do  %>
   <%= javascript_include_tag 'bootstrap-datepicker/bootstrap-datepicker.js', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'jquery.scrollintoview.js', 'data-turbolinks-track' => true %>
   <script src="https://checkout.stripe.com/checkout.js"></script>
-  <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
 
   <script type="text/javascript">
 
@@ -170,6 +170,22 @@
 
           //$element.tooltip('show');
         });
+      },
+      focusInvalid: true,
+      invalidHandler: function(form, validator) {
+        if (!validator.numberOfInvalids())
+        return;
+
+        /*$('html, body').animate({
+          scrollTop: $(validator.errorList[0].element).offset().top - 50
+        }, "slow");*/
+        $(validator.errorList[0].element).scrollintoview({ duration: "slow", padding: {T: 55} });
+
+        var applyFocus = function(){
+          $(validator.errorList[0].element).focus();
+          //$(validator.errorList[0].element).tooltip("show");
+        };
+        window.setTimeout(applyFocus, "slow");
       }
     });
 
@@ -198,7 +214,7 @@
           email: $('input[type=email]').val(),
         });
       } else {
-        $("html, body").animate({ scrollTop: 0 }, "slow");
+        //$("html, body").animate({ scrollTop: 0 }, "slow");
       }
     });
 
