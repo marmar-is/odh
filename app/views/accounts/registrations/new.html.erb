@@ -1,40 +1,6 @@
 <%= content_for :head do %>
-  <style>
-    section.overlay.cover.fullscreen {
-      min-height:1000px!important;
-    }
-
-    p.group-tag {
-      margin-bottom:0;
-    }
-
-    .group-elem {
-      margin-bottom: 5px!important;
-    }
-
-    form input {
-      height: 35px!important;
-    }
-
-    form input[type="submit"] {
-      height: inherit!important;
-    }
-    /* Error Tooltip */
-    form input.error {
-      border: 2px solid #b94a48!important;
-      background-color: #fee!important;
-    }
-    form .tooltip .tooltip-inner {
-      background-color: #b94a48!important;
-      border-radius: 2px;
-    }
-    form .tooltip .tooltip-arrow {
-      border-top-color: #b94a48!important;
-    }
-
-  </style>
-
   <%= stylesheet_link_tag 'bootstrap-datepicker/bootstrap-datepicker3.css', 'data-turbolinks-track' => true %>
+  <%= stylesheet_link_tag 'register', 'data-turbolinks-track' => true %>
 <% end %>
 
 <section class="cover fullscreen image-bg overlay">
@@ -77,7 +43,8 @@
                   </div>
                   <div class="col-sm-7">
                     <%= text_field_tag :ssn_last_4, '', placeholder: "Last 4 Of SSN", class:"group-elem", maxlength: 4 %>
-                    <p class="help-block">This is used to verify your identity information and is not stored on our server</p>
+                    <i class="help ti ti-help" data-toggle="tooltip" data-placement="right"
+                    title="This is used to verify your identity information and is not stored on our servers."></i>
                   </div>
                 </div>
 

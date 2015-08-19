@@ -40,4 +40,5 @@ Rails.application.config.assets.precompile += %w(
   bootstrap-datepicker/bootstrap-datepicker.js
   jquery.scrollintoview/jquery.scrollintoview.js
   register.js
+  register.css
 )

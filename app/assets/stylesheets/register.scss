@@ -1,0 +1,58 @@
+section.overlay.cover.fullscreen {
+  min-height:1000px!important;
+}
+
+p.group-tag {
+  margin-bottom:0;
+}
+
+.group-elem {
+  margin-bottom: 5px!important;
+}
+
+form input {
+  height: 35px!important;
+}
+
+form input[type="submit"] {
+  height: inherit!important;
+}
+/* Error Tooltip */
+form input.error {
+  border: 2px solid #b94a48;
+  background-color: #fee;
+}
+form .tooltip.top .tooltip-inner {
+  background-color: #b94a48;
+  border-radius: 2px;
+}
+form .tooltip.top .tooltip-arrow {
+  border-top-color: #b94a48;
+}
+/* SSN Info Icon */
+form input#ssn_last_4 {
+  padding-right: 15px;
+}
+form div.row i.help {
+  position:absolute;
+  line-height: 35px;
+  top:0px;
+  right: 15px;
+  color: #428bca;
+  font-size: 16px;
+  background-color: #ccc;
+
+  padding: 0px 5px;
+}
+form input.error ~ i.help {
+  line-height: 31px;
+  top:2px;
+  right: 17px;
+}
+form .tooltip.right .tooltip-inner {
+  background-color: #428bca;
+  width:200px;
+}
+form .tooltip.right .tooltip-arrow {
+  border-right-color: #428bca;
+}
