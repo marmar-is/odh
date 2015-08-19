@@ -72,10 +72,14 @@ class Accounts::RegistrationsController < Devise::RegistrationsController
 
             resource.assign_attributes(stripe_account_id: @stripe_account.id) # hold onto the Stripe Account ID
 
+            # Charge Subscription Fee
+            
+
             # Successful Create! Save Everything
             resource.save
             @ambassador.save
 
+            # Taken from Devise
             if resource.active_for_authentication?
               set_flash_message :notice, :signed_up if is_flashing_format?
               sign_up(resource_name, resource)
@@ -96,7 +100,6 @@ class Accounts::RegistrationsController < Devise::RegistrationsController
           clean_up_passwords resource
           set_minimum_password_length
           render :new # TODO: add error messages
-          #raise ActiveRecord::Rollback # rollback if error in creating ambassador
         end
         # /ambassador.valid?
       else
@@ -109,10 +112,6 @@ class Accounts::RegistrationsController < Devise::RegistrationsController
       # /super
     #end
     # /transaction
-
-    #else
-    #  respond_to.html { render :new }
-    #end
 
   end
 
