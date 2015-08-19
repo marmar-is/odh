@@ -1,7 +1,7 @@
 <%= content_for :head do %>
   <style>
     section.overlay.cover.fullscreen {
-      min-height:1500px!important;
+      min-height:1000px!important;
     }
 
     p.group-tag {
@@ -18,6 +18,18 @@
 
     form input[type="submit"] {
       height: inherit!important;
+    }
+    /* Error Tooltip */
+    form input.error {
+      border: 2px solid #b94a48!important;
+      background-color: #fee!important;
+    }
+    form .tooltip .tooltip-inner {
+      background-color: #b94a48!important;
+      border-radius: 5px;
+    }
+    form .tooltip .tooltip-arrow {
+      border-top-color: #b94a48!important;
     }
 
   </style>
@@ -46,25 +58,25 @@
                     <%= f.email_field :email, placeholder: "Email Address", autofocus: true, class:"group-elem", value: @ambassador.email, required: true %>
                   </div>
                   <div class="col-sm-5">
-                    <%= ff.telephone_field :phone, placeholder: "Phone Number", class:"group-elem" %>
+                    <%= ff.telephone_field :phone, placeholder: "Phone Number", class:"group-elem", required: true %>
                   </div>
                 </div>
 
                 <div class="row">
                   <div class="col-sm-6">
-                    <%= ff.text_field :fname, placeholder: "First Name", class:"group-elem" %>
+                    <%= ff.text_field :fname, placeholder: "First Name", class:"group-elem", required: true %>
                   </div>
                   <div class="col-sm-6">
-                    <%= ff.text_field :lname, placeholder: "Last Name", class:"group-elem" %>
+                    <%= ff.text_field :lname, placeholder: "Last Name", class:"group-elem", required: true %>
                   </div>
                 </div>
 
                 <div class="row">
                   <div class="col-sm-5">
-                    <%= ff.text_field :dob, placeholder: 'Date of Birth', data: { provide: 'datepicker', 'date-format': 'yyyy-mm-dd', 'date-end-date': "+0d", 'date-start-view': 2 } %>
+                    <%= ff.text_field :dob, placeholder: 'Date of Birth', data: { provide: 'datepicker', 'date-format': 'yyyy-mm-dd', 'date-end-date': "+0d", 'date-start-view': 2 }, required: true %>
                   </div>
                   <div class="col-sm-7">
-                    <%= text_field_tag :ssn_last_4, '', placeholder: "Last 4 Of SSN", class:"group-elem" %>
+                    <%= text_field_tag :ssn_last_4, '', placeholder: "Last 4 Of SSN", class:"group-elem", required: true, minlength: 4, maxlength: 4 %>
                     <p class="help-block">This is used to verify your bank account information and is not stored on our server</p>
                   </div>
                 </div>
@@ -131,10 +143,35 @@
     form = $('form#new_account');
     plan = {id: 'subscription', name: '1 Year of Standard ODH Services', amount: 350000}; // TODO: add ability to select a plan
 
-    function validateForm(form) {
-      // Ensure presence of all fields
-      if (form)
-    };
+    form.validate({
+      rules: {
+        'account[email]': {
+          required: true,
+          email: true
+        },
+        'ambassador[phone]': {
+          phoneUS: true,
+        }
+      },
+      showErrors: function(errorMap, errorList) {
+        // Clean up any tooltips for valid elements
+        $.each(this.validElements(), function (index, element) {
+          var $element = $(element);
+          // Clear the title - there is no error associated anymore
+          $element.data("title", "").removeClass("error").tooltip("destroy");
+        });
+
+        // Create new tooltips for invalid elements
+        $.each(errorList, function (index, error) {
+          var $element = $(error.element);
+          // Destroy any pre-existing tooltip so we can repopulate with new tooltip content
+          // Create a new tooltip based on the error messsage we just set in the title
+          $element.tooltip("destroy").data({"title": error.message}).addClass("error").tooltip();
+
+          //$element.tooltip('show');
+        });
+      }
+    });
 
     var handler = StripeCheckout.configure({
       key: "<%= Rails.application.secrets.stripe_publishable_key %>",
@@ -151,9 +188,8 @@
 
     $('#register-btn').on('click', function(e) {
       e.preventDefault();
-      // Easy Validate the Form Before Opening Handler
-      if (validateForm(form)) {
 
+      if (form.valid()) {
         // Open Checkout with further options
         handler.open({
           name: 'ODH Yearly Subscription',
@@ -162,10 +198,8 @@
           email: $('input[type=email]').val(),
         });
       } else {
-        // print errors
-        alert('error')
+        $("html, body").animate({ scrollTop: 0 }, "slow");
       }
-
     });
 
     // Close Checkout on page navigation
