@@ -1,6 +1,10 @@
 <%= content_for :head do %>
   <%= stylesheet_link_tag 'bootstrap-datepicker/bootstrap-datepicker3.css', 'data-turbolinks-track' => true %>
   <%= stylesheet_link_tag 'register', 'data-turbolinks-track' => true %>
+
+  <style>
+    
+  </style>
 <% end %>
 
 <section class="cover fullscreen image-bg overlay">
@@ -84,8 +88,12 @@
                 <input type="submit" id="register-btn" value="Register" class="mb0 mt32"/>
 
                 <p class="text-center">
-                  By signing up, you agree to our
-                  <a href="#">Terms Of Use</a>
+                  By registering your account, you agree to our
+                  <a href="#" target="_blank">Terms Of Use</a>
+                  <br />
+                  and the
+                  <a href="https://stripe.com/us/terms" target="_blank">Stripe Connected Account Agreement</a>
+                  .
                 </p>
                 <hr />
                 <%= render "accounts/shared/links" %>
