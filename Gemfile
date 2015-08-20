@@ -68,6 +68,10 @@ gem 'stripe'
 # Select JS & CSS
 gem 'selectize-rails'
 
+# Active Jobs ( using Resque )
+gem 'resque'
+gem 'resque-scheduler'
+
 # Development emails
 gem 'letter_opener', group: :development
 
