@@ -16,14 +16,14 @@ class Ambassador < ActiveRecord::Base
   default_scope { order('created_at DESC') }
 
   # Validations
-  validates :email,  presence: true # validated through devise 
+  validates :email,  presence: true # validated through devise
   validates :phone,  presence: true, numericality: { only_integer: true }
   validates :fname,  presence: true, length: { minimum: 2 }
   validates :lname,  presence: true, length: { minimum: 2 }
   validates :dob,    presence: true, timeliness: { on_or_before: lambda { Date.current }, type: :date }
   validates :street, presence: true
   validates :city,   presence: true
-  validates :state,  presence: true
+  validates :state,  presence: true, length: { is: 2 }
   validates :zip,    presence: true
 
   # Methods
