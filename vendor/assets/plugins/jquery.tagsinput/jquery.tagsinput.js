@@ -181,7 +181,7 @@ ben@xoxco.com
 	};
 
 	$.fn.invalid_email = function(val) {
-		var pattern = new RegExp("^[^@]+@[^@]+[.][^@]+$"); // Very basic email regex
+		var pattern = new RegExp("^[^@ ]+@[^@ ]+[.][^@ ]+$"); // Very basic email regex
 		return !pattern.test(val);
 	};
 
