@@ -1,11 +1,21 @@
+var selectize_checkError = function(){
+  if ( $('#ambassador_state').hasClass("error") ){
+    $('.selectize-control').tooltip("destroy").data({ "title": "This field is required." }).addClass("error").tooltip();
+  } else {
+    $('.selectize-control').data("title", "").removeClass("error").tooltip("destroy");
+  };
+};
+
 $(document).ready(function(){
   /* State Selectize */
-  $('#ambassador_state').selectize();
-  $(".selectize-input.items.not-full.has-options").trigger('click');
-  
+  $('#ambassador_state').selectize({
+    onChange: selectize_checkError,
+  });
+
+  //$(".selectize-input.items.not-full.has-options").trigger('click');
+
   form = $('form#new_account');
   plan = { id: 'subscription', name: '1 Year of Standard ODH Services', amount: 350000 }; // TODO: add ability to select a plan
-
 
   /* js validations ( these are merely for user feedback, not for server side validation ) */
   form.validate({
@@ -89,6 +99,8 @@ $(document).ready(function(){
 
         //$element.tooltip('show');
       });
+
+      selectize_checkError();
     },
     focusInvalid: true,
     invalidHandler: function(form, validator) {
