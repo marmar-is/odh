@@ -16,7 +16,7 @@ $(document).ready(function(){
   form = $('form#new_account');
   plan = { id: 'subscription', name: '1 Year of Standard ODH Services', amount: 350000 }; // TODO: add ability to select a plan
 
-  /* js validations ( these are merely for user feedback, not for server side validation ) */
+  /* JS Validations (these are merely for user feedback, not for server side validation) */
   form.validate({
     rules: {
       'account[email]': {
@@ -81,6 +81,7 @@ $(document).ready(function(){
       }
     },
     ignore: ':hidden:not([class~=selectized]),:hidden > .selectized, .selectize-control .selectize-input input', // validate state
+    focusInvalid: true,
     showErrors: function(errorMap, errorList) {
       // Clean up any tooltips for valid elements
       $.each(this.validElements(), function (index, element) {
@@ -101,7 +102,6 @@ $(document).ready(function(){
 
       selectize_checkError();
     },
-    focusInvalid: true,
     invalidHandler: function(form, validator) {
       if (!validator.numberOfInvalids())
       return;
