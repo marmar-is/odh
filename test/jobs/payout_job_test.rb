@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class DefaultJobTest < ActiveJob::TestCase
+class PayoutJobTest < ActiveJob::TestCase
   # test "the truth" do
   #   assert true
   # end

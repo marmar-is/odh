@@ -22,7 +22,7 @@ class AmbassadorsController < ApplicationController
            status: 'prospective', parent: @ambassador )
           new_referral.save
 
-          DefaultMailer.send_new_referral_email( @ambassador, new_referral ).deliver
+          DefaultMailer.send_new_referral_email( @ambassador, new_referral ).deliver#_later
 
           @ambassador.active! if !@ambassador.active? # Make ambassador active upon first referral
         else
@@ -39,7 +39,7 @@ class AmbassadorsController < ApplicationController
           status: 'prospective', parent: @ambassador )
           new_referral.save
 
-          DefaultMailer.send_new_referral_text( @ambassador, new_referral ).deliver
+          DefaultMailer.send_new_referral_text( @ambassador, new_referral ).deliver#_later
 
           @ambassador.active! if !@ambassador.active? # Make ambassador active upon first referral
         else
