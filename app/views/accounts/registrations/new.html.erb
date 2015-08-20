@@ -21,59 +21,58 @@
                 <p class="group-tag">Identity</p>
                 <div class="row">
                   <div class="col-sm-7">
-                    <%= f.email_field :email, placeholder: "Email Address", autofocus: true, class:"group-elem", value: @ambassador.email %>
+                    <%= f.email_field :email, placeholder: "Email Address", autofocus: true, class:"input-control", value: @ambassador.email %>
                   </div>
                   <div class="col-sm-5">
-                    <%= ff.telephone_field :phone, placeholder: "Phone Number", class:"group-elem" %>
+                    <%= ff.telephone_field :phone, placeholder: "Phone Number", class:"input-control" %>
                   </div>
                 </div>
 
                 <div class="row">
                   <div class="col-sm-6">
-                    <%= ff.text_field :fname, placeholder: "First Name", class:"group-elem" %>
+                    <%= ff.text_field :fname, placeholder: "First Name", class:"input-control" %>
                   </div>
                   <div class="col-sm-6">
-                    <%= ff.text_field :lname, placeholder: "Last Name", class:"group-elem" %>
+                    <%= ff.text_field :lname, placeholder: "Last Name", class:"input-control" %>
                   </div>
                 </div>
 
                 <div class="row">
                   <div class="col-sm-5">
-                    <%= ff.text_field :dob, placeholder: 'Date of Birth', data: { provide: 'datepicker', 'date-format': 'yyyy-mm-dd', 'date-end-date': "+0d", 'date-start-view': 2 } %>
+                    <%= ff.text_field :dob, placeholder: 'Date of Birth', data: { provide: 'datepicker', 'date-format': 'yyyy-mm-dd', 'date-end-date': "+0d", 'date-start-view': 2 }, class: 'input-control' %>
                   </div>
                   <div class="col-sm-7">
-                    <%= text_field_tag :ssn_last_4, '', placeholder: "Last 4 Of SSN", class:"group-elem", maxlength: 4 %>
+                    <%= text_field_tag :ssn_last_4, '', placeholder: "Last 4 Of SSN", class:"input-control", maxlength: 4 %>
                     <i class="help ti ti-help" data-toggle="tooltip" data-placement="right"
                     title="This is used to verify your identity information and is not stored on our servers."></i>
                   </div>
                 </div>
 
-                <p class="group-tag">Address</p>
+                <p class="group-tag mt16">Address</p>
                 <div class="row">
                   <div class="col-sm-7">
-                    <%= ff.text_field :street, placeholder: "Street", class:"group-elem" %>
+                    <%= ff.text_field :street, placeholder: "Street", class:"input-control" %>
                   </div>
                   <div class="col-sm-5">
-                    <%= ff.text_field :city, placeholder: "City", class:"group-elem" %>
+                    <%= ff.text_field :city, placeholder: "City", class:"input-control" %>
                   </div>
                 </div>
 
                 <div class="row">
-                  <div class="col-sm-9">
-                    <%# TODO: Make this a select tag %>
-                    <%= ff.text_field :state, placeholder: "State", class:"group-elem" %>
+                  <div class="col-sm-7">
+                    <%= ff.select :state, options_for_select(us_states), {include_blank: true}, { class:'', 'data-placeholder':'Select a State...' } %>
                   </div>
-                  <div class="col-sm-3">
-                    <%= ff.text_field :zip, placeholder: "Zip Code" %>
+                  <div class="col-sm-5">
+                    <%= ff.text_field :zip, placeholder: "Zip Code", class: 'input-control' %>
                   </div>
                 </div>
 
-                <p class="group-tag">Security</p>
-                <%= f.password_field :password, placeholder: "Password (#{@minimum_password_length} characters minimum)", class:"group-elem", autocomplete: "off" %>
-                <%= f.password_field :password_confirmation, placeholder: "Confirm Password", autocomplete: "off" %>
+                <p class="group-tag mt16">Security</p>
+                <%= f.password_field :password, placeholder: "Password (#{@minimum_password_length} characters minimum)", class:"group-elem input-control", autocomplete: "off" %>
+                <%= f.password_field :password_confirmation, placeholder: "Confirm Password", autocomplete: "off", class: 'input-control' %>
 
-                <p class="group-tag">Referred By A Member?</p>
-                <%= text_field_tag :referrer_token, @ambassador.parent.try(:token), placeholder: "Enter Their Referral Token", readonly: !@ambassador.parent.nil? %>
+                <p class="group-tag mt16">Referred By A Member?</p>
+                <%= text_field_tag :referrer_token, @ambassador.parent.try(:token), placeholder: "Enter Their Referral Token", readonly: !@ambassador.parent.nil?, class: 'input-control' %>
 
                 <%= hidden_field_tag 'registration_token', params[:registration_token] %>
                 <%= hidden_field_tag 'id', params[:id] %>
@@ -82,9 +81,9 @@
                 <%= hidden_field_tag 'plan_id' %>
 
                 <%#= f.submit "Register" %>
-                <input type="submit" id="register-btn" value="Register"/>
+                <input type="submit" id="register-btn" value="Register" class="mb0 mt32"/>
 
-                <p class="mb8 text-center">
+                <p class="text-center">
                   By signing up, you agree to our
                   <a href="#">Terms Of Use</a>
                 </p>
@@ -104,5 +103,4 @@
   <%= javascript_include_tag 'jquery.scrollintoview/jquery.scrollintoview.js', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'register.js', 'data-turbolinks-track' => true %>
   <script src="https://checkout.stripe.com/checkout.js"></script>
-
 <% end %>

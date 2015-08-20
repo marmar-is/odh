@@ -25,7 +25,6 @@ Rails.application.config.assets.precompile += %w(
   ytplayer.min.js
   countdown.min.js
   smooth-scroll.min.js
-  parallax.js
   scripts.js
 
   jquery.tagsinput/jquery.tagsinput.css
@@ -33,6 +32,7 @@ Rails.application.config.assets.precompile += %w(
 
   ambassadors.css
 )
+#parallax.js
 
 # Register Assets (js & css)
 Rails.application.config.assets.precompile += %w(

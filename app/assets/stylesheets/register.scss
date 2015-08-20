@@ -6,12 +6,15 @@ p.group-tag {
   margin-bottom:0;
 }
 
-.group-elem {
-  margin-bottom: 5px!important;
+form input.input-control {
+  height: 35px;
+  margin-bottom: 5px;
 }
-
-form input {
-  height: 35px!important;
+form .selectize-input input {
+  height: inherit;
+}
+form .selectize-dropdown {
+  overflow: auto!important;
 }
 
 form input[type="submit"] {
