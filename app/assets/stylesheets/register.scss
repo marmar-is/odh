@@ -11,17 +11,26 @@ form input.input-control {
   margin-bottom: 5px;
 }
 form .selectize-input input {
+  font-family: Raleway, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-weight: 500;
+  width: 80%!important;
+  padding-left: 5px!important;
+}
+form .selectize-input input {
   height: inherit;
 }
-form .selectize-dropdown {
-  overflow: auto!important;
+.selectize-dropdown [data-selectable] .highlight {
+  //background: rgba(255, 237, 40, 0.4);
+  background: rgba(66, 139, 202, 0.4);
 }
+
 
 form input[type="submit"] {
   height: inherit!important;
 }
 /* Error Tooltip */
-form input.error {
+form input.error,
+.selectized.error + div div.not-full {
   border: 2px solid #b94a48;
   background-color: #fee;
 }

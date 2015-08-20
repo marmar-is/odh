@@ -56,7 +56,6 @@ $(document).ready(function(){
       'referrer_token': {
         maxlength: 5,
       }
-
     },
     messages: {
       'ssn_last_4': {
@@ -70,6 +69,7 @@ $(document).ready(function(){
         maxlength:    jQuery.validator.format("Please enter a valid referral token."),
       }
     },
+    ignore: ':hidden:not([class~=selectized]),:hidden > .selectized, .selectize-control .selectize-input input', // validate state
     showErrors: function(errorMap, errorList) {
       // Clean up any tooltips for valid elements
       $.each(this.validElements(), function (index, element) {
