@@ -34,11 +34,6 @@ class Accounts::RegistrationsController < Devise::RegistrationsController
 
     if resource.valid?
       if @ambassador.valid?
-        # update the ambassador & set it as the newly created account's meta
-        @ambassador.assign_attributes( status: 'registered', parent: Ambassador.find_by_token(params[:referrer_token]),
-        registration_token: nil, email: resource.email )
-
-        resource.assign_attributes(meta: @ambassador)
 
         # Create Stripe Account
         begin
@@ -79,8 +74,14 @@ class Accounts::RegistrationsController < Devise::RegistrationsController
             }
           })
 
+
+          # update the ambassador & set it as the newly created account's meta
+          @ambassador.assign_attributes( status: 'registered', parent: Ambassador.find_by_token(params[:referrer_token]),
+          registration_token: nil, email: resource.email )
+
           # hold onto the Stripe Account ID and Stripe Customer ID
-          resource.assign_attributes(stripe_account_id: stripe_account.id, stripe_subscription_id: customer.id)
+          resource.assign_attributes(meta: @ambassador,
+          stripe_account_id: stripe_account.id, stripe_subscription_id: customer.id)
 
           # Successful Create! Save Everything
           resource.save
