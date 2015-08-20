@@ -1,0 +1,85 @@
+section.overlay.cover.fullscreen {
+  min-height:1000px!important;
+}
+
+p.group-tag {
+  margin-bottom:0;
+}
+/* Register Form */
+form input.input-control {
+  height: 35px;
+  margin-bottom: 5px;
+}
+form input[type="submit"] {
+  height: inherit!important;
+}
+/* Selectize Styling */
+.selectize-input input,
+.selectize-input div.item {
+  font-family: Raleway, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-weight: 500;
+  padding-left: 7px!important;
+  color: #555;
+}
+.selectize-input input {
+  height: inherit;
+  width: 50%!important;
+}
+.selectize-input,
+.selectize-dropdown {
+  border-radius: 0!important;
+  -webkit-border-radius: 0!important;
+  -moz-border-radius: 0!important;
+  color:#555555!important;
+}
+.selectize-dropdown [data-selectable] .highlight {
+  background: rgba(66, 139, 202, 0.4);
+}
+.selectize-control.single .selectize-input:after {
+  border-color: #555555 transparent transparent transparent!important;
+}
+.selectize-control.single .selectize-input.dropdown-active:after {
+  border-color: transparent transparent #555555 transparent!important;;
+}
+
+
+/* Error Tooltip */
+form input.error,
+.selectized.error + div div.not-full {
+  border: 2px solid #b94a48;
+  background-color: #fee;
+}
+form .tooltip.top .tooltip-inner {
+  background-color: #b94a48;
+  border-radius: 2px;
+}
+form .tooltip.top .tooltip-arrow {
+  border-top-color: #b94a48;
+}
+/* SSN Info Icon */
+form input#ssn_last_4 {
+  padding-right: 15px;
+}
+form div.row i.help {
+  position:absolute;
+  line-height: 35px;
+  top:0px;
+  right: 15px;
+  color: #428bca;
+  font-size: 16px;
+  background-color: #ccc;
+
+  padding: 0px 5px;
+}
+form input.error ~ i.help {
+  line-height: 31px;
+  top:2px;
+  right: 17px;
+}
+form .tooltip.right .tooltip-inner {
+  background-color: #428bca;
+  width:200px;
+}
+form .tooltip.right .tooltip-arrow {
+  border-right-color: #428bca;
+}

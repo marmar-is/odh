@@ -2,6 +2,7 @@
   <%= stylesheet_link_tag 'jquery.tagsinput/jquery.tagsinput.css', 'data-turbolinks-track' => true %>
   <%= stylesheet_link_tag 'ambassadors', 'data-turbolinks-track' => true %>
 <% end %>
+
 <section id="my-account" class="pb0">
   <div class="container">
     <div class="row">
@@ -141,11 +142,11 @@
                       <div class="widget">
                         <h6 class="title text-center">Prospects</h6>
                         <hr>
-                        <ul class="accordion accordion-2">
+                        <ul class="prospect accordion accordion-2">
                           <%- @child_prospects.each do |cp| %>
                             <li>
                               <div class="title">
-                                <span id="title-<%= cp.id %>"><%= display_child_label(cp) %></span>
+                                <span id="child-title-<%= cp.id %>"><%= display_child_label(cp) %></span>
                               </div>
                               <div id="child-<%= cp.id %>" class="content">
                                 <%= render partial: 'ambassadors/prospect', locals: { child: cp } %>
@@ -162,7 +163,7 @@
                       <div class="widget">
                         <h6 class="title text-center">Successes</h6>
                         <hr>
-                        <ul class="accordion accordion-2">
+                        <ul class="success accordion accordion-2">
                           <%- @child_successes.each do |cs| %>
                             <li>
                               <div class="title">
@@ -324,7 +325,7 @@
 <%= javascript_include_tag 'ytplayer.min.js', 'data-turbolinks-track' => true %>
 <%= javascript_include_tag 'countdown.min.js', 'data-turbolinks-track' => true %>
 <%= javascript_include_tag 'smooth-scroll.min.js', 'data-turbolinks-track' => true %>
-<%= javascript_include_tag 'parallax.js', 'data-turbolinks-track' => true %>
+<%#= javascript_include_tag 'parallax.js', 'data-turbolinks-track' => true %>
 <%= javascript_include_tag 'scripts.js', 'data-turbolinks-track' => true %>
 
 <%= javascript_include_tag 'jquery.tagsinput/jquery.tagsinput.js', 'data-turbolinks-track' => true %>

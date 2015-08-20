@@ -2,7 +2,7 @@
   <nav>
     <div class="nav-bar">
       <div class="module left">
-        <%= link_to root_path do %>
+        <%= link_to root_path, 'data-no-turbolink': true do %>
           <%= image_tag 'logo-light.png', class: 'logo logo-light', alt: 'Foundry' %>
           <%= image_tag 'logo-dark.png', class: 'logo logo-dark', alt: 'Foundry' %>
         <% end %>
@@ -16,7 +16,7 @@
             <li>
               <a href="#">THE MEMBERSHIP</a>
             </li><li>
-              <a href="#">THE EXPERIENCES</a>
+              <%= link_to "MY PROFILE", home_page_path, 'data-no-turbolink': true %>
             </li><li>
               <a href="#"> </a>
             </li>

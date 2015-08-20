@@ -19,56 +19,115 @@ class Accounts::RegistrationsController < Devise::RegistrationsController
   def create
     if !params[:registration_token].blank? && !params[:id].blank?
       if Ambassador.find(params[:id]).registration_token == params[:registration_token]
-        ambas = Ambassador.find(params[:id])
+        @ambassador = Ambassador.find(params[:id])
       else
         raise "Attempted trickery (RegistrationsController.rb:24)"
       end
     else
-      ambas = Ambassador.new
+      @ambassador = Ambassador.new
     end
-    ambas.assign_attributes(ambassador_params) # update ambassador object (without saving)
 
-    if ambas.valid?
-      @ambassador = ambas
-      super do |resource|
-        # save the ambassador & set it as the newly created account's meta
-        ambas.update( status: 'registered', parent: Ambassador.find_by_token(params[:referrer_token]),
-        registration_token: nil, email: params[:account][:email] )
-        resource.update(meta: ambas)
+    build_resource(sign_up_params) # Build the devise account
+
+    # Update Ambassador object (without saving)
+    @ambassador.assign_attributes( ambassador_params.merge(email: params[:account][:email].downcase) )
+
+    if resource.valid?
+      if @ambassador.valid?
 
         # Create Stripe Account
-        @stripe_account = Stripe::Account.create(
-          managed: true,
-          country: 'US',
-          default_currency: 'USD',
-          email: resource.email,
-          tos_acceptance: {
-            ip: request.remote_ip,
-            date: Time.now.to_i,
-          },
-          legal_entity: {
-            type: 'individual',
-            dob: {
-              day: ambas.dob.day,
-              month: ambas.dob.month,
-              year: ambas.dob.year
+        begin
+          stripe_account = Stripe::Account.create(
+            managed: true,
+            country: 'US',
+            default_currency: 'USD',
+            email: resource.email,
+            tos_acceptance: {
+              ip: request.remote_ip,
+              date: Time.now.to_i,
             },
-            first_name: ambas.fname,
-            last_name: ambas.lname,
-            ssn_last_4: params[:ssn_last_4]
-          }
-        )
-
-        if @stripe_account
-          resource.update(
-            stripe_account_id: @stripe_account.id
+            legal_entity: {
+              type: 'individual',
+              dob: {
+                day: @ambassador.dob.day,
+                month: @ambassador.dob.month,
+                year: @ambassador.dob.year
+              },
+              first_name: @ambassador.fname,
+              last_name: @ambassador.lname,
+              ssn_last_4: params[:ssn_last_4]
+            },
+            metadata: {
+              organization: 'odh'
+            }
           )
-        end
 
+          # Charge Subscription Fee
+          customer = Stripe::Customer.create({
+            source:       params[:token],
+            email:        resource.email,
+            plan:         params[:plan_id],
+            description:  "Subscription to ODH",
+            metadata: {
+              connect_account: stripe_account.id,
+              odh_account:     resource.id
+            }
+          })
+
+
+          # update the ambassador & set it as the newly created account's meta
+          @ambassador.assign_attributes( status: 'registered', parent: Ambassador.find_by_token(params[:referrer_token]),
+          registration_token: nil, email: resource.email )
+
+          # hold onto the Stripe Account ID and Stripe Customer ID
+          resource.assign_attributes(meta: @ambassador,
+          stripe_account_id: stripe_account.id, stripe_subscription_id: customer.id)
+
+          # Successful Create! Save Everything
+          resource.save
+          @ambassador.save
+
+          # Taken from Devise
+          if resource.active_for_authentication?
+            set_flash_message :notice, :signed_up if is_flashing_format?
+            sign_up(resource_name, resource)
+            respond_with resource, location: after_sign_up_path_for(resource)
+          else
+            set_flash_message :notice, :"signed_up_but_#{resource.inactive_message}" if is_flashing_format?
+            expire_data_after_sign_in!
+            respond_with resource, location: after_inactive_sign_up_path_for(resource)
+          end
+
+        rescue Stripe::CardError => e
+          error = e.json_body[:error][:message]
+          flash[:error] = "Charge failed! #{error}"
+
+          Stripe::Account.retrieve(stripe_account.id).delete # remove stripe account if card is declined
+
+          render :new # Will describe why card failed
+        rescue
+          clean_up_passwords resource
+          set_minimum_password_length
+
+          Stripe::Account.retrieve(stripe_account.id).delete # remove stripe account if there is an error during creation
+
+          render :new # TODO: add error messages (using stripe errors)
+        end
+        # /begin
+
+      else
+        clean_up_passwords resource
+        set_minimum_password_length
+        render :new # TODO: add error messages (invalid ambassador)
       end
+      # /ambassador.valid?
+
     else
-      respond_to.html { render :new }
+      clean_up_passwords resource
+      set_minimum_password_length
+      respond_with resource
     end
+    # /resource.valid?
   end
 
   # GET /resource/edit

@@ -17,6 +17,9 @@
  *= require ytplayer
  *= require theme-chipotle
 
- *= require_tree .
+ *= require selectize
+ *= require selectize.bootstrap3
+
  *= require_self
+ * require_tree .
  */

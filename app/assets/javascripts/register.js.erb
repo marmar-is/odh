@@ -1,0 +1,150 @@
+var selectize_checkError = function(){
+  if ( $('#ambassador_state').hasClass("error") ){
+    $('.selectize-control').tooltip("destroy").data({ "title": "This field is required." }).addClass("error").tooltip();
+  } else {
+    $('.selectize-control').data("title", "").removeClass("error").tooltip("destroy");
+  };
+};
+
+$(document).ready(function(){
+  /* State Selectize */
+  $('#ambassador_state').selectize({
+    onChange: selectize_checkError,
+  });
+  //$(".selectize-input.items.not-full.has-options").trigger('click');
+
+  form = $('form#new_account');
+  plan = { id: 'subscription', name: '1 Year of Standard ODH Services', amount: 350000 }; // TODO: add ability to select a plan
+
+  /* JS Validations (these are merely for user feedback, not for server side validation) */
+  form.validate({
+    rules: {
+      'account[email]': {
+        required: true,
+        email: true
+      },
+      'ambassador[phone]': {
+        required: true,
+        phoneUS: true,
+      },
+      'ambassador[fname]': {
+        required: true,
+        minlength: 2
+      },
+      'ambassador[lname]': {
+        required: true,
+        minlength: 2
+      },
+      'ambassador[dob]': {
+        required: true,
+        date: true
+      },
+      'ssn_last_4': {
+        required: true,
+        digits: true,
+        rangelength: [4, 4]
+      },
+      'ambassador[street]': {
+        required: true
+      },
+      'ambassador[city]': {
+        required: true
+      },
+      'ambassador[state]': {
+        required: true
+      },
+      'ambassador[zip]': {
+        required: true,
+        zipcodeUS: true,
+      },
+      'account[password]': {
+        required: true,
+        minlength: 8
+      },
+      'account[password_confirmation]': {
+        equalTo : "#account_password"
+      },
+      'referrer_token': {
+        maxlength: 5,
+      }
+    },
+    messages: {
+      'ssn_last_4': {
+        rangelength: jQuery.validator.format("Please enter the last 4 digits of your SSN."),
+        digits:      jQuery.validator.format("Please enter the last 4 digits of your SSN."),
+      },
+      'account[password_confirmation]': {
+        equalTo:      jQuery.validator.format("Please enter the same password again."),
+      },
+      'referrer_token': {
+        maxlength:    jQuery.validator.format("Please enter a valid referral token."),
+      }
+    },
+    ignore: ':hidden:not([class~=selectized]),:hidden > .selectized, .selectize-control .selectize-input input', // validate state
+    focusInvalid: true,
+    showErrors: function(errorMap, errorList) {
+      // Clean up any tooltips for valid elements
+      $.each(this.validElements(), function (index, element) {
+        var $element = $(element);
+        // Clear the title - there is no error associated anymore
+        $element.data("title", "").removeClass("error").tooltip("destroy");
+      });
+
+      // Create new tooltips for invalid elements
+      $.each(errorList, function (index, error) {
+        var $element = $(error.element);
+        // Destroy any pre-existing tooltip so we can repopulate with new tooltip content
+        // Create a new tooltip based on the error messsage we just set in the title
+        $element.tooltip("destroy").data({"title": error.message}).addClass("error").tooltip();
+
+        //$element.tooltip('show');
+      });
+
+      selectize_checkError();
+    },
+    invalidHandler: function(form, validator) {
+      if (!validator.numberOfInvalids())
+      return;
+
+      // Uses Scroll Into View Plugin
+      $(validator.errorList[0].element).scrollintoview({ duration: "slow", padding: {T: 55} });
+
+      var applyFocus = function(){
+        $(validator.errorList[0].element).focus();
+      };
+      window.setTimeout(applyFocus, "slow");
+    }
+  });
+
+  var handler = StripeCheckout.configure({
+    key: "<%= Rails.application.secrets.stripe_publishable_key %>",
+    allowRememberMe: false,
+    token: function(token) {
+      submitting = true
+      form.find('input[name=token]').val( token.id )
+      form.find('input[name=plan_id]').val( plan.id )
+      form.get(0).submit()
+    }
+  });
+
+  $('#register-btn').on('click', function(e) {
+    e.preventDefault();
+
+    if (form.valid()) {
+      // Open Checkout with further options
+      handler.open({
+        name: 'ODH Yearly Subscription',
+        description: plan.name,
+        amount: plan.amount,
+        email: $('input[type=email]').val(),
+      });
+    } else {
+      //$("html, body").animate({ scrollTop: 0 }, "slow");
+    }
+  });
+
+  // Close Checkout on page navigation
+  $(window).on('popstate', function() {
+    handler.close();
+  });
+});

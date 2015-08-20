@@ -43,6 +43,10 @@
 #my-people div input {
   height: 35px;
 }
+#my-people .prospect div input[readonly] {
+  font-weight: bold;
+  background: transparent;
+}
 #my-people div.input-r {
   padding-right: 3px;
 }

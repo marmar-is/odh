@@ -6,11 +6,11 @@ var finishLoad = function(){
 };
 
 var finishFade = function(){
-  $("#title-<%= child.id.to_s %>").html("<%= display_child_label(child) %>").fadeIn(500);
+  $("#child-title-<%= child.id.to_s %>").html("<%= display_child_label(child) %>").fadeIn(750);
 }
 
 /* loading ajax gif */
 $("#child-<%= child.id.to_s %>").append($("<div id='overlay-ajax'><img src=<%= asset_path('loading.gif') %> class='loading-gif' alt='loading' /></div>").hide().fadeIn(500));
+setTimeout(finishLoad, 1000);
 /* fade out/in to change title */
-$("#title-<%= child.id.to_s %>").fadeOut(500, finishFade);
-setTimeout(finishLoad, 1500);
+$("#child-title-<%= child.id.to_s %>").fadeOut(750, finishFade);

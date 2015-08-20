@@ -2,8 +2,10 @@ Rails.application.routes.draw do
 
   devise_for :accounts, controllers: { registrations: 'accounts/registrations' }
 
+  #root 'statics#index'
   root 'ambassadors#index'
 
+  get  'home'              => 'ambassadors#index', as: :home_page
   post 'ambassadors/refer' => 'ambassadors#refer', as: :send_referrals
   put  'ambassadors/update_prospect/:id' => 'ambassadors#update_prospect', as: :update_prospect
 
