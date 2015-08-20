@@ -1,9 +1,11 @@
 $(document).ready(function(){
   /* State Selectize */
   $('#ambassador_state').selectize();
-
+  $(".selectize-input.items.not-full.has-options").trigger('click');
+  
   form = $('form#new_account');
   plan = { id: 'subscription', name: '1 Year of Standard ODH Services', amount: 350000 }; // TODO: add ability to select a plan
+
 
   /* js validations ( these are merely for user feedback, not for server side validation ) */
   form.validate({

@@ -30,10 +30,18 @@ form input[type="submit"] {
   border-radius: 0!important;
   -webkit-border-radius: 0!important;
   -moz-border-radius: 0!important;
+  color:#555555!important;
 }
 .selectize-dropdown [data-selectable] .highlight {
   background: rgba(66, 139, 202, 0.4);
 }
+.selectize-control.single .selectize-input:after {
+  border-color: #555555 transparent transparent transparent!important;
+}
+.selectize-control.single .selectize-input.dropdown-active:after {
+  border-color: transparent transparent #555555 transparent!important;;
+}
+
 
 /* Error Tooltip */
 form input.error,
