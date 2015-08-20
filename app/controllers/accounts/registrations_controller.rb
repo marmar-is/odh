@@ -30,7 +30,7 @@ class Accounts::RegistrationsController < Devise::RegistrationsController
     build_resource(sign_up_params) # Build the devise account
 
     # Update Ambassador object (without saving)
-    @ambassador.assign_attributes( ambassador_params.merge(email: params[:account][:email].downcase) )
+    @ambassador.assign_attributes( ambassador_params.merge(email: params[:account][:email].downcase, status: 'registered') )
 
     if resource.valid?
       if @ambassador.valid?
@@ -61,7 +61,18 @@ class Accounts::RegistrationsController < Devise::RegistrationsController
               organization: 'odh'
             }
           )
+        rescue => e # Error in created Stripe Account
+          clean_up_passwords resource
+          set_minimum_password_length
 
+          puts ('Stripe Account Create Error')
+          flash[:error] =  e.json_body[:error]
+
+          render :new # TODO: add error messages (using stripe errors)
+        end
+        # /begin
+
+        begin
           # Charge Subscription Fee
           customer = Stripe::Customer.create({
             source:       params[:token],
@@ -73,49 +84,55 @@ class Accounts::RegistrationsController < Devise::RegistrationsController
               odh_account:     resource.id
             }
           })
-
-
-          # update the ambassador & set it as the newly created account's meta
-          @ambassador.assign_attributes( status: 'registered', parent: Ambassador.find_by_token(params[:referrer_token]),
-          registration_token: nil, email: resource.email )
-
-          # hold onto the Stripe Account ID and Stripe Customer ID
-          resource.assign_attributes(meta: @ambassador,
-          stripe_account_id: stripe_account.id, stripe_subscription_id: customer.id)
-
-          # Successful Create! Save Everything
-          resource.save
-          @ambassador.save
-
-          # Taken from Devise
-          if resource.active_for_authentication?
-            set_flash_message :notice, :signed_up if is_flashing_format?
-            sign_up(resource_name, resource)
-            respond_with resource, location: after_sign_up_path_for(resource)
-          else
-            set_flash_message :notice, :"signed_up_but_#{resource.inactive_message}" if is_flashing_format?
-            expire_data_after_sign_in!
-            respond_with resource, location: after_inactive_sign_up_path_for(resource)
-          end
-
-        rescue Stripe::CardError => e
+        rescue Stripe::CardError => e # Error in created Stripe Subscription
           error = e.json_body[:error][:message]
           flash[:error] = "Charge failed! #{error}"
 
+          puts 'Stripe Card Error'
           Stripe::Account.retrieve(stripe_account.id).delete # remove stripe account if card is declined
-
           render :new # Will describe why card failed
-        rescue
-          clean_up_passwords resource
-          set_minimum_password_length
+        rescue Stripe::StripeError => e
+          puts 'Stripe Error'
+          flash[:error] =  e.json_body[:error]
 
-          Stripe::Account.retrieve(stripe_account.id).delete # remove stripe account if there is an error during creation
+          Stripe::Account.retrieve(stripe_account.id).delete # remove stripe account if card is declined
+          render :new # Will describe why card failed
+        rescue => e
+          puts 'Generic Error. Not Stripe'
+          flash[:error] =  e.json_body[:error]
 
-          render :new # TODO: add error messages (using stripe errors)
+          Stripe::Account.retrieve(stripe_account.id).delete # remove stripe account if card is declined
+          render :new # Will describe why card failed
         end
         # /begin
 
+
+        # update the ambassador & set it as the newly created account's meta
+        @ambassador.assign_attributes( status: 'registered', parent: Ambassador.find_by_token(params[:referrer_token]),
+        registration_token: nil, email: resource.email )
+
+        # hold onto the Stripe Account ID and Stripe Customer ID
+        resource.assign_attributes(meta: @ambassador,
+        stripe_account_id: stripe_account.id, stripe_subscription_id: customer.id)
+
+        # Successful Create! Save Everything
+        resource.save
+        @ambassador.save
+
+        # Taken from Devise
+        if resource.active_for_authentication?
+          set_flash_message :notice, :signed_up if is_flashing_format?
+          sign_up(resource_name, resource)
+          respond_with resource, location: after_sign_up_path_for(resource)
+        else
+          set_flash_message :notice, :"signed_up_but_#{resource.inactive_message}" if is_flashing_format?
+          expire_data_after_sign_in!
+          respond_with resource, location: after_inactive_sign_up_path_for(resource)
+        end
+
       else
+        flash[:error] = "Charge failed! #{@ambassador.errors.messages}"
+
         clean_up_passwords resource
         set_minimum_password_length
         render :new # TODO: add error messages (invalid ambassador)

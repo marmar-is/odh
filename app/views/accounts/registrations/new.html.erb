@@ -43,7 +43,7 @@
 
                 <div class="row">
                   <div class="col-sm-5">
-                    <%= ff.text_field :dob, placeholder: 'Date of Birth', data: { provide: 'datepicker', 'date-format': 'yyyy-mm-dd', 'date-end-date': "+0d", 'date-start-view': 2 }, class: 'input-control' %>
+                    <%= ff.text_field :dob, placeholder: 'Date of Birth', data: { provide: 'datepicker', 'date-format': 'yyyy-mm-dd', 'date-end-date': "-1d", 'date-start-view': 2 }, class: 'input-control' %>
                   </div>
                   <div class="col-sm-7">
                     <%= text_field_tag :ssn_last_4, '', placeholder: "Last 4 Of SSN", class:"input-control", maxlength: 4 %>

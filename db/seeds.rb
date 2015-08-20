@@ -5,3 +5,14 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+a = Ambassador.new(
+  email: 'aaa@gmail.com',
+  phone: '5446665676',
+  fname: 'matt',
+  lname: 'vass',
+  dob: '1995-11-08',
+  street: '94 van',
+  city: 'prince',
+  state: 'NJ',
+  zip: ''
+)
