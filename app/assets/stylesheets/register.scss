@@ -5,29 +5,36 @@ section.overlay.cover.fullscreen {
 p.group-tag {
   margin-bottom:0;
 }
-
+/* Register Form */
 form input.input-control {
   height: 35px;
   margin-bottom: 5px;
 }
-form .selectize-input input {
-  font-family: Raleway, 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  font-weight: 500;
-  width: 80%!important;
-  padding-left: 5px!important;
-}
-form .selectize-input input {
-  height: inherit;
-}
-.selectize-dropdown [data-selectable] .highlight {
-  //background: rgba(255, 237, 40, 0.4);
-  background: rgba(66, 139, 202, 0.4);
-}
-
-
 form input[type="submit"] {
   height: inherit!important;
 }
+/* Selectize Styling */
+.selectize-input input,
+.selectize-input div.item {
+  font-family: Raleway, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-weight: 500;
+  padding-left: 7px!important;
+  color: #555;
+}
+.selectize-input input {
+  height: inherit;
+  width: 50%!important;
+}
+.selectize-input,
+.selectize-dropdown {
+  border-radius: 0!important;
+  -webkit-border-radius: 0!important;
+  -moz-border-radius: 0!important;
+}
+.selectize-dropdown [data-selectable] .highlight {
+  background: rgba(66, 139, 202, 0.4);
+}
+
 /* Error Tooltip */
 form input.error,
 .selectized.error + div div.not-full {
