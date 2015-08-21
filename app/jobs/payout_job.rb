@@ -23,20 +23,50 @@ class PayoutJob < ActiveJob::Base
 
     first_referrer = new_referral.parent
     if first_referrer
-      Stripe::Transfer.create(
-      amount:               payout_matrix[0][:amount],
+      transfer(first_referrer.stripe_account_id, 1)
+
+      second_referrer = first_referrer.parent
+      if second_referrer
+        transfer(second_referrer.stripe_account_id, 2)
+
+        third_referrer = first_referrer.parent
+        if third_referrer
+          transfer(third_referrer.stripe_account_id, 3)
+
+          fourth_referrer = first_referrer.parent
+          if fourth_referrer
+            transfer(fourth_referrer.stripe_account_id, 4)
+
+            fifth_referrer = first_referrer.parent
+            if fifth_referrer
+              transfer(fifth_referrer.stripe_account_id, 5)
+            end
+            # fifth
+          end
+          # fourth
+        end
+        # third
+      end
+      # second
+    end
+    # first
+  end
+  # perform
+
+  private
+  def transfer(stripe_account_id, generation)
+    Stripe::Transfer.create(
+      amount:               payout_matrix[generation-1][:amount],
       currency:             'USD',
-      destination:          Account.first.stripe_account_id#first_referrer.account.stripe_account_id,
+      destination:          stripe_account_id#first_referrer.account.stripe_account_id,
       #source_transaction:   sub_id
     )
-      #Stripe::Charge.create({
-      #  amount:       payout_matrix[0][:amount],
-      #  currency:     "usd",
-      #  customer:       marmaris_customer,#{ TOKEN }, # Our marmaris account info
-      #  destination:  first_referrer.account.stripe_account_id
-      #  })
-    else
-      # No First Referrer, no one to pay.
-    end
+    #Stripe::Charge.create({
+    #  amount:       payout_matrix[generation-1][:amount],
+    #  currency:     "usd",
+    #  customer:     marmaris_customer,
+    #  source:       { TOKEN }, # Our marmaris account info
+    #  destination:  stripe_account_id
+    #  })
   end
 end
