@@ -85,6 +85,8 @@ GEM
       unf (>= 0.0.5, < 1.0.0)
     erubis (2.7.0)
     execjs (2.6.0)
+    font-awesome-rails (4.4.0.0)
+      railties (>= 3.2, < 5.0)
     globalid (0.3.6)
       activesupport (>= 4.1.0)
     haml (4.0.7)
@@ -190,8 +192,6 @@ GEM
     stripe (1.25.0)
       json (~> 1.8.1)
       rest-client (~> 1.4)
-    themify-icons-rails (1.0.1.1)
-      rails (~> 4.1)
     therubyracer (0.12.2)
       libv8 (~> 3.16.14.0)
       ref
@@ -239,6 +239,7 @@ DEPENDENCIES
   coffee-rails (~> 4.1.0)
   delayed_job_active_record
   devise (~> 3.4)
+  font-awesome-rails (~> 4.3)
   haml
   jbuilder (~> 2.0)
   jc-validates_timeliness
@@ -252,7 +253,6 @@ DEPENDENCIES
   selectize-rails
   spring
   stripe
-  themify-icons-rails
   therubyracer
   turbolinks
   twilio-ruby
