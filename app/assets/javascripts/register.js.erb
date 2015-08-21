@@ -121,8 +121,11 @@ $(document).ready(function(){
     allowRememberMe: false,
     token: function(token) {
       submitting = true
-      form.find('input[name=token]').val( token.id )
-      form.find('input[name=plan_id]').val( plan.id )
+      // Insert the token id and plan id into the form so it gets submitted to the server
+      form.append($('<input type="hidden" name="token" />').val(token.id));
+      form.append($('<input type="hidden" name="plan_id" />').val(plan.id));
+      //form.find('input[name=token]').val( token.id )
+      //form.find('input[name=plan_id]').val( plan.id )
       form.get(0).submit()
     }
   });

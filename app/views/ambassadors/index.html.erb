@@ -34,15 +34,19 @@
               <div class="tab-title">
                 <span>PAYMENT</span>
               </div>
-              <div class="tab-content">
+              <div id="payment" class="tab-content">
                 <p class="mb8">
                   Enter Your Bank Account Info In Order To Recieve Compensation For Your Referrals.
                 </p>
+                <p class="mb8">
+                  <u>Current Account:</u> Bank Account Not Set (you will be unable to collect compensation)
+                </p>
                 <%#= text_field_tag :country, '', placeholder: 'Account\'s Country', 'data-stripe': 'number' %>
-                <%= form_tag update_bank_account_path(id: current_account.id), method: :patch do %>
+                <%= form_tag update_bank_account_path(id: current_account.id), method: :patch, id: 'bank-account-form' do %>
                   <div class="row">
                     <div class="col-md-6 col-md-offset-3">
-                      <div class="row">
+                      <p class="bank-errors bg-danger mb0"></p>
+                      <div class="row mt8">
                         <div class="col-md-6">
                           <%= text_field_tag :routing_number, nil, placeholder: 'Routing Number', 'data-stripe': 'routing_number', class:'input-control' %>
                         </div>
@@ -50,10 +54,12 @@
                           <%= text_field_tag :account_number, nil, placeholder: 'Account Number', 'data-stripe': 'account_number', class:'input-control' %>
                         </div>
                       </div>
-                      <div class="row">
-                        <div class="col-md-6 col-md-offset-3">
-                          <%= submit_tag "Add Bank Account", class: 'input-control' %>
-                        </div>
+                      <%= hidden_field_tag :country, 'US', 'data-stripe': 'country' %>
+                      <%= hidden_field_tag :currency, 'USD', 'data-stripe': 'currency' %>
+                      <div class="col-md-6 col-md-offset-3 mt16">
+                        <%= button_tag(type: 'submit') do %>
+                        <i class="fa fa-bank"> Set Bank Account</i>
+                        <% end %>
                       </div>
                     </div>
                   </div>
@@ -367,9 +373,43 @@
         removeTitle: 'Remove Phone',
         inputReferType: 'phone',
       });
-
-      Stripe.setPublishableKey("#{Rails.application.secrets.stripe_publishable_key}");
     };
+
+    Stripe.setPublishableKey("<%= Rails.application.secrets.stripe_publishable_key %>");
+
+    function stripeResponseHandler(status, response) {
+      var $form = $('#bank-account-form');
+
+      if (response.error) {
+        // Show the errors on the form
+        $form.find('.bank-errors').text(response.error.message);
+        $form.find('button').prop('disabled', false);
+      } else {
+        // response contains id and bank_account, which contains additional bank account details
+        var token = response.id;
+        // Insert the token into the form so it gets submitted to the server
+        $form.append($('<input type="hidden" name="stripe_bank_token" />').val(token));
+        $("[data-stripe]").remove(); // remove stripe data from params
+
+        // and submit
+        $form.get(0).submit();
+      }
+
+      return false;
+    };
+
+    $('body').on('submit', '#bank-account-form', function (event) {
+      var $form;
+      $form = $(this);
+      $form.find('button').prop("disabled", true);
+      if ( $form.find('#country').val() == 'US' && $form.find('#currency').val() == 'USD' ) {
+        Stripe.bankAccount.createToken($form, stripeResponseHandler);
+      } else {
+        console.log('Fuck Off');
+      }
+
+      return false;
+    });
 
     $('document').ready(ready);
   </script>

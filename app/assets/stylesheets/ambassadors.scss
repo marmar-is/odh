@@ -7,6 +7,16 @@
   margin-bottom: 5px!important;
 }
 
+/* Payment Tab */
+#payment form > .row > div {
+  border: 1px #ccc dashed;
+  padding: 15px;
+}
+#payment form .bank-errors {
+  border-radius: 1px;
+  -webkit-border-radius: 1px;
+  -moz-border-radius: 1px;
+}
 
 /* Referral Input Tags */
 #spread-the-word div.tagsinput {

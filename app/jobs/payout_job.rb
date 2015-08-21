@@ -58,6 +58,10 @@ class PayoutJob < ActiveJob::Base
     Stripe::Transfer.create(
       amount:               payout_matrix[generation-1][:amount],
       currency:             'USD',
+      description:          'Compensation for a referral. Thanks!',
+      metadata:             {
+        generation:         generation,
+      },
       destination:          stripe_account_id#first_referrer.account.stripe_account_id,
       #source_transaction:   sub_id
     )

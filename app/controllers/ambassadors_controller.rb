@@ -82,7 +82,16 @@ class AmbassadorsController < ApplicationController
 
   # PATCH /ambassadors/update_bank_account/1
   def update_bank_account
+    account = Account.find(params[:id])
 
+    stripe_account = Stripe::Account.retrieve(account.stripe_account_id)
+
+    stripe_account.external_account = params[:stripe_bank_token]
+    stripe_account.save
+
+    respond_to do |format|
+      format.html {redirect_to root_path, notice: "Successfully Added A Bank Account"}
+    end
   end
 
   private
