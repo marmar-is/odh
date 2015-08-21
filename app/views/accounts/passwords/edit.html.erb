@@ -3,7 +3,7 @@
     min-height:500px!important;
   }
 
-  .group-elem {
+  .input-control {
     margin-bottom: 5px!important;
   }
 </style>
@@ -22,7 +22,7 @@
               <%= devise_error_messages! %>
               <%= f.hidden_field :reset_password_token %>
 
-              <%= f.password_field :password, placeholder: "New Password", class:"group-elem", autofocus: true, autocomplete: "off" %>
+              <%= f.password_field :password, placeholder: "New Password", class:"input-control", autofocus: true, autocomplete: "off" %>
               <%= f.password_field :password_confirmation, placeholder: "Confirm New Password", autocomplete: "off" %>
 
 

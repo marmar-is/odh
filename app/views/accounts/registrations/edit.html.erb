@@ -8,7 +8,7 @@
       margin-bottom:0;
     }
 
-    .group-elem {
+    .input-control {
       margin-bottom: 5px!important;
     }
   </style>
@@ -33,10 +33,10 @@
                 <p class="group-tag">Identity</p>
                 <div class="row">
                   <div class="col-sm-8">
-                    <%= f.email_field :email, placeholder: "Email", autofocus: true, class:"group-elem" %>
+                    <%= f.email_field :email, placeholder: "Email", autofocus: true, class:"input-control" %>
                   </div>
                   <div class="col-sm-4">
-                    <%= ff.telephone_field :phone, placeholder: "Phone Number", class:"group-elem" %>
+                    <%= ff.telephone_field :phone, placeholder: "Phone Number", class:"input-control" %>
                   </div>
                 </div>
 
@@ -46,10 +46,10 @@
 
                 <div class="row">
                   <div class="col-sm-6">
-                    <%= ff.text_field :fname, placeholder: "First Name", class:"group-elem" %>
+                    <%= ff.text_field :fname, placeholder: "First Name", class:"input-control" %>
                   </div>
                   <div class="col-sm-6">
-                    <%= ff.text_field :lname, placeholder: "Last Name", class:"group-elem" %>
+                    <%= ff.text_field :lname, placeholder: "Last Name", class:"input-control" %>
                   </div>
                 </div>
 
@@ -62,16 +62,16 @@
                 <p class="group-tag">Address</p>
                 <div class="row">
                   <div class="col-sm-7">
-                    <%= ff.text_field :street, placeholder: "Street", class:"group-elem" %>
+                    <%= ff.text_field :street, placeholder: "Street", class:"input-control" %>
                   </div>
                   <div class="col-sm-5">
-                    <%= ff.text_field :city, placeholder: "City", class:"group-elem" %>
+                    <%= ff.text_field :city, placeholder: "City", class:"input-control" %>
                   </div>
                 </div>
 
                 <div class="row">
                   <div class="col-sm-9">
-                    <%= ff.text_field :state, placeholder: "State", class:"group-elem" %>
+                    <%= ff.text_field :state, placeholder: "State", class:"input-control" %>
                   </div>
                   <div class="col-sm-3">
                     <%= ff.text_field :zip, placeholder: "Zip Code" %>
@@ -79,7 +79,7 @@
                 </div>
 
                 <p class="group-tag">Security</p>
-                <%= f.password_field :password, placeholder: "Password (leave blank to not change)", class:"group-elem", autocomplete: "off" %>
+                <%= f.password_field :password, placeholder: "Password (leave blank to not change)", class:"input-control", autocomplete: "off" %>
                 <%= f.password_field :password_confirmation, placeholder: "Confirm Password", autocomplete: "off" %>
 
                 <%= f.label :current_password %>
@@ -95,7 +95,7 @@
                 </p>
 
                 <p class="mb0">
-                  <i class="ti ti-arrow-circle-left"></i>
+                  <i class="fa fa-arrow-circle-o-left"></i>
                   <%= link_to "Back", :back, class: 'pull-right' %>
                 </p>
               <% end %>

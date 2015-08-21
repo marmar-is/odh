@@ -54,7 +54,7 @@ class AmbassadorsController < ApplicationController
     end
   end
 
-  # PUT /ambassadors/update_prospect/1
+  # PATCH /ambassadors/update_prospect/1
   def update_prospect
     child = Ambassador.find(params[:id])
     if child.referred_via == 'email'
@@ -78,6 +78,11 @@ class AmbassadorsController < ApplicationController
         format.js { render "update_prospect_nochange", locals: {child: child} }
       end
     end
+  end
+
+  # PATCH /ambassadors/update_bank_account/1
+  def update_bank_account
+
   end
 
   private

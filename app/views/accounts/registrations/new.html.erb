@@ -47,7 +47,7 @@
                   </div>
                   <div class="col-sm-7">
                     <%= text_field_tag :ssn_last_4, '', placeholder: "Last 4 Of SSN", class:"input-control", maxlength: 4 %>
-                    <i class="help ti ti-help" data-toggle="tooltip" data-placement="right"
+                    <i class="help fa fa-info" data-toggle="tooltip" data-placement="right"
                     title="This is used to verify your identity information and is not stored on our servers."></i>
                   </div>
                 </div>
@@ -72,7 +72,7 @@
                 </div>
 
                 <p class="group-tag mt16">Security</p>
-                <%= f.password_field :password, placeholder: "Password (#{@minimum_password_length} characters minimum)", class:"group-elem input-control", autocomplete: "off" %>
+                <%= f.password_field :password, placeholder: "Password (#{@minimum_password_length} characters minimum)", class:"input-control", autocomplete: "off" %>
                 <%= f.password_field :password_confirmation, placeholder: "Confirm Password", autocomplete: "off", class: 'input-control' %>
 
                 <p class="group-tag mt16">Referred By A Member?</p>

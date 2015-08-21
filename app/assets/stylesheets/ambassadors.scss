@@ -1,6 +1,13 @@
 // Place all the styles related to the Ambassadors controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.input-control {
+  height: 35px!important;
+  margin-bottom: 5px!important;
+}
+
+
 /* Referral Input Tags */
 #spread-the-word div.tagsinput {
   height:auto!important;
@@ -52,9 +59,6 @@
 }
 #my-people div.input-l {
   padding-left: 3px;
-}
-#my-people .group-elem {
-  margin-bottom: 5px!important;
 }
 #my-people .btn-div {
   margin-left: 76.5%;

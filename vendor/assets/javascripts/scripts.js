@@ -373,7 +373,7 @@ $(document).ready(function() { //variant-remove
       iframe.attr('data-src', src);
     }
     $(this).find('.btn-modal').attr('modal-link', index);
-    $(this).find('.foundry_modal').clone().appendTo('body').attr('modal-link', index).prepend($('<i class="ti-close close-modal">'));
+    $(this).find('.foundry_modal').clone().appendTo('body').attr('modal-link', index).prepend($('<i class="fa fa-times close-modal">'));
   });
 
   $('.btn-modal').click(function(){
@@ -391,7 +391,7 @@ $(document).ready(function() { //variant-remove
   $('.foundry_modal[data-time-delay]').each(function(){
     var modal = $(this);
     var delay = modal.attr('data-time-delay');
-    modal.prepend($('<i class="ti-close close-modal">'));
+    modal.prepend($('<i class="fa fa-times close-modal">'));
     if(typeof modal.attr('data-cookie') != "undefined"){
       if(!mr_cookies.hasItem(modal.attr('data-cookie'))){
         setTimeout(function(){
@@ -433,7 +433,7 @@ $(document).ready(function() { //variant-remove
 
   $('.modal-strip').each(function(){
     if(!$(this).find('.close-modal').length){
-      $(this).append($('<i class="ti-close close-modal">'));
+      $(this).append($('<i class="fa fa-times close-modal">'));
     }
     var modal = $(this);
 
