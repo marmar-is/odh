@@ -19,15 +19,15 @@ class PayoutJob < ActiveJob::Base
     marmaris_customer = "cus_6pfktmXjY8Hozs"
 
     # Associated Transaction
-    sub_id = Stripe::Customer.retrieve(new_referral.account.stripe_subscription_id).subscriptions.data[0].id
+    #sub_id = Stripe::Customer.retrieve(new_referral.account.stripe_subscription_id).subscriptions.data[0].id
 
     first_referrer = new_referral.parent
     if first_referrer
       Stripe::Transfer.create(
       amount:               payout_matrix[0][:amount],
       currency:             'USD',
-      destination:          first_referrer.account.stripe_account_id,
-      source_transaction:   sub_id
+      destination:          Account.first.stripe_account_id#first_referrer.account.stripe_account_id,
+      #source_transaction:   sub_id
     )
       #Stripe::Charge.create({
       #  amount:       payout_matrix[0][:amount],
