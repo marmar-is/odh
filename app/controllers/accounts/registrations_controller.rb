@@ -88,6 +88,9 @@ class Accounts::RegistrationsController < Devise::RegistrationsController
             resource.save
             @ambassador.save
 
+            # Payout
+            PayoutJob.perform_later(@ambassador)
+
             # Taken from Devise
             if resource.active_for_authentication?
               set_flash_message :notice, :signed_up if is_flashing_format?

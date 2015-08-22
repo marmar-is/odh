@@ -23,23 +23,23 @@ class PayoutJob < ActiveJob::Base
 
     first_referrer = new_referral.parent
     if first_referrer
-      transfer(first_referrer.stripe_account_id, 1)
+      transfer(first_referrer.account.stripe_account_id, 1)
 
       second_referrer = first_referrer.parent
       if second_referrer
-        transfer(second_referrer.stripe_account_id, 2)
+        transfer(second_referrer.account.stripe_account_id, 2)
 
         third_referrer = first_referrer.parent
         if third_referrer
-          transfer(third_referrer.stripe_account_id, 3)
+          transfer(third_referrer.account.stripe_account_id, 3)
 
           fourth_referrer = first_referrer.parent
           if fourth_referrer
-            transfer(fourth_referrer.stripe_account_id, 4)
+            transfer(fourth_referrer.account.stripe_account_id, 4)
 
             fifth_referrer = first_referrer.parent
             if fifth_referrer
-              transfer(fifth_referrer.stripe_account_id, 5)
+              transfer(fifth_referrer.account.stripe_account_id, 5)
             end
             # fifth
           end
@@ -62,7 +62,7 @@ class PayoutJob < ActiveJob::Base
       metadata:             {
         generation:         generation,
       },
-      destination:          stripe_account_id#first_referrer.account.stripe_account_id,
+      destination:          stripe_account_id,#first_referrer.account.stripe_account_id,
       #source_transaction:   sub_id
     )
     #Stripe::Charge.create({
