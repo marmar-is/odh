@@ -7,6 +7,8 @@ class AmbassadorsController < ApplicationController
   def index
     @child_prospects = @ambassador.children.where(status: 0)
     @child_successes = @ambassador.children.where(status: [ 1, 2 ])
+
+    @stripe_bank_account = Stripe::Account.retrieve(current_account.stripe_account_id).bank_accounts.first
   end
 
   # POST /ambassadors/refer
