@@ -57,8 +57,9 @@ group :development, :test do
   gem 'spring'
 end
 
-# Accounts & Authentication
+# Accounts & Authentication & Admins
 gem 'devise', '~> 3.4'
+gem 'activeadmin', github: 'activeadmin'
 
 # Twilio Messages
 gem 'twilio-ruby'
