@@ -1,7 +1,4 @@
 Rails.application.routes.draw do
-  # Active Admin
-  devise_for :admins, ActiveAdmin::Devise.config
-  ActiveAdmin.routes(self)
   # Devise Accounts
   devise_for :accounts, controllers: { registrations: 'accounts/registrations' }
 
