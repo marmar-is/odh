@@ -16,3 +16,4 @@ a = Ambassador.new(
   state: 'NJ',
   zip: ''
 )
+AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password')
