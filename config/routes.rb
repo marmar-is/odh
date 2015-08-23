@@ -1,11 +1,8 @@
 Rails.application.routes.draw do
-
-
-
-  constraints subdomain: 'admin' do
-    devise_for :admins, ActiveAdmin::Devise.config
-    ActiveAdmin.routes(self)
-  end
+  # Active Admin
+  devise_for :admins, ActiveAdmin::Devise.config
+  ActiveAdmin.routes(self)
+  # Devise Accounts
   devise_for :accounts, controllers: { registrations: 'accounts/registrations' }
 
   #root 'statics#index'
