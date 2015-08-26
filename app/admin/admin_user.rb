@@ -1,5 +1,5 @@
 ActiveAdmin.register AdminUser do
-  menu priority: 3
+  menu priority: 3, if: proc{ !current_admin_user.admin? }
 
   controller do
     # Restrict abilities of basic admin
