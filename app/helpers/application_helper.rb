@@ -9,6 +9,7 @@ module ApplicationHelper
     end
   end
 
+  # US State Names & Abbreviations in an array
   def us_states
     [
       ['Alabama', 'AL'],
