@@ -11,6 +11,7 @@ class PayoutJob < ActiveJob::Base
     #sub_id = Stripe::Customer.retrieve(new_referral.account.stripe_subscription_id).subscriptions.data[0].id
 
     referrer = new_referral.parent
+    # Payout Matrix is ordered by generation (1 .. x)
     PayoutMatrix.select(:generation, :amount).each do |p|
       if referrer
         transfer(referrer.stripe_account_id, p.generation, p.amount)
