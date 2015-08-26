@@ -1,4 +1,17 @@
 ActiveAdmin.register AdminUser do
+  menu priority: 3
+
+  controller do
+    # Restrict abilities of basic admin
+    def action_methods
+      if current_admin_user.superadmin?
+        super
+      else
+        super - ['index', 'new', 'create', 'edit', 'update', 'destroy', ]
+      end
+    end
+  end
+
   permit_params :email, :password, :password_confirmation
 
   index do

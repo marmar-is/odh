@@ -1,4 +1,6 @@
 ActiveAdmin.register PayoutMatrix do
+  menu priority: 2
+
   permit_params :generation, :amount
 
   index do
