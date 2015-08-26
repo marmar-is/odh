@@ -14,7 +14,7 @@ class PayoutJob < ActiveJob::Base
     # Payout Matrix is ordered by generation (1 .. x)
     PayoutMatrix.select(:generation, :amount).each do |p|
       if referrer
-        transfer(referrer.stripe_account_id, p.generation, p.amount)
+        transfer(referrer.account.stripe_account_id, p.generation, p.amount)
 
         referrer = referrer.parent
       else
@@ -28,7 +28,7 @@ class PayoutJob < ActiveJob::Base
   private
   def transfer(stripe_account_id, generation, amount)
     Stripe::Transfer.create(
-      amount:               amount,
+      amount:               amount*100, # Convert dollars to cents
       currency:             'USD',
       description:          'Compensation for a referral. Thanks!',
       metadata:             {
