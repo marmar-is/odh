@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   devise_for :accounts, controllers: { registrations: 'accounts/registrations' }
 
   #root 'statics#index'
-  root 'ambassadors#index'
+  #root 'ambassadors#index'
   root 'statics#index', as: :unauthenticated_root
 
   get    'home'                                => 'ambassadors#index',               as: :home_page
