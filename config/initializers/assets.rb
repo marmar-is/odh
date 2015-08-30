@@ -31,8 +31,9 @@ Rails.application.config.assets.precompile += %w(
   jquery.tagsinput/jquery.tagsinput.js
 
   ambassadors.css
+  parallax.js
 )
-#parallax.js
+
 
 # Register Assets (js & css)
 Rails.application.config.assets.precompile += %w(
