@@ -2,12 +2,13 @@ Rails.application.routes.draw do
   # Active Admin
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
-  
+
   # Devise Accounts
   devise_for :accounts, controllers: { registrations: 'accounts/registrations' }
 
   #root 'statics#index'
   root 'ambassadors#index'
+  root 'statics#index', as: :unauthenticated_root
 
   get    'home'                                => 'ambassadors#index',               as: :home_page
   post   'ambassadors/refer'                   => 'ambassadors#refer',               as: :send_referrals
