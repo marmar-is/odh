@@ -8,6 +8,10 @@ Rails.application.routes.draw do
     root 'ambassadors#index'
   end
 
+  authenticated :admin_user do
+    root 'admin/dashboard#index', as: "admin"
+  end
+
   authenticated :account do
     root 'ambassadors#index'
   end

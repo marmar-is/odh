@@ -25,6 +25,11 @@ Things you may want to cover:
 
 * ...
 
+Notes:
+
+For each company we work with, we must manually add that company ( i.e. Company.new(...) )
+and then manually create a Stripe Customer (i.e. Stripe::Customer.create(...)).
+
 
 Please feel free to use a different markup language if you do not plan to run
 <tt>rake doc:app</tt>.
