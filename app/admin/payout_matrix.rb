@@ -1,5 +1,5 @@
 ActiveAdmin.register PayoutMatrix do
-  menu priority: 2
+  menu priority: 2, if: proc{ !current_admin_user.delegate? }
 
   permit_params :generation, :amount
 

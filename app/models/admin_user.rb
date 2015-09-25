@@ -5,6 +5,6 @@ class AdminUser < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   # Enumerations
-  enum role: [ :admin, :superadmin ]
+  enum role: [ :delegate, :admin ]
 
 end
