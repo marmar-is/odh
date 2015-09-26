@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  exposition_id: 
+  ambassador_id: 
+  choice: 1
+
+two:
+  exposition_id: 
+  ambassador_id: 
+  choice: 1

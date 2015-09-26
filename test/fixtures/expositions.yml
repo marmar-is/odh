@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  when: 2015-09-26 12:01:47
+  point_spread: 9.99
+  stream_url: MyString
+  team_1_id: 
+  team_2_id: 
+
+two:
+  when: 2015-09-26 12:01:47
+  point_spread: 9.99
+  stream_url: MyString
+  team_1_id: 
+  team_2_id: 

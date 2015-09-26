@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150826211706) do
+ActiveRecord::Schema.define(version: 20150926160254) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -123,6 +123,21 @@ ActiveRecord::Schema.define(version: 20150826211706) do
 
   add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
 
+  create_table "expositions", force: :cascade do |t|
+    t.datetime "when"
+    t.decimal  "point_spread"
+    t.string   "stream_url"
+    t.integer  "home_id"
+    t.integer  "away_id"
+    t.integer  "week_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
+  add_index "expositions", ["away_id"], name: "index_expositions_on_away_id", using: :btree
+  add_index "expositions", ["home_id"], name: "index_expositions_on_home_id", using: :btree
+  add_index "expositions", ["week_id"], name: "index_expositions_on_week_id", using: :btree
+
   create_table "payout_matrices", force: :cascade do |t|
     t.integer  "generation"
     t.integer  "amount"
@@ -132,4 +147,32 @@ ActiveRecord::Schema.define(version: 20150826211706) do
 
   add_index "payout_matrices", ["generation"], name: "index_payout_matrices_on_generation", unique: true, using: :btree
 
+  create_table "picks", force: :cascade do |t|
+    t.integer  "exposition_id"
+    t.integer  "ambassador_id"
+    t.boolean  "choice"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  add_index "picks", ["ambassador_id"], name: "index_picks_on_ambassador_id", using: :btree
+  add_index "picks", ["exposition_id"], name: "index_picks_on_exposition_id", using: :btree
+
+  create_table "teams", force: :cascade do |t|
+    t.string   "name"
+    t.string   "conference"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "weeks", force: :cascade do |t|
+    t.integer  "number"
+    t.datetime "deadline"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_foreign_key "expositions", "weeks"
+  add_foreign_key "picks", "ambassadors"
+  add_foreign_key "picks", "expositions"
 end
