@@ -9,8 +9,6 @@ class Ambassador < ActiveRecord::Base
   belongs_to :parent, class_name: :Ambassador, foreign_key: "parent_id"
   has_many :children, class_name: :Ambassador, foreign_key: "parent_id"
 
-  has_many :picks
-
   # Enumerations
   enum status: [ :prospective, :registered, :active ]
 

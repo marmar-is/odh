@@ -2,40 +2,43 @@
 <html lang="en">
 <head>
   <title><%= title(@title) %></title>
+
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= yield :head %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
   <meta name="description" content="Marmaris ODH Project" />
   <meta name="keywords" content="ODH,marmaris,dashboard" />
   <meta name="author" content="Marmaris" />
+  <%= favicon_link_tag 'favicon.png' %>
 
   <!-- Font -->
-  <%= stylesheet_link_tag 'http://fonts.googleapis.com/css?family=Lato:300,400%7CRaleway:100,400,300,500,600,700%7COpen+Sans:400,500,600', 'data-turbolinks-track' => true %>
+  <%#= stylesheet_link_tag 'http://fonts.googleapis.com/css?family=Lato:300,400%7CRaleway:100,400,300,500,600,700%7COpen+Sans:400,500,600', 'data-turbolinks-track' => true %>
+  <%= stylesheet_link_tag 'http://fonts.googleapis.com/css?family=Abel|Source+Sans+Pro:400,300,300italic,400italic,600,600italic,700,700italic,900,900italic,200italic,200' %>
 </head>
 <body>
 
-  <%#= render partial: 'layouts/header' %>
+  <!--  preloader start -->
+  <div id="tb-preloader">
+      <div class="tb-preloader-wave"></div>
+  </div>
+  <!-- preloader end -->
 
-  <div class="main-container">
     <%= yield %>
 
-    <%#= render partial: 'layouts/footer' %>
-  </div>
 
-  <%= javascript_include_tag 'flexslider.min.js', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'lightbox.min.js', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'masonry.min.js', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'twitterfetcher.min.js', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'spectragram.min.js', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'ytplayer.min.js', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'countdown.min.js', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'smooth-scroll.min.js', 'data-turbolinks-track' => true %>
-  <%#= javascript_include_tag 'parallax.js', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'scripts.js', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'menuzord', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'jquery.flexslider-min', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'owl.carousel.min', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'jquery.isotope', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'imagesloaded', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'jquery.magnific-popup.min', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'smooth', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'wow.min', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'scripts', 'data-turbolinks-track' => true %>
   <%= yield :js_includes %>
 
 </body>

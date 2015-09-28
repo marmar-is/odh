@@ -8,4 +8,6 @@ class Account < ActiveRecord::Base
   # Associations
   belongs_to :meta, polymorphic: true # Polymorphic association for Accounts + Ambassador/Etc.
 
+  has_many :picks
+
 end

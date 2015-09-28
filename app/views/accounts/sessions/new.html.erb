@@ -1,9 +1,49 @@
-<style>
-  section.overlay.cover.fullscreen {
-    min-height:500px!important;
-  }
-</style>
+<div class="login login-bg">
+  <div class="container">
+    <div class="login-logo text-center">
+      <a href="#">
+        <%= image_tag "logo.png", alt: "" %>
+      </a>
+    </div>
+    <div class="login-box btn-rounded">
+      <%= form_for(resource, html: { }, as: resource_name, url: session_path(resource_name)) do |f| %>
+        <div class="text-center">
+          <h3>LOGIN</h3>
+        </div>
 
+        <div class="form-group">
+          <%= f.email_field :email, placeholder:"Email", autofocus: true, class: 'form-control' %>
+        </div>
+
+        <div class="form-group">
+          <%= f.password_field :password, placeholder:"Password", autocomplete: "off", class: 'form-control' %>
+        </div>
+
+        <div class="form-group">
+          <%= f.submit "Login", class: 'btn btn-small btn-dark-solid full-width btn-rounded' %>
+        </div>
+
+        <div class="login-social-link">
+          <a href="index.html" class="facebook">
+            Facebook
+          </a>
+          <a href="index.html" class="twitter">
+            Twitter
+          </a>
+        </div>
+
+        <div class="form-group">
+          <%= f.check_box :remember_me %>
+          <label for="checkbox1">Remember me</label>
+
+          <%= render "accounts/shared/links" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<% if false %>
 <section class="cover fullscreen image-bg overlay">
   <div class="background-image-holder">
     <%= image_tag "home12.jpg", class:"background-image", alt:"image" %>
@@ -37,3 +77,4 @@
     </div>
   </div>
 </section>
+<% end %>
