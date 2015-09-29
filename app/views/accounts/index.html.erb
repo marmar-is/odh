@@ -34,9 +34,10 @@
                 </div>
                 <hr/>
                 <% current_week.expositions.each do |expo| %>
+                  <% pick = current_account.picks.joins(:exposition).where(expositions: {id: expo.id}).first %>
                   <div class="row mb40">
                     <!-- home team -->
-                    <div id="<%= expo.id %>" class="col-md-6 home-team animated pickable" data-team="true">
+                    <div id="<%= expo.id %>" class="col-md-6 home-team animated pickable <%= "picked" if (pick && pick.choice) %>" data-team="true">
                       <span class="number text-center"><%= expo.point_spread %></span>
                       <h4 class="text-uppercase mb8"><%= expo.home.name %></h4>
                       <p>
@@ -45,7 +46,7 @@
                     </div>
                     <!-- /home team -->
                     <!-- away team -->
-                    <div id="<%= expo.id %>" class="col-md-6 away-team animated pickable" data-team="false">
+                    <div id="<%= expo.id %>" class="col-md-6 away-team animated pickable <%= "picked" if (pick && !pick.choice) %>" data-team="false">
                       <span class="number text-center"><%= -1 * expo.point_spread %></span>
                       <h4 class="text-uppercase mb8"><%= expo.away.name %></h4>
                       <p>
@@ -294,6 +295,7 @@
 
       $('div.home-team').addClass('fadeInLeft divider');
       $('div.away-team').addClass('fadeInRight');
+
     };
 
     Stripe.setPublishableKey("<%= Rails.application.secrets.stripe_publishable_key %>");
