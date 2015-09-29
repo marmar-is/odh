@@ -14,7 +14,8 @@
   <meta name="author" content="Marmaris" />
 
   <!-- Font -->
-  <%= stylesheet_link_tag 'http://fonts.googleapis.com/css?family=Lato:300,400%7CRaleway:100,400,300,500,600,700%7COpen+Sans:400,500,600', 'data-turbolinks-track' => true %>
+  <%= stylesheet_link_tag "http://fonts.googleapis.com/css?family=Abel|Source+Sans+Pro:400,300,300italic,400italic,600,600italic,700,700italic,900,900italic,200italic,200", 'data-turbolinks-track' => true %>
+  <%#= stylesheet_link_tag 'http://fonts.googleapis.com/css?family=Lato:300,400%7CRaleway:100,400,300,500,600,700%7COpen+Sans:400,500,600', 'data-turbolinks-track' => true %>
 </head>
 <body>
 
@@ -26,11 +27,9 @@
     <p class="alert"><%= alert %></p>
   <% end %>
 
-  <div class="main-container">
-    <%= yield %>
+  <%= yield %>
 
-    <%= render partial: 'layouts/footer' %>
-  </div>
+  <%= render partial: 'layouts/footer' %>
 
 
   <%= yield :js_includes %>

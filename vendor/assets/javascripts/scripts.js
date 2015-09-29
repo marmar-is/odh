@@ -23,14 +23,14 @@
     new WOW().init();
 
     $(document).ready(function () {
-        
+
         /* ---------------------------------------------
          retina fix
          --------------------------------------------- */
         if (window.devicePixelRatio > 1){
             $(".retina").imagesLoaded(function(){
                 $(".retina").each(function(){
-                    var src = $(this).attr("src").replace(".","@2x.");
+                    var src = $(this).attr("src");//.replace(".","@2x.");
                     var h = $(this).height();
                     var w = $(this).width();
                     $(this).attr("src",src).css({height:h,width:'auto'});
@@ -74,7 +74,7 @@
                 $(".showhide").trigger("click");
             }
         });
-        
+
         if ($.fn.onePageNav) {
             $('.op-nav').onePageNav({
                 currentClass: 'active'

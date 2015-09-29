@@ -36,9 +36,9 @@
             <div class="container">
               <div class="menuzord" id="massive-menu">
                 <!--logo start-->
-                <a class="logo-brand" href="index.html">
+                <%= link_to unauthenticated_path, class: 'logo-brand', 'data-no-turbolink': true do %>
                   <%= image_tag "https://storage.googleapis.com/siteassets/rsz_logo.png", alt:"", class:"retina", style:"width:200" %>
-                </a>
+                <% end %>
                 <!--logo end-->
 
                 <!--mega menu start-->
@@ -53,7 +53,7 @@
                     <a href="#experiences">THE EXPERIENCE</a>
                   </li>
                   <li class="">
-                    <%= link_to "JOIN US", new_account_session_path %>
+                    <%= link_to "JOIN US", new_account_session_path, 'data-no-turbolink': true %>
                   </li>
                   <li class="">
                     <a href="#console">MY CONSOLE</a>

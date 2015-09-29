@@ -6,5 +6,5 @@ class Exposition < ActiveRecord::Base
   has_many :picks
 
   # Scopes
-  scope :by_week, -> (week_number) { joins(:week).where("weeks.number= ?", week_number) }
+  #scope :by_week, -> (week_number) { joins(:week).where("weeks.number= ?", week_number) }
 end

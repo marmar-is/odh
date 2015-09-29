@@ -28,6 +28,11 @@ Rails.application.config.assets.precompile += %w(
   wow.min.js
   jquery.nav.js
   scripts.js
+
+  slider-revolution/css/extralayers.css
+  slider-revolution/css/settings.css
+  slider-revolution/js/jquery.themepunch.tools.min.js
+  slider-revolution/js/jquery.themepunch.revolution.js
 )
 
 # Ambassador index Assets ( js & css )

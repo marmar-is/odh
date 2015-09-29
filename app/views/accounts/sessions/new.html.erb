@@ -1,9 +1,9 @@
 <div class="login login-bg">
   <div class="container">
     <div class="login-logo text-center">
-      <a href="#">
+      <%= link_to unauthenticated_path, 'data-no-turbolink': true do %>
         <%= image_tag "logo.png", alt: "" %>
-      </a>
+      <% end %>
     </div>
     <div class="login-box btn-rounded">
       <%= form_for(resource, html: { }, as: resource_name, url: session_path(resource_name)) do |f| %>

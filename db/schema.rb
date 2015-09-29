@@ -149,13 +149,13 @@ ActiveRecord::Schema.define(version: 20150926160254) do
 
   create_table "picks", force: :cascade do |t|
     t.integer  "exposition_id"
-    t.integer  "ambassador_id"
+    t.integer  "account_id"
     t.boolean  "choice"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
   end
 
-  add_index "picks", ["ambassador_id"], name: "index_picks_on_ambassador_id", using: :btree
+  add_index "picks", ["account_id"], name: "index_picks_on_account_id", using: :btree
   add_index "picks", ["exposition_id"], name: "index_picks_on_exposition_id", using: :btree
 
   create_table "teams", force: :cascade do |t|
@@ -173,6 +173,6 @@ ActiveRecord::Schema.define(version: 20150926160254) do
   end
 
   add_foreign_key "expositions", "weeks"
-  add_foreign_key "picks", "ambassadors"
+  add_foreign_key "picks", "accounts"
   add_foreign_key "picks", "expositions"
 end
