@@ -9,6 +9,10 @@ module ApplicationHelper
     end
   end
 
+  def current_week
+    Week.where("deadline < ?", Time.now)
+  end
+
   # US State Names & Abbreviations in an array
   def us_states
     [
