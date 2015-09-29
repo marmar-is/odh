@@ -14,6 +14,26 @@ Rails.application.config.assets.version = '1.0'
 # Vendor Plugins
 Rails.application.config.assets.paths << Rails.root.join("vendor", "assets", "plugins")
 
+# General Assets
+Rails.application.config.assets.precompile += %w(
+  menuzord.js
+  jquery.flexslider-min.js
+  owl.carousel.min.js
+  jquery.isotope.js
+  imagesloaded.js
+  jquery.magnific-popup.min.js
+  jquery.countTo.js
+  visible.js
+  smooth.js
+  wow.min.js
+  jquery.nav.js
+  scripts.js
+
+  slider-revolution/css/extralayers.css
+  slider-revolution/css/settings.css
+  slider-revolution/js/jquery.themepunch.tools.min.js
+  slider-revolution/js/jquery.themepunch.revolution.js
+)
 
 # Ambassador index Assets ( js & css )
 Rails.application.config.assets.precompile += %w(

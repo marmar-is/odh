@@ -10,12 +10,16 @@
  * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
  * file per style scope.
  *
- *= require bootstrap
+ *= require bootstrap.min
  *= require font-awesome
- *= require flexslider
- *= require lightbox.min
- *= require ytplayer
- *= require theme-chipotle
+ *= require magnific-popup
+ *= require shortcodes/shortcodes
+ *= require owl.carousel
+ *= require owl.theme
+ *= require style
+ *= require blog
+ *= require style-responsive
+ *= require default-theme
 
  *= require selectize
  *= require selectize.bootstrap3

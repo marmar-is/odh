@@ -1,52 +1,50 @@
-<!--header start-->
-<header id="header" class="header-full-width">
-  <div class="header-sticky light-header">
-    <div class="container">
-      <div id="massive-menu" class="menuzord menuzord-responsive">
-        <a href="javascript:void(0)" class="showhide" style="">
-          <em></em>
-          <em></em>
-          <em></em>
-        </a>
-
-        <!--logo start-->
-        <%= link_to root_path, class: 'logo-brand', 'data-no-turbolink': true do %>
-          ODH
+<div class="nav-container">
+  <nav>
+    <div class="nav-bar">
+      <div class="module left">
+        <%= link_to root_path, 'data-no-turbolink': true do %>
+          <%= image_tag 'logo-light.png', class: 'logo logo-light', alt: 'Foundry' %>
+          <%= image_tag 'logo-dark.png', class: 'logo logo-dark', alt: 'Foundry' %>
         <% end %>
-        <!--logo end-->
-
-        <!--mega menu start-->
-        <ul class="menuzord-menu pull-right op-nav menuzord-indented scrollable" style="max-height: 400px;">
-          <li class="">
-            <a href="#home">POOLS</a>
-            <li class="EXPERIENCES">
+      </div>
+      <div class="module widget-handle mobile-toggle right visible-sm visible-xs">
+        <i class="fa fa-bars"></i>
+      </div>
+      <div class="module-group right">
+        <div class="module left">
+          <ul class="menu">
+            <li>
+              <a href="#">THE MEMBERSHIP</a>
+            </li><li>
+              <%= link_to "MY PROFILE", root_path, 'data-no-turbolink': true %>
+            </li><li>
+              <a href="#"> </a>
             </li>
-          </li>
+          </ul>
+        </div>
 
-          <li class="">
-            <a href="#start">EXPERIENCES</a>
-          </li>
-
-          <li class="">
-            <a href="#team">AMBASSADORSHIP</a>
-          </li>
-
-          <li class="">
-            <a href="#portfolio">CONCIERGE</a>
-          </li>
-
-          <li class="">
-            <%= link_to edit_account_registration_path do %>
-              SETTINGS
-            <% end %>
-          </li>
-
-          <li class="">
-            <%= link_to "Logout", destroy_account_session_path, method: :delete %>
-          </li>
-        </ul>
+        <div class="module widget-handle left">
+          <ul class="menu">
+            <li class="has-dropdown">
+              <a href="#"><%= current_account.meta.full_name %></a>
+              <ul>
+                <li>
+                  <%= link_to edit_account_registration_path do %>
+                    <i class="fa fa-cog" style="font-size:11px"></i>
+                    SETTINGS
+                  <% end %>
+                </li>
+                <li>
+                  <%= link_to destroy_account_session_path, method: :delete do %>
+                    <i class="fa fa-times" style="font-size:11px"></i>
+                    LOGOUT
+                  <% end %>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
-  </div>
-</header>
-<!--header end-->
+  </nav>
+</div>

@@ -14,24 +14,31 @@
   <meta name="author" content="Marmaris" />
 
   <!-- Font -->
-  <%= stylesheet_link_tag 'http://fonts.googleapis.com/css?family=Lato:300,400%7CRaleway:100,400,300,500,600,700%7COpen+Sans:400,500,600', 'data-turbolinks-track' => true %>
+  <%= stylesheet_link_tag "http://fonts.googleapis.com/css?family=Abel|Source+Sans+Pro:400,300,300italic,400italic,600,600italic,700,700italic,900,900italic,200italic,200", 'data-turbolinks-track' => true %>
+  <%#= stylesheet_link_tag 'http://fonts.googleapis.com/css?family=Lato:300,400%7CRaleway:100,400,300,500,600,700%7COpen+Sans:400,500,600', 'data-turbolinks-track' => true %>
 </head>
 <body>
+  <!--  preloader start -->
+  <div id="tb-preloader">
+    <div class="tb-preloader-wave"></div>
+  </div>
+  <!-- preloader end -->
+  
+  <div class="wrapper" id="home">
 
-  <%= render partial: 'layouts/header' %>
+    <%= render partial: 'layouts/header' %>
 
 
-  <%- if false %>
+    <%- if false %>
     <p class="notice"><%= notice %></p>
     <p class="alert"><%= alert %></p>
-  <% end %>
+    <% end %>
 
-  <div class="main-container">
+
     <%= yield %>
 
     <%= render partial: 'layouts/footer' %>
   </div>
-
 
   <%= yield :js_includes %>
 </body>
