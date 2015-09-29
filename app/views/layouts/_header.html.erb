@@ -1,5 +1,5 @@
 <!--header start-->
-<header id="header" class="header-full-width sticky">
+<header id="header" class="header-full-width">
   <div class="header-sticky light-header">
     <div class="container">
       <div id="massive-menu" class="menuzord menuzord-responsive">
@@ -11,7 +11,6 @@
 
         <!--logo start-->
         <%= link_to root_path, class: 'logo-brand', 'data-no-turbolink': true do %>
-          <%#= image_tag "logo.png", alt:"", class:"" %>
           ODH
         <% end %>
         <!--logo end-->
@@ -37,7 +36,13 @@
           </li>
 
           <li class="">
-            <a href="#service">SETTINGS</a>
+            <%= link_to edit_account_registration_path do %>
+              SETTINGS
+            <% end %>
+          </li>
+
+          <li class="">
+            <%= link_to "Logout", destroy_account_session_path, method: :delete %>
           </li>
         </ul>
       </div>
