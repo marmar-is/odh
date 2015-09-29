@@ -1,7 +1,7 @@
 # Capistrano Deploy Configurations
 server ENV['ODH_WEB_IP'], port: 22, roles: [:web, :app, :db], primary: true
 
-set :repo_url,        'git@54.187.122.146:matt/odh.git'
+set :repo_url,        'git@github.com:marmar-is/odh.git'
 set :application,     'odh'
 set :user,            'marmaris'
 set :branch,          :production # Push from production branch
