@@ -1,6 +1,14 @@
 <%= content_for :head do %>
   <%= stylesheet_link_tag 'jquery.tagsinput/jquery.tagsinput.css', 'data-turbolinks-track' => true %>
   <%= stylesheet_link_tag 'ambassadors', 'data-turbolinks-track' => true %>
+  <style>
+    .divider {
+      border-right: 1px dashed #333;
+    }
+    .picked {
+      outline: red solid thick;
+    }
+  </style>
 <% end %>
 
 <section id="my-account" class="pb0">
@@ -16,49 +24,37 @@
               </div>
               <div class="tab-content">
                 <!-- expositions -->
-                <%= current_week.expositions.each do |expo| %>
+                <div class="row mb8">
+                  <div class="col-md-6 home-team animated">
+                    <h3>HOME</h3>
+                  </div>
+                  <div class="col-md-6 away-team animated">
+                    <h3>AWAY</h3>
+                  </div>
+                </div>
+                <hr/>
+                <% current_week.expositions.each do |expo| %>
+                  <div class="row mb40">
+                    <!-- home team -->
+                    <div id="<%= expo.id %>" class="col-md-6 home-team animated pickable" data-team="true">
+                      <span class="number text-center"><%= expo.point_spread %></span>
+                      <h4 class="text-uppercase mb8"><%= expo.home.name %></h4>
+                      <p>
+                        Fringilla augue at maximus vestibulum. Nam pulvinar vitae neque et porttitor. Praesent sed nisi eleifend. Pellentesque eu quam sem, ac malesuada leo sem quam pellente.
+                      </p>
+                    </div>
+                    <!-- /home team -->
+                    <!-- away team -->
+                    <div id="<%= expo.id %>" class="col-md-6 away-team animated pickable" data-team="false">
+                      <span class="number text-center"><%= -1 * expo.point_spread %></span>
+                      <h4 class="text-uppercase mb8"><%= expo.away.name %></h4>
+                      <p>
+                        Fringilla augue at maximus vestibulum. Nam pulvinar vitae neque et porttitor. Praesent sed nisi eleifend. Pellentesque eu quam sem, ac malesuada leo sem quam pellente.
+                      </p>
+                    </div>
+                    <!-- /away team -->
+                  </div>
                 <% end %>
-                <div class="row mb40">
-                  <!-- home team -->
-                  <div class="col-md-6 home-team animated">
-                    <span class="number">+7.5</span>
-                    <h4 class="text-uppercase mb8">EAGLES</h4>
-                    <p>
-                      Fringilla augue at maximus vestibulum. Nam pulvinar vitae neque et porttitor. Praesent sed nisi eleifend. Pellentesque eu quam sem, ac malesuada leo sem quam pellente.
-                    </p>
-                  </div>
-                  <!-- /home team -->
-                  <!-- away team -->
-                  <div class="col-md-6 away-team animated">
-                    <span class="number">+7.5</span>
-                    <h4 class="text-uppercase mb8">EAGLES</h4>
-                    <p>
-                      Fringilla augue at maximus vestibulum. Nam pulvinar vitae neque et porttitor. Praesent sed nisi eleifend. Pellentesque eu quam sem, ac malesuada leo sem quam pellente.
-                    </p>
-                  </div>
-                  <!-- /away team -->
-                </div>
-
-                <div class="row mb40">
-                  <!-- home team -->
-                  <div class="col-md-6 home-team animated">
-                    <span class="number">+7.5</span>
-                    <h4 class="text-uppercase mb8">EAGLES</h4>
-                    <p>
-                      Fringilla augue at maximus vestibulum. Nam pulvinar vitae neque et porttitor. Praesent sed nisi eleifend. Pellentesque eu quam sem, ac malesuada leo sem quam pellente.
-                    </p>
-                  </div>
-                  <!-- /home team -->
-                  <!-- away team -->
-                  <div class="col-md-6 away-team animated">
-                    <span class="number">+7.5</span>
-                    <h4 class="text-uppercase mb8">EAGLES</h4>
-                    <p>
-                      Fringilla augue at maximus vestibulum. Nam pulvinar vitae neque et porttitor. Praesent sed nisi eleifend. Pellentesque eu quam sem, ac malesuada leo sem quam pellente.
-                    </p>
-                  </div>
-                  <!-- /away team -->
-                </div>
               </div>
             </li>
             <li>
@@ -296,11 +292,9 @@
         inputReferType: 'phone',
       });
 
-      $('div.home-team').addClass('fadeInLeft');
+      $('div.home-team').addClass('fadeInLeft divider');
       $('div.away-team').addClass('fadeInRight');
     };
-
-    $('document').ready(ready);
 
     Stripe.setPublishableKey("<%= Rails.application.secrets.stripe_publishable_key %>");
 
@@ -339,5 +333,20 @@
       return false;
     });
 
+    $('body').on('click', 'div.pickable', function(event) {
+      event.preventDefault();
+
+      var $picked = $(this);
+      console.log($picked);
+      $.ajax({
+        url: 'accounts/make_pick/'+$picked.attr('id'),
+        type: 'PATCH',
+        data: {
+          team: $picked.data('team')
+        }
+      });
+    });
+
+    $('document').ready(ready);
   </script>
 <% end %>

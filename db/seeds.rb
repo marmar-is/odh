@@ -59,3 +59,15 @@ Team.create(name: "St. Louis Rams",       conference: "NFC West")
 Team.create(name: "Tampa Bay Buccaneers", conference: "NFC South")
 Team.create(name: "Tennessee Titans",     conference: "AFC South")
 Team.create(name: "Washington Redskins",  conference: "NFC East")
+
+# Weeks
+Week.create(number: 1, start: Time.now-2.days, deadline: Time.now+5.days)
+Week.create(number: 2, start: Time.now+5.days, deadline: Time.now+12.days)
+Week.create(number: 3, start: Time.now+12.days, deadline: Time.now+19.days)
+Week.create(number: 4, start: Time.now+26.days, deadline: Time.now+33.days)
+
+# Expositions
+Exposition.create(week: Week.first, home: Team.first, away: Team.second, when: Time.now, point_spread:7.5)
+Exposition.create(week: Week.first, home: Team.second, away: Team.last, when: Time.now+1.days, point_spread:-5.0)
+Exposition.create(week: Week.first, home: Team.third, away: Team.first, when: Time.now+2.days, point_spread:0.0)
+Exposition.create(week: Week.first, home: Team.fourth, away: Team.last, when: Time.now+3.days, point_spread:10.0)

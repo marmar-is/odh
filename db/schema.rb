@@ -168,6 +168,7 @@ ActiveRecord::Schema.define(version: 20150926160254) do
   create_table "weeks", force: :cascade do |t|
     t.integer  "number"
     t.datetime "deadline"
+    t.datetime "start"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

@@ -1,0 +1,7 @@
+"<% if team == 'true' %>"
+  $("<%= expo_id %>.home-team").addClass(".picked");
+  $("<%= expo_id %>.away-team").removeClass(".picked");
+"<% else %>"
+  $("<%= expo_id %>.home-team").removeClass(".picked");
+  $("<%= expo_id %>.away-team").addClass(".picked");
+"<% end %>"

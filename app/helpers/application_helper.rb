@@ -10,7 +10,7 @@ module ApplicationHelper
   end
 
   def current_week
-    Week.where("deadline < ?", Time.now)
+    Week.where("deadline > ? AND start < ?", Time.now, Time.now).first
   end
 
   # US State Names & Abbreviations in an array

@@ -23,6 +23,7 @@ Rails.application.routes.draw do
   #root 'statics#index'
 
   #get    'home'                                => 'ambassadors#index',               as: :home_page
+  patch  'accounts/make_pick/:expo_id'         => 'accounts#make_pick',              as: :make_pick
   post   'ambassadors/refer'                   => 'ambassadors#refer',               as: :send_referrals
   patch  'ambassadors/update_prospect/:id'     => 'ambassadors#update_prospect',     as: :update_prospect
   patch  'ambassadors/update_bank_account/:id' => 'ambassadors#update_bank_account', as: :update_bank_account

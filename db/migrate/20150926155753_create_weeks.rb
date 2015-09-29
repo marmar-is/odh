@@ -3,6 +3,7 @@ class CreateWeeks < ActiveRecord::Migration
     create_table :weeks do |t|
       t.integer :number
       t.datetime :deadline
+      t.datetime :start
 
       t.timestamps null: false
     end
