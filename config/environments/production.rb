@@ -19,7 +19,7 @@ Rails.application.configure do
   config.action_mailer.perform_deliveries = true
 
   # Default mailer url
-  config.action_mailer.default_url_options = { host: 'proto.marmar.is' }
+  config.action_mailer.default_url_options = { host: 'odh.marmar.is' }
 
   # Enable Rack::Cache to put a simple HTTP cache in front of your application
   # Add `rack-cache` to your Gemfile before enabling this.
