@@ -1,7 +1,16 @@
-$("#child-<%= child.id.to_s %>").append("<div id='overlay-ajax'><img src=<%= asset_path('loading.gif') %> class='loading-gif' alt='loading' /></div>");
-
+var finishLoadFade = function(){
+  $('#overlay-ajax').remove()
+}
 var finishLoad = function(){
-  $('#overlay-ajax').remove();
+  $('#overlay-ajax').fadeOut(500, finishLoadFade);
 };
 
-setTimeout(finishLoad, 1500);
+var finishFade = function(){
+  $("#child-title-<%= child.id.to_s %>").html("<%= display_child_label(child) %>").fadeIn(750);
+}
+
+/* loading ajax gif */
+$("#child-<%= child.id.to_s %>").append($("<div id='overlay-ajax'><img src=<%= asset_path('loading.gif') %> class='loading-gif' alt='loading' /></div>").hide().fadeIn(500));
+setTimeout(finishLoad, 1000);
+/* fade out/in to change title */
+$("#child-title-<%= child.id.to_s %>").fadeOut(750, finishFade);

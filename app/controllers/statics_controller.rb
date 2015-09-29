@@ -1,5 +1,6 @@
 class StaticsController < ApplicationController
-  before_filter :authenticate_account!
+  skip_before_filter :authenticate_account!
+  layout false
 
   def index
   end

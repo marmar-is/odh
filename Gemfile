@@ -11,20 +11,26 @@ gem 'pg'
 gem 'sass-rails', '~> 5.0'
 
 # Icons
-# gem 'font-awesome-rails', '~> 4.3' # Font Awesome
-gem 'themify-icons-rails' # Themify
+#gem 'themify-icons-rails' # Themify
+gem 'font-awesome-rails', '~> 4.3' # Font Awesome
 
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.1.0'
+# Allow haml files
+gem 'haml'
 
 # See https://github.com/rails/execjs#readme for more supported runtimes
 gem 'therubyracer', platforms: :ruby
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
+# Jquery Form Validations
+gem 'jquery-validation-rails'
+# Ruby Date Validations
+gem 'jc-validates_timeliness'
 
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem 'turbolinks'
@@ -51,23 +57,28 @@ group :development, :test do
   gem 'spring'
 end
 
-# Allow haml files
-gem 'haml'
-
-# User Accounts & Authentication
+# Accounts & Authentication & Admins
 gem 'devise', '~> 3.4'
+gem 'activeadmin', github: 'activeadmin'
+
+# Twilio Messages
+gem 'twilio-ruby'
+# Stripe Payouts
+gem 'stripe'
+
+# Select JS & CSS
+gem 'selectize-rails'
+
+# Active Jobs ( using DelayedJob )
+#gem 'resque'
+#gem 'resque-scheduler'
+gem 'delayed_job_active_record'
 
 # Development emails
 gem 'letter_opener', group: :development
 
 # Use Unicorn as the app server
 gem 'unicorn'
-
-# Ambassador Tokens
-# gem 'has_secure_token'
-
-# Twilio Messages
-gem 'twilio-ruby'
 
 # Deployment Details (Use Capistrano for deployment)
 group :development do

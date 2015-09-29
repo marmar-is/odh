@@ -7,6 +7,8 @@ class AmbassadorsController < ApplicationController
   def index
     @child_prospects = @ambassador.children.where(status: 0)
     @child_successes = @ambassador.children.where(status: [ 1, 2 ])
+
+    @stripe_bank_account = Stripe::Account.retrieve(current_account.stripe_account_id).bank_accounts.first
   end
 
   # POST /ambassadors/refer
@@ -21,7 +23,8 @@ class AmbassadorsController < ApplicationController
           new_referral = Ambassador.new(email: email, referred_via: 'email',
            status: 'prospective', parent: @ambassador )
           new_referral.save
-          DefaultMailer.send_new_referral_email( @ambassador, new_referral ).deliver
+
+          DefaultMailer.send_new_referral_email( @ambassador, new_referral ).deliver#_later
 
           @ambassador.active! if !@ambassador.active? # Make ambassador active upon first referral
         else
@@ -37,7 +40,8 @@ class AmbassadorsController < ApplicationController
           new_referral = Ambassador.new(phone: phone, referred_via: 'phone',
           status: 'prospective', parent: @ambassador )
           new_referral.save
-          DefaultMailer.send_new_referral_text( @ambassador, new_referral ).deliver
+
+          DefaultMailer.send_new_referral_text( @ambassador, new_referral ).deliver#_later
 
           @ambassador.active! if !@ambassador.active? # Make ambassador active upon first referral
         else
@@ -52,7 +56,7 @@ class AmbassadorsController < ApplicationController
     end
   end
 
-  # PUT /ambassadors/update_prospect/1
+  # PATCH /ambassadors/update_prospect/1
   def update_prospect
     child = Ambassador.find(params[:id])
     if child.referred_via == 'email'
@@ -75,6 +79,20 @@ class AmbassadorsController < ApplicationController
       else
         format.js { render "update_prospect_nochange", locals: {child: child} }
       end
+    end
+  end
+
+  # PATCH /ambassadors/update_bank_account/1
+  def update_bank_account
+    account = Account.find(params[:id])
+
+    stripe_account = Stripe::Account.retrieve(account.stripe_account_id)
+
+    stripe_account.external_account = params[:stripe_bank_token]
+    stripe_account.save
+
+    respond_to do |format|
+      format.html {redirect_to root_path, notice: "Successfully Added A Bank Account"}
     end
   end
 

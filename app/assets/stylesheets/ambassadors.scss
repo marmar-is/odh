@@ -1,6 +1,23 @@
 // Place all the styles related to the Ambassadors controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.input-control {
+  height: 35px!important;
+  margin-bottom: 5px!important;
+}
+
+/* Payment Tab */
+#payment form > .row > div {
+  border: 1px #ccc dashed;
+  padding: 15px;
+}
+#payment form .bank-errors {
+  border-radius: 1px;
+  -webkit-border-radius: 1px;
+  -moz-border-radius: 1px;
+}
+
 /* Referral Input Tags */
 #spread-the-word div.tagsinput {
   height:auto!important;
@@ -43,14 +60,15 @@
 #my-people div input {
   height: 35px;
 }
+#my-people .prospect div input[readonly] {
+  font-weight: bold;
+  background: transparent;
+}
 #my-people div.input-r {
   padding-right: 3px;
 }
 #my-people div.input-l {
   padding-left: 3px;
-}
-#my-people .group-elem {
-  margin-bottom: 5px!important;
 }
 #my-people .btn-div {
   margin-left: 76.5%;
@@ -68,10 +86,9 @@
   position:relative;
 }
 #my-people .status div:after  {
-  font-family: themify;
+  font-family: 'FontAwesome';
   font-size:16px;
   height:35px;
-  font-weight:bold;
   position: absolute;
   top:0;
   right:20px;
@@ -81,10 +98,10 @@
   padding-left:20px;
 }
 #my-people .status.registered div:after {
-  content: "\e64c";
+  content: "\f00c";
 }
 #my-people .status.active div:after {
-  content: "\e60c";
+  content: "\f135";
 }
 
 /* AJAX Overlay */

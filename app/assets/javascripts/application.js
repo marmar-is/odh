@@ -12,8 +12,11 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require jquery.validate
+//= require jquery.validate.additional-methods
+//= require selectize
 //= require bootstrap.min
 
 
 //= require turbolinks
-//= require_tree .
+//  require_tree .

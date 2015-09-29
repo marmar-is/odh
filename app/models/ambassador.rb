@@ -12,8 +12,19 @@ class Ambassador < ActiveRecord::Base
   # Enumerations
   enum status: [ :prospective, :registered, :active ]
 
-  # Tokens
-  #has_secure_token :registration_token
+  # Order
+  default_scope { order('created_at DESC') }
+
+  # Validations
+  validates :email,  presence: true, unless: Proc.new { |a| a.prospective? } # validated through devise
+  validates :phone,  presence: true, numericality: { only_integer: true }, unless: Proc.new { |a| a.prospective? }
+  validates :fname,  presence: true, length: { minimum: 2 }, unless: Proc.new { |a| a.prospective? }
+  validates :lname,  presence: true, length: { minimum: 2 }, unless: Proc.new { |a| a.prospective? }
+  validates :dob,    presence: true, timeliness: { on_or_before: lambda { Date.current }, type: :date }, unless: Proc.new { |a| a.prospective? }
+  validates :street, presence: true, unless: Proc.new { |a| a.prospective? }
+  validates :city,   presence: true, unless: Proc.new { |a| a.prospective? }
+  validates :state,  presence: true, length: { is: 2 }, unless: Proc.new { |a| a.prospective? }
+  validates :zip,    presence: true, unless: Proc.new { |a| a.prospective? }
 
   # Methods
   # Get Full Name
@@ -39,7 +50,7 @@ class Ambassador < ActiveRecord::Base
 
     def generate_unique_token
       begin
-        token = self.initials + sprintf('%03d', rand(0..999))
+        token = self.initials.upcase + sprintf('%03d', rand(0..999))
       end while self.class.exists?(token: token)
       return token
     end

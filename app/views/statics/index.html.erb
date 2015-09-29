@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title><%= title(@title) %></title>
+
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= yield :head %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta name="description" content="Marmaris ODH Project" />
+  <meta name="keywords" content="ODH,marmaris,dashboard" />
+  <meta name="author" content="Marmaris" />
+  <%= favicon_link_tag 'favicon.png' %>
+
+  <!-- Font -->
+  <%#= stylesheet_link_tag 'http://fonts.googleapis.com/css?family=Lato:300,400%7CRaleway:100,400,300,500,600,700%7COpen+Sans:400,500,600', 'data-turbolinks-track' => true %>
+  <%= stylesheet_link_tag 'http://fonts.googleapis.com/css?family=Abel|Source+Sans+Pro:400,300,300italic,400italic,600,600italic,700,700italic,900,900italic,200italic,200' %>
+</head>
+
+<body>
+  <!--  preloader start -->
+  <div id="tb-preloader">
+    <div class="tb-preloader-wave"></div>
+  </div>
+  <!-- preloader end -->
+
+  <div class="wrapper" id="home">
+    <!-- header start-->
+    <header class="header-full-width transparent-header ha-header ha-header-large" id="header">
+      <div class="ha-header-perspective">
+        <div class="ha-header-front">
+          <div class="header-sticky light-header nav-boxed-color">
+            <div class="container">
+              <div class="menuzord" id="massive-menu">
+                <!--logo start-->
+                <%= link_to unauthenticated_path, class: 'logo-brand', 'data-no-turbolink': true do %>
+                  <%= image_tag "https://storage.googleapis.com/siteassets/rsz_logo.png", alt:"", class:"retina", style:"width:200" %>
+                <% end %>
+                <!--logo end-->
+
+                <!--mega menu start-->
+                <ul class="menuzord-menu pull-right op-nav">
+                  <li class="active">
+                    <a href="#fullscreen-banner"></a>
+                  </li>
+                  <li class="">
+                    <a href="#membership">THE MEMBERSHIP</a>
+                  </li>
+                  <li class="">
+                    <a href="#experiences">THE EXPERIENCE</a>
+                  </li>
+                  <li class="">
+                    <%= link_to "JOIN US", new_account_session_path, 'data-no-turbolink': true %>
+                  </li>
+                  <li class="">
+                    <a href="#console">MY CONSOLE</a>
+                  </li>
+                </ul>
+                <!--mega menu end-->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+    <!--header end-->
+
+    <section id="fullscreen-banner" class="video-parallax overlay-background vertical-align text-center">
+      <div class="overlay-block"></div>
+
+      <!--video source start-->
+      <%= video_tag "https://storage.googleapis.com/siteassets/home.mp4", loop:"", autoplay: "", muted: "", preload:"auto", poster:"videos/lasvegas-poster.jpg" %>
+      <!--video source end-->
+
+      <div class="container-mid">
+        <div class="container">
+          <div class="banner-box">
+            <h1 class="text-uppercase light-txt">INFINITE ACCESS</h1>
+            <h3 class="text-uppercase light-txt">JOIN US FOR UNPARALLELED ACCESS TO EVENTS, TICKETS, ATHLETES, AND CELEBRITIES</h3>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <h2>INFINITE ACCESS</h2>
+
+
+    <p class="light-txt">
+      In joining us you gain
+      unparalleled access to events, tickets,
+      athletes and celebrities.
+    </p>
+    <a href="#">Contact Us &gt;</a>
+    <!--body content start-->
+
+
+    <section class="body-content">
+      <div class="page-content" id="membership">
+        <div class="container">
+          <div class="row">
+            <!--feature border box start-->
+
+            <div class="feature-box-grid">
+              <div class="heading-title text-center">
+                <h3 class="text-uppercase">THE MEMBERSHIP</h3>
+              </div>
+
+              <div class="col-md-3">
+                <div class="featured-item border-box text-center">
+                  <div class="icon fa fa-users" style="font-style: italic">
+                  </div>
+
+
+                  <div class="title text-uppercase">
+                    <h4>Sports Pools</h4>
+                  </div>
+
+
+                  <div class="desc">
+                    Gain access to some of the most
+                    competitive pools in Pro and College
+                    sports -- survive and win the greatest
+                    sports experience of your life.
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="col-md-3">
+                <div class="featured-item border-box text-center">
+                  <div class="icon fa fa-star" style="font-style: italic">
+                  </div>
+
+
+                  <div class="title text-uppercase">
+                    <h4>VIP ACCESS</h4>
+                  </div>
+
+
+                  <div class="desc">
+                    Fringilla augue at maximus vestibulum.
+                    Nam pulvinar vitae neque et porttitor.
+                    Praesent sed nisi eleifend.
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="col-md-3">
+                <div class="featured-item border-box text-center">
+                  <div class="icon fa fa-database" style="font-style: italic">
+                  </div>
+
+
+                  <div class="title text-uppercase">
+                    <h4>WINNINGS</h4>
+                  </div>
+
+
+                  <div class="desc">
+                    Fringilla augue at maximus vestibulum.
+                    Nam pulvinar vitae neque et porttitor.
+                    Praesent sed nisi eleifend.
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="col-md-3">
+                <div class="featured-item border-box text-center">
+                  <div class="icon fa fa-user-plus" style="font-style: italic">
+                  </div>
+
+
+                  <div class="title text-uppercase">
+                    <h4>REFERALLS</h4>
+                  </div>
+
+
+                  <div class="desc">
+                    Fringilla augue at maximus vestibulum.
+                    Nam pulvinar vitae neque et porttitor.
+                    Praesent sed nisi eleifend.
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!--feature border box end-->
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+
+  <div class="fun-factor-parallax dark parallax-hot" id="pools">
+    <div class=" p-tb-150">
+      <div class="container">
+        <div class="heading-title text-center">
+          <h3 class="text-uppercase light-txt">
+            Time till next pick
+          </h3>
+
+
+          <p class="half-txt light-txt">
+            Believe us we really mean it
+          </p>
+        </div>
+
+
+        <div class="row">
+          <div class="col-md-3">
+            <div class="fun-factor">
+              <div class="icon icon-happy" style="font-style: italic">
+              </div>
+
+
+              <div class="fun-info">
+                <h1 class="timer theme-color" data-from="0" data-speed="1000" data-to="36">36</h1>
+                <span>NCAA FOOTBALL</span>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="col-md-3">
+            <div class="fun-factor">
+              <div class="icon icon-happy" style="font-style: italic">
+              </div>
+
+
+              <div class="fun-info">
+                <h1 class="timer theme-color" data-from="0" data-speed="1000" data-to="36">36</h1>
+                <span>PRO FOOTBALL</span>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="col-md-3">
+            <div class="fun-factor">
+              <div class="icon icon-flag" style="font-style: italic">
+              </div>
+
+
+              <div class="fun-info">
+                <h1 class="timer theme-color" data-from="0" data-speed="1000" data-to="29">29</h1>
+                <span>MARCH MADNESS</span>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="col-md-3">
+            <div class="fun-factor">
+              <div class="icon icon-ribbon" style="font-style: italic">
+              </div>
+
+
+              <div class="fun-info">
+                <h1 class="timer theme-color" data-from="0"data-speed="1000" data-to="17">17</h1>
+                <span>Design Award Won</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="container" id="experiences">
+    <div class="heading-title text-center">
+      <h3 class="text-uppercase">THE EXPERIENCES</h3>
+    </div>
+
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="text-center">
+          <ul class="portfolio-filter">
+            <li class="active">
+              <a class="current" data-filter="*" href="#">All</a>
+            </li>
+
+            <li>
+              <a data-filter=".cat1" href="#">FOOTBALL</a>
+            </li>
+
+            <li>
+              <a data-filter=".cat2" href="#">BASKETBALL</a>
+            </li>
+
+            <li>
+              <a data-filter=".cat3" href="#">GOLF</a>
+            </li>
+
+            <li>
+              <a data-filter=".cat4" href="#">RACING</a>
+            </li>
+
+            <li>
+              <a data-filter=".cat5" href="#">RETREATS</a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="portfolio col-4" style="position: relative; height: 416px;">
+          <div class="portfolio-item cat1 cat3" style="position: absolute; left: 0px; top: 0px;">
+            <div class="thumb">
+              <%= image_tag 'portfolio/01.jpg' %>
+
+              <div class="portfolio-hover">
+                <div class="action-btn">
+                  <a class="popup-link icon-basic_magnifier" href="img/portfolio/01.jpg" style= "font-style: italic" title= "lightbox view"></a>
+                </div>
+
+                <div class="portfolio-description">
+                  <h4>
+                    <a class="popup-link" href="img/portfolio/01.jpg" title="lightbox view">lightbox view</a>
+                  </h4>
+
+                  <p>
+                    <a href="#">category</a>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="portfolio-item cat2 cat4" style="position: absolute; left: 277px; top: 0px;">
+            <div class="thumb">
+              <%= image_tag 'portfolio/02.jpg' %>
+
+              <div class="portfolio-hover">
+                <div class="action-btn">
+                  <a class="icon-basic_link" href="portfolio-single.html" style="font-style: italic"></a>
+                </div>
+
+                <div class="portfolio-description">
+                  <h4><a href="portfolio-single.html">External link</a>
+                  </h4>
+
+                  <p>
+                    <a href="#">category 1</a>
+                    ,
+                    <a href="#">category 2</a>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="portfolio-item cat1 cat2" style="position: absolute; left: 554px; top: 0px;">
+            <div class="thumb">
+              <div class="portfolio-slider">
+                <div class="flex-viewport" style="overflow: hidden; position: relative; height: 208px;">
+                  <ul class="slides" style="height: 1200%; position: absolute; width: 100%; transition-duration: 0.6s; transform: translate3d(0px, -624px, 0px);">
+                    <li class="clone" style="display: block;">
+                      <a href="img/portfolio/07c.jpg" title="Amazing Theme">
+                        <%= image_tag 'portfolio/07c.jpg', draggable: 'false' %>
+                      </a>
+                    </li>
+
+                    <li class="" style="display: block;">
+                      <a href="img/portfolio/07.jpg" title="Freshness Photo">
+                        <%= image_tag 'portfolio/07.jpg', draggable: 'false' %>
+                      </a>
+                    </li>
+
+                    <li class="" style="display: block;">
+                      <a href="img/portfolio/07a.jpg" title="Awesome Lightbox">
+                        <%= image_tag 'portfolio/07a.jpg', draggable: 'false' %>
+                      </a>
+                    </li>
+
+                    <li class="flex-active-slide" style="display: block;">
+                      <a href="img/portfolio/07b.jpg" title="Massive UI Components">
+                        <%= image_tag 'portfolio/07b.jpg', draggable: 'false' %>
+                      </a>
+                    </li>
+
+                    <li class="" style="display: block;">
+                      <a href="img/portfolio/07c.jpg" title="Amazing Theme">
+                        <%= image_tag 'portfolio/07c.jpg', draggable: 'false' %>
+                      </a>
+                    </li>
+
+                    <li class="clone" style="display: block;">
+                      <a href="img/portfolio/07.jpg" title="Freshness Photo">
+                        <%= image_tag 'portfolio/07.jpg', draggable: 'false' %>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+
+                <ol class="flex-control-nav flex-control-paging">
+                  <li>
+                    <a class="">1</a>
+                  </li>
+
+                  <li>
+                    <a class="">2</a>
+                  </li>
+
+                  <li>
+                    <a class="flex-active">3</a>
+                  </li>
+
+                  <li>
+                    <a class="">4</a>
+                  </li>
+                </ol>
+
+
+                <ul class="flex-direction-nav">
+                  <li class="flex-nav-prev">
+                    <a class="flex-prev" href="#">Previous</a>
+                  </li>
+
+                  <li class="flex-nav-next">
+                    <a class="flex-next" href="#">Next</a>
+                  </li>
+                </ul>
+              </div>
+
+
+              <div class="portfolio-hover">
+                <div class="action-btn">
+                  <a class="icon-basic_magnifier" href="#" style="font-style: italic"></a>
+                </div>
+
+                <div class="portfolio-description">
+                  <h4>
+                    <a href="#">lightbox Gallary</a>
+                  </h4>
+
+
+                  <p>
+                    <a href="#">category</a>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="portfolio-item cat1 cat4" style="position: absolute; left: 831px; top: 0px;">
+            <div class="thumb">
+              <%= image_tag 'portfolio/03.jpg' %>
+
+              <div class="portfolio-hover">
+                <div class="action-btn">
+                  <a class="popup-vimeo icon-arrows_keyboard_right" href="https://vimeo.com/45830194" style="font-style: italic"></a>
+                </div>
+
+                <div class="portfolio-description">
+                  <h4>
+                    <a class="popup-vimeo" href="https://vimeo.com/45830194">Video lightbox</a>
+                  </h4>
+
+                  <p>
+                    <a href="#">category</a>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="portfolio-item cat2 cat4" style="position: absolute; left: 0px; top: 208px;">
+            <div class="thumb">
+              <%= image_tag 'portfolio/04.jpg' %>
+
+              <div class="portfolio-hover">
+                <div class="action-btn">
+                  <a class="popup-link icon-basic_magnifier" href="img/portfolio/04.jpg" style="font-style: italic" title="lightbox view"></a>
+                </div>
+
+
+                <div class="portfolio-description">
+                  <h4>
+                    <a class="popup-link" href="img/portfolio/04.jpg" title="lightbox view">lightbox view</a>
+                  </h4>
+
+                  <p>
+                    <a href="#">category 3</a>
+                    ,
+                    <a href="#">category 4</a>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="portfolio-item cat3" style="position: absolute; left: 277px; top: 208px;">
+            <div class="thumb">
+              <%= image_tag 'portfolio/05.jpg' %>
+
+              <div class="portfolio-hover">
+                <div class="action-btn">
+                  <a class="icon-basic_link" href="portfolio-single.html" style="font-style: italic"></a>
+                </div>
+
+                <div class="portfolio-description">
+                  <h4>
+                    <a href="portfolio-single.html">External link</a>
+                  </h4>
+
+                  <p>
+                    <a href="#">category</a>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="portfolio-item cat2 cat5" style="position: absolute; left: 554px; top: 208px;">
+            <div class="thumb">
+              <div class="portfolio-slider-alt">
+                <div class="flex-viewport" style="overflow: hidden; position: relative;">
+                  <ul class="slides" style="width: 1000%; transition-duration: 0.6s; transform: translate3d(-554px, 0px, 0px);">
+                    <li class="clone" style="width: 277px; float: left; display: block;">
+                      <a href="img/portfolio/08b.jpg" title="Bootstrap">
+                        <%= image_tag 'portfolio/08b.jpg', draggable: 'false' %>
+                      </a>
+                    </li>
+
+                    <li class="" style="width: 277px; float: left; display: block;">
+                      <a href="img/portfolio/08.jpg" title="Freshness">
+                        <%= image_tag 'portfolio/08.jpg', draggable: 'false' %>
+                      </a>
+                    </li>
+
+                    <li class="flex-active-slide" style="width: 277px; float: left; display: block;">
+                      <a href="img/portfolio/08a.jpg"title="Massive">
+                        <%= image_tag 'portfolio/08a.jpg', draggable: 'false' %>
+                      </a>
+                    </li>
+
+                    <li class="" style="width: 277px; float: left; display: block;">
+                      <a href="img/portfolio/08b.jpg" title="Bootstrap">
+                        <%= image_tag 'portfolio/08b.jpg', draggable: 'false' %>
+                      </a>
+                    </li>
+
+                    <li class="clone" style="width: 277px; float: left; display: block;">
+                      <a href="img/portfolio/08.jpg" title="Freshness">
+                        <%= image_tag 'portfolio/08.jpg', draggable: 'false' %>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+
+                <ol class="flex-control-nav flex-control-paging">
+                  <li>
+                    <a class="">1</a>
+                  </li>
+
+                  <li>
+                    <a class="flex-active">2</a>
+                  </li>
+
+                  <li>
+                    <a class="">3</a>
+                  </li>
+                </ol>
+
+                <ul class="flex-direction-nav">
+                  <li class="flex-nav-prev">
+                    <a class="flex-prev" href="#">Previous</a>
+                  </li>
+
+                  <li class="flex-nav-next">
+                    <a class="flex-next" href="#">Next</a>
+                  </li>
+                </ul>
+              </div>
+
+              <div class="portfolio-hover">
+                <div class="action-btn">
+                  <a class="icon-basic_magnifier" href="#"style="font-style: italic"></a>
+                </div>
+
+                <div class="portfolio-description">
+                  <h4>
+                    <a href="#">lightbox gallery</a>
+                  </h4>
+
+                  <p>
+                    <a href="#">category</a>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="portfolio-item cat1 cat4 cat3 cat5" style="position: absolute; left: 831px; top: 208px;">
+            <div class="thumb">
+              <%= image_tag 'portfolio/06.jpg' %>
+
+              <div class="portfolio-hover">
+                <div class="action-btn">
+                  <a class="popup-link icon-basic_magnifier" href="img/portfolio/06.jpg" style="font-style: italic" title="lightbox view"></a>
+                </div>
+
+                <div class="portfolio-description">
+                  <h4>
+                    <a class="popup-link" href="img/portfolio/06.jpg" title="lightbox view">lightbox view</a>
+                  </h4>
+
+                  <p>
+                    <a href="#">category 5</a>
+                    ,
+                    <a href="#">category 6</a>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <section class="body-content">
+    <div class="page-content" id="join">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-7">
+            <div class="heading-title-alt text-left heading-border-bottom" style="center">
+              <h5 class="text-uppercase">
+                DON’T YOU HAVE AN ACCOUNT?
+                <span class="theme-color">REGISTER NOW</span>
+              </h5>
+            </div>
+
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipisicing
+              elit. Unde, vel odio non dicta provident sint ex autem
+              mollitia dolorem illum repellat ipsum aliquid illo.
+            </p>
+
+            <form action="#" class=" login magazine-grid" method="post">
+              <div class="row">
+                <div class="form-group col-md-6">
+                  <input class="form-control" placeholder="Name" type="text">
+                </div>
+
+
+                <div class="form-group col-md-6">
+                  <input class="form-control" placeholder="Email" type="text">
+                </div>
+
+
+                <div class="form-group col-md-6">
+                  <input class="form-control" placeholder="User Name" type="text">
+                </div>
+
+
+                <div class="form-group col-md-6">
+                  <input class="form-control" placeholder="Phone" type="text">
+                </div>
+
+
+                <div class="form-group col-md-6">
+                  <input class="form-control" placeholder="Choose Password" type="password">
+                </div>
+
+
+                <div class="form-group col-md-6">
+                  <input class="form-control" placeholder="Confirm Password" type="password">
+                </div>
+
+
+                <div class="form-group col-md-12">
+                  <button class="btn btn-small btn-dark-solid full-width btn-rounded" id="login-form-submit" name="login-form-submit" value="login">Register</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!--body content end-->
+  <!--footer 1 start -->
+
+
+  <footer class="dark footer-4" id="footer">
+    <div class="container">
+      <div class="f-logo-center">
+        <a class="footer-logo" href="index.html">
+          <%= image_tag "https://storage.googleapis.com/siteassets/rsz_logo.png", alt:"", class:"retina" %>
+        </a>
+      </div>
+
+
+      <div class="col-md-6">
+        <div class="copyright">© MASSIVE 2014.</div>
+
+
+        <div class="copyright-sub-title text-uppercase">
+          Building your site with lots of fun
+        </div>
+      </div>
+
+
+      <div class="col-md-6">
+        <div class="social-link pull-right circle">
+          <a class="fa fa-facebook" href="#" style="font-style: italic"></a>
+          <a class="fa fa-twitter" href="#"style="font-style: italic"></a>
+          <a class="fa fa-dribbble"href="#" style="font-style: italic"></a>
+          <a class="fa fa-google-plus" href="#" style="font-style: italic"></a>
+          <a class="fa fa-behance" href="#"style="font-style: italic"></a>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <!--footer 1 end-->
+  <!-- Placed js at the end of the document so the pages load faster -->
+  <%= javascript_include_tag 'menuzord', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'jquery.flexslider-min', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'owl.carousel.min', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'jquery.isotope', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'imagesloaded', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'jquery.magnific-popup.min', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'jquery.countTo', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'visible', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'smooth', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'wow.min', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'jquery.nav', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'scripts', 'data-turbolinks-track' => true %>
+
+</body>
+</html>

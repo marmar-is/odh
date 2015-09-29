@@ -1,11 +1,32 @@
 Rails.application.routes.draw do
+  # Active Admin
+  #devise_for :admin_users, ActiveAdmin::Devise.config
+  #ActiveAdmin.routes(self)
 
-  devise_for :accounts, controllers: { registrations: 'accounts/registrations' }
+  #authenticated :admin_user do
+  #  root 'admin/dashboard#index', as: "admin"
+  #end
 
-  root 'ambassadors#index'
+  # Devise Accounts
+  devise_for :accounts, controllers: { registrations: 'accounts/registrations' } do
+    root 'accounts#index'
+  end
 
-  post 'ambassadors/refer' => 'ambassadors#refer', as: :send_referrals
-  put  'ambassadors/update_prospect/:id' => 'ambassadors#update_prospect', as: :update_prospect
+  authenticated :account do
+    root 'accounts#index'
+  end
+
+  unauthenticated do
+    root 'statics#index', :as => "unauthenticated"
+  end
+
+  #root 'statics#index'
+
+  #get    'home'                                => 'ambassadors#index',               as: :home_page
+  patch  'accounts/make_pick/:expo_id'         => 'accounts#make_pick',              as: :make_pick
+  post   'ambassadors/refer'                   => 'ambassadors#refer',               as: :send_referrals
+  patch  'ambassadors/update_prospect/:id'     => 'ambassadors#update_prospect',     as: :update_prospect
+  patch  'ambassadors/update_bank_account/:id' => 'ambassadors#update_bank_account', as: :update_bank_account
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

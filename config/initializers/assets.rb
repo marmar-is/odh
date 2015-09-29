@@ -25,17 +25,21 @@ Rails.application.config.assets.precompile += %w(
   ytplayer.min.js
   countdown.min.js
   smooth-scroll.min.js
-  parallax.js
   scripts.js
 
   jquery.tagsinput/jquery.tagsinput.css
   jquery.tagsinput/jquery.tagsinput.js
 
   ambassadors.css
+  parallax.js
 )
+
 
 # Register Assets (js & css)
 Rails.application.config.assets.precompile += %w(
   bootstrap-datepicker/bootstrap-datepicker3.css
   bootstrap-datepicker/bootstrap-datepicker.js
+  jquery.scrollintoview/jquery.scrollintoview.js
+  register.js
+  register.css
 )

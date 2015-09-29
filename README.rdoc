@@ -5,7 +5,9 @@ application up and running.
 
 Things you may want to cover:
 
-* Ruby version
+* Ruby version - 2.2.1
+
+* Rails version - 4.2.3
 
 * System dependencies
 
@@ -22,6 +24,11 @@ Things you may want to cover:
 * Deployment instructions
 
 * ...
+
+Notes:
+
+For each company we work with, we must manually add that company ( i.e. Company.new(...) )
+and then manually create a Stripe Customer (i.e. Stripe::Customer.create(...)).
 
 
 Please feel free to use a different markup language if you do not plan to run

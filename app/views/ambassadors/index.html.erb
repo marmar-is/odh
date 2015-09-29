@@ -2,6 +2,7 @@
   <%= stylesheet_link_tag 'jquery.tagsinput/jquery.tagsinput.css', 'data-turbolinks-track' => true %>
   <%= stylesheet_link_tag 'ambassadors', 'data-turbolinks-track' => true %>
 <% end %>
+
 <section id="my-account" class="pb0">
   <div class="container">
     <div class="row">
@@ -13,7 +14,7 @@
               <div class="tab-title">
                 <span>BIO</span>
               </div>
-              <div class="tab-content">
+                <div class="tab-content">
                 <p>
                   Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores.
                 </p>
@@ -33,9 +34,44 @@
               <div class="tab-title">
                 <span>PAYMENT</span>
               </div>
-              <div class="tab-content">
-                <p>
-                  At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est.
+              <div id="payment" class="tab-content">
+                <p class="mb8">
+                  <u>Current Account:</u>
+                  <%- if @stripe_bank_account %>
+                    <span class="bank-last4"><%= "XXXX#{@stripe_bank_account.last4}" %></span>
+                     with
+                    <span class="bank-name"><%= @stripe_bank_account.bank_name %></span>
+                  <% else %>
+                    Bank Account Not Set (you will be unable to collect compensation)
+                  <% end -%>
+                </p>
+                <%= form_tag update_bank_account_path(id: current_account.id), method: :patch do %>
+                  <div class="row">
+                    <div class="col-md-6 col-md-offset-3">
+                      <p class="bank-errors bg-danger mb0"></p>
+                      <div class="row mt8">
+                        <div class="col-md-6">
+                          <%= text_field_tag :routing_number, nil, placeholder: 'Routing Number', 'data-stripe': 'routing_number', class:'input-control' %>
+                        </div>
+                        <div class="col-md-6">
+                          <%= text_field_tag :account_number, nil, placeholder: 'Account Number', 'data-stripe': 'account_number', class:'input-control' %>
+                        </div>
+                      </div>
+                      <%= hidden_field_tag :country, 'US', 'data-stripe': 'country' %>
+                      <%= hidden_field_tag :currency, 'USD', 'data-stripe': 'currency' %>
+                      <div class="col-md-6 col-md-offset-3 mt16">
+                        <%= button_tag(type: 'submit') do %>
+                          <i class="fa fa-bank">
+                            <span class="bank-btn"><%= @stripe_bank_account ? " Edit " : " Add " %></span>
+                            Bank Account
+                          </i>
+                        <% end %>
+                      </div>
+                    </div>
+                  </div>
+                <% end %>
+                <p class="help-block mb8">
+                  Enter Your Bank Account Info In Order To Recieve Compensation For Your Referrals.
                 </p>
               </div>
             </li>
@@ -95,7 +131,7 @@
                         <!-- Email-Referrals -->
                         <div class="col-md-6">
                           <div class="tab-title">
-                            <i class="icon ti-email"></i>
+                            <i class="icon fa fa-envelope-o"></i>
                             <span>E-mail</span>
                           </div>
                           <%= text_field_tag :email_refers, '', id:'tags_email_refers' %>
@@ -105,7 +141,7 @@
                         <!-- Phone-Referrals -->
                         <div class="col-md-6">
                           <div class="tab-title">
-                            <i class="icon ti ti-mobile"></i>
+                            <i class="icon fa fa-mobile"></i>
                             <span>TEXT</span>
                           </div>
                           <%= text_field_tag :text_refers, '', id:'tags_text_refers' %>
@@ -141,11 +177,11 @@
                       <div class="widget">
                         <h6 class="title text-center">Prospects</h6>
                         <hr>
-                        <ul class="accordion accordion-2">
+                        <ul class="prospect accordion accordion-2">
                           <%- @child_prospects.each do |cp| %>
                             <li>
                               <div class="title">
-                                <span><%= display_child_label(cp) %></span>
+                                <span id="child-title-<%= cp.id %>"><%= display_child_label(cp) %></span>
                               </div>
                               <div id="child-<%= cp.id %>" class="content">
                                 <%= render partial: 'ambassadors/prospect', locals: { child: cp } %>
@@ -162,7 +198,7 @@
                       <div class="widget">
                         <h6 class="title text-center">Successes</h6>
                         <hr>
-                        <ul class="accordion accordion-2">
+                        <ul class="success accordion accordion-2">
                           <%- @child_successes.each do |cs| %>
                             <li>
                               <div class="title">
@@ -316,38 +352,75 @@
 -->
 
 <%= content_for :js_includes do %>
-<%= javascript_include_tag 'flexslider.min.js', 'data-turbolinks-track' => true %>
-<%= javascript_include_tag 'lightbox.min.js', 'data-turbolinks-track' => true %>
-<%= javascript_include_tag 'masonry.min.js', 'data-turbolinks-track' => true %>
-<%= javascript_include_tag 'twitterfetcher.min.js', 'data-turbolinks-track' => true %>
-<%= javascript_include_tag 'spectragram.min.js', 'data-turbolinks-track' => true %>
-<%= javascript_include_tag 'ytplayer.min.js', 'data-turbolinks-track' => true %>
-<%= javascript_include_tag 'countdown.min.js', 'data-turbolinks-track' => true %>
-<%= javascript_include_tag 'smooth-scroll.min.js', 'data-turbolinks-track' => true %>
-<%= javascript_include_tag 'parallax.js', 'data-turbolinks-track' => true %>
-<%= javascript_include_tag 'scripts.js', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'flexslider.min.js', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'lightbox.min.js', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'masonry.min.js', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'twitterfetcher.min.js', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'spectragram.min.js', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'ytplayer.min.js', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'countdown.min.js', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'smooth-scroll.min.js', 'data-turbolinks-track' => true %>
+  <%#= javascript_include_tag 'parallax.js', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'scripts.js', 'data-turbolinks-track' => true %>
 
-<%= javascript_include_tag 'jquery.tagsinput/jquery.tagsinput.js', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'jquery.tagsinput/jquery.tagsinput.js', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag "https://js.stripe.com/v2/", 'data-turbolinks-track' => true %>
 
-<script>
-var ready = function() {
-  'use strict';
-  $('#tags_email_refers').tagsInput({
-    width: '100%',
-    defaultText: 'add email',
-    removeTitle: 'Remove Email',
-    inputReferType: 'email',
-  });
+  <script>
+    var ready = function() {
+      'use strict';
+      $('#tags_email_refers').tagsInput({
+        width: '100%',
+        defaultText: 'add email',
+        removeTitle: 'Remove Email',
+        inputReferType: 'email',
+      });
 
-  $('#tags_text_refers').tagsInput({
-    width: '100%',
-    defaultText: 'add phone',
-    removeTitle: 'Remove Phone',
-    inputReferType: 'phone',
-  });
-};
+      $('#tags_text_refers').tagsInput({
+        width: '100%',
+        defaultText: 'add phone',
+        removeTitle: 'Remove Phone',
+        inputReferType: 'phone',
+      });
+    };
 
-$('document').ready(ready);
-</script>
+    Stripe.setPublishableKey("<%= Rails.application.secrets.stripe_publishable_key %>");
 
+    function stripeResponseHandler(status, response) {
+      var $form = $('#payment > form');
+
+      if (response.error) {
+        // Show the errors on the form
+        $form.find('.bank-errors').text(response.error.message);
+        $form.find('button').prop('disabled', false);
+      } else {
+        // response contains id and bank_account, which contains additional bank account details
+        var token = response.id;
+        // Insert the token into the form so it gets submitted to the server
+        $form.append($('<input type="hidden" name="stripe_bank_token" />').val(token));
+        $("[data-stripe]").remove(); // remove stripe data from params
+        // and submit
+        $form.get(0).submit();
+      }
+
+      return false;
+    };
+
+    $('body').on('submit', '#payment > form', function (event) {
+      event.preventDefault();
+
+      var $form;
+      $form = $(this);
+      $form.find('button').prop("disabled", true);
+      if ( $form.find('#country').val() == 'US' && $form.find('#currency').val() == 'USD' ) {
+        Stripe.bankAccount.createToken($form, stripeResponseHandler);
+      } else {
+        console.log('Fuck Off');
+      }
+
+      return false;
+    });
+
+    $('document').ready(ready);
+  </script>
 <% end %>
