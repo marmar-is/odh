@@ -13,8 +13,8 @@ class AccountsController < ApplicationController
   def make_pick
     expo = Exposition.find(params[:expo_id])
 
-    pick = expo.picks.where(account: current_account.id)
-    pick ||= Pick.new(Exposition: expo, Account: current_account)
+    pick = expo.picks.where(account: current_account.id).first
+    pick ||= Pick.new(exposition: expo, account: current_account)
 
     if (params[:team] == "true")
       pick.choice = true
@@ -23,9 +23,8 @@ class AccountsController < ApplicationController
     end
 
     if pick.save
-
       respond_to do |format|
-        format.html { redirect_to root_path, notice: 'Successfully Chosen!' }
+        #format.html { redirect_to root_path, notice: 'Successfully Chosen!' }
         format.js { render 'make_pick', locals: {expo_id: params[:expo_id], team: params[:team]}}
       end
     end
